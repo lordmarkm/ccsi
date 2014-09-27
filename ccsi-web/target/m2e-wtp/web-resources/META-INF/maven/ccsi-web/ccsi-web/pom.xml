@@ -12,6 +12,11 @@
   
   <dependencies>
     <dependency>
+      <groupId>ccsi</groupId>
+      <artifactId>ccsi-commons</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>baldy.commons</groupId>
       <artifactId>baldy-commons-web</artifactId>
     </dependency>

@@ -4,6 +4,12 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="ccsi-commons-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ccsi-commons/ccsi-commons">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="baldy-commons-dtos-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-dtos/baldy-commons-dtos">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="baldy-commons-web-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-web/baldy-commons-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
