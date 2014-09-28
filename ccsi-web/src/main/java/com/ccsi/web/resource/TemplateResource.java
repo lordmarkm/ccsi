@@ -14,6 +14,7 @@ import com.ccsi.app.service.TemplateService;
 import com.ccsi.commons.dto.tenant.TemplateInfo;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * @author mbmartinez

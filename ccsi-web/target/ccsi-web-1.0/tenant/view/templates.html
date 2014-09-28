@@ -1,0 +1,19 @@
+asdfdasf
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Status
+      <th>Template
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="template in templates">
+      <td>{{template.status}}
+      <td>{{template.templateString}}
+    </tr>
+    <tr ng-if="!templates.length">
+      <td colspan="2">No templates available</td>
+    </tr>
+  </tbody>
+</table>
