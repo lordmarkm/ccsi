@@ -7,7 +7,7 @@ define(['angular'], function(angular) {
     return $resource('/auth');
   })
   .factory('TenantService', function($resource) {
-    return $resource('/tenant', {}, {
+    return $resource('/tenant/:tenantId', {}, {
       page: {method: 'GET', isArray: false}
     });
   })

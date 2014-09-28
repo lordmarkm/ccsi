@@ -1,4 +1,7 @@
 define([
   'tenant/controllers/AuthController.js',
-  'tenant/controllers/TenantCreateController.js'
+  'tenant/controllers/TenantCreateController.js',
+  'tenant/controllers/TenantHomeController.js',
+  'tenant/controllers/TenantController.js',
+  'tenant/controllers/TenantTemplatesController.js'
 ], function () {});

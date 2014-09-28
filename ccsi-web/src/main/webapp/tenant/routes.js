@@ -10,6 +10,16 @@ define(['tenant/app.js'], function(app) {
       url: '/tenant/create',
       templateUrl: 'tenant/view/create.html',
       controller: 'TenantCreateController'
+    })
+    .state('tenant', {
+      url: '/tenant/{tenantId}',
+      templateUrl: 'tenant/view/tenant.html',
+      controller: 'TenantController'
+    })
+    .state('tenant.templates', {
+      url: '/templates',
+      templateUrl: 'tenant/view/templates.html',
+      controller: 'TenantTemplatesController'
     });
   });
 });

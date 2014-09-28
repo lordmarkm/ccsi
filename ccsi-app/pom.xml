@@ -23,7 +23,7 @@
     </dependency>
     <dependency>
       <groupId>baldy.commons.security</groupId>
-      <artifactId>baldy-commons-security-models</artifactId>
+      <artifactId>baldy-commons-security-services</artifactId>
     </dependency>
     <dependency>
       <groupId>baldy.commons</groupId>

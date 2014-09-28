@@ -21,7 +21,7 @@
   <!-- NAVIGATION -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/auth/redirect">Chikka Service Interface</a>
+      <a class="navbar-brand" href="/#/">Chikka Service Interface</a>
     </div>
     <ul class="nav navbar-nav">
       <!-- 
@@ -38,8 +38,8 @@
           <!--
           <li><a href="#/profile">Profile</a></li>
           -->
-          <li><a href="<@spring.url '/auth/redirect' />">Home</a></li>
-          <li><a href="<@spring.url '/logout' />">Logout</a></li>
+          <li><a href="<@spring.url '/#/' />">Home</a></li>
+          <li><a href="<@spring.url '/auth/logout' />">Logout</a></li>
         </ul>
       </li>
     </ul>

@@ -15,7 +15,7 @@ public class Tenant extends BaseBaldyEntity {
     @JoinColumn(name = "OWNER_ID", nullable = false)
     private Account owner;
 
-    @Column(name = "KEYWORD", nullable = false)
+    @Column(name = "KEYWORD", nullable = false, unique = true)
     private String keyword;
 
     public Account getOwner() {

@@ -3,7 +3,12 @@ define(['tenant/controllers/module.js'], function (controllers) {
   controllers.controller('TenantCreateController', ['$scope', '$state', 'TenantService',
     function($scope, $state, TenantService) {
 
-    $scope.test = 'Hello world';
+    $scope.tenant = {};
+    $scope.saveTenant = function () {
+      TenantService.save($scope.tenant, function (saved) {
+        $scope.tenant = saved;
+      });
+    };
 
   }]);
 });

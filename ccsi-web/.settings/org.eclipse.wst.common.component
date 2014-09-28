@@ -13,6 +13,9 @@
         <dependent-module archiveName="baldy-commons-dtos-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-dtos/baldy-commons-dtos">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="baldy-commons-security-services-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-security-services/baldy-commons-security-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="baldy-commons-security-models-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-security-models/baldy-commons-security-models">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -26,9 +29,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ccsi-security-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ccsi-security/ccsi-security">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="baldy-commons-security-services-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-security-services/baldy-commons-security-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="baldy-commons-web-2.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-web/baldy-commons-web">

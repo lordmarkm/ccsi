@@ -2,9 +2,45 @@
   It looks like you don't have any registered templates. <a ui-sref="tenant_create">Create one now</a>
 </div>
 
-<!-- Dropdown for available tenants -->
-
 <div ng-if="tenant">
-  <!-- Recent transactions -->
-  <!-- Status table -->
+  <div class="row">
+    <!-- Dropdown for available tenants -->
+    <div class="col-sm-6">
+      <select ng-model="tenant" ng-options="tenant as tenant.name for tenant in tenants track by tenant.keyword"
+        class="form-control">
+      </select>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 5px;">
+    <div class="col-sm-6">
+      <a ui-sref="tenant_create">Create new</a>
+    </div>
+  </div>
+
+  <div class="panel panel-default" style="margin-top:10px;">
+    <div class="panel-heading">Tenant Info</div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Name
+        <dd>{{tenant.name}}
+        <dt>Keyword
+        <dd>{{tenant.keyword}}
+        <dt>Templates
+        <dd><a ui-sref="tenant.templates({tenantId: tenant.id})">Edit</a>
+      </dl>
+    </div>
+    <div class="panel-heading">Tenant records</div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Tracking Code
+            <th>Customer name
+            <th>Status
+          </tr>
+        </thead>
+      </table>
+    </div>
+    </div>
+  </div>
 </div>

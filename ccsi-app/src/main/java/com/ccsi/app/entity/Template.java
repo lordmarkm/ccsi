@@ -14,6 +14,9 @@ public class Template extends BaseEntity {
     @JoinColumn(name = "TENANT_ID", nullable = false)
     private Tenant tenant;
 
+    @Column(name = "STATUS", nullable = false)
+    private String status;
+
     @Column(name = "STRING", nullable = false)
     private String templateString;
 
@@ -31,6 +34,14 @@ public class Template extends BaseEntity {
 
     public void setTemplateString(String templateString) {
         this.templateString = templateString;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
