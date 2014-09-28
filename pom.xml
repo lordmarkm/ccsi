@@ -336,5 +336,7 @@
   <modules>
   <module>ccsi-web</module>
   <module>ccsi-commons</module>
+  <module>ccsi-app</module>
+  <module>ccsi-security</module>
   </modules>
 </project>

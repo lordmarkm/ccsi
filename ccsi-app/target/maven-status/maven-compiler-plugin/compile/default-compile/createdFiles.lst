@@ -1,0 +1,11 @@
+com/ccsi/app/service/TemplateService.class
+com/ccsi/app/service/TenantService.class
+com/ccsi/app/entity/Tenant.class
+com/ccsi/app/entity/Template.class
+com/ccsi/app/config/CcsiCoreConfig.class
+com/ccsi/app/entity/TenantVariable.class
+com/ccsi/app/service/custom/TenantServiceCustomImpl.class
+com/ccsi/app/service/VariableService.class
+com/ccsi/app/config/CcsiPersistenceConfig.class
+com/ccsi/app/service/custom/TenantServiceCustom.class
+com/ccsi/app/util/MappingService.class

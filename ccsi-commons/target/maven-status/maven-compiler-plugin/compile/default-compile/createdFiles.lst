@@ -1,0 +1,7 @@
+com/ccsi/commons/dto/tenant/TenantInfo.class
+com/ccsi/commons/dto/ReplyMessageInfo.class
+com/ccsi/commons/dto/tenant/BaseCcsiInfo.class
+com/ccsi/commons/dto/GenericHttpResponse.class
+com/ccsi/commons/dto/IncomingMessageInfo.class
+com/ccsi/commons/dto/DeliveryNotificationInfo.class
+com/ccsi/commons/dto/OutgoingMessageInfo.class

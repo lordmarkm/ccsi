@@ -1,0 +1,31 @@
+.quickdate > .quickdate-button{cursor:text;text-decoration: none}
+.quickdate-button div,.quickdate-action-link div{display:inline}
+.quickdate-popup{z-index:10;background-color:#fff;text-align:center;width:250px;display:none;position:absolute;padding:10px 5px 5px;}
+.quickdate-popup.open{display:block}
+.quickdate-calendar-header{display:block;padding:2px 0;text-align:center}
+.quickdate-month{display:inline-block; width:72%;}
+a.quickdate-prev-month{float:left; margin-top:0; display:inline-block;}
+a.quickdate-next-month{float:right;margin-top:0; display:inline-block;}
+.quickdate-text-inputs{text-align:left;margin-bottom:5px; clear:both;}
+.quickdate-input-wrapper{width:49%;display:inline-block}
+input.quickdate-date-input,input.quickdate-time-input{margin:0;height:auto;padding:2px 3px;border-radius: 3px;border: 1px solid #ccc;}
+table.quickdate-calendar{border-collapse:collapse;border-spacing:0;width:100%}
+table.quickdate-calendar th,table.quickdate-calendar td{padding:6px 5px}
+table.quickdate-calendar td:hover{cursor:pointer}
+.quickdate input,.quickdate select{font-size:12px}
+
+.quickdate-popup{color:#333;font-size:12px;border:1px solid #e3e3e3; border-radius:3px;-webkit-box-shadow:0 10px 30px rgba(25,25,25,0.92);-moz-box-shadow:0 10px 30px rgba(25,25,25,0.92);box-shadow:0 10px 30px rgba(25,25,25,0.92)}
+.quickdate-action-link:visited,.quickdate-action-link:hover{color:#333}
+
+table.quickdate-calendar{border:0; background-color:none; border-collapse:separate; border-spacing:0px;}
+table.quickdate-calendar td{background-color: #fff; border:1px solid #dbdbdb; border-radius:3px;padding: 5px 8px;font-size: 12px;line-height: 1.5;border-radius: 3px;}
+table.quickdate-calendar th{border:0 ; border-bottom:0;}
+table.quickdate-calendar td:hover{background-color:#e6e6e6}
+table.quickdate-calendar td.other-month{color:#999;}
+table.quickdate-calendar td.selected{color:#333 !important; background-color:#1996d8;font-weight:bold;border-color:#1996d8}
+table.quickdate-calendar td.is-today{font-weight:bold;border-color:#1996d8}
+table.quickdate-calendar td.disabled-date{color:#c8c8c8}
+table.quickdate-calendar td.disabled-date:hover{background-color: #FFF;cursor:not-allowed}
+
+.quickdate-popup-footer{margin-top:5px;text-align:right}
+.quickdate-calendar-header .ng-binding{padding:5px 10px;font-size: 12px;border-radius: 3px;color: #333;border:1px solid #ccc;background-color: #fff;display:inline-block;font-weight: bold}

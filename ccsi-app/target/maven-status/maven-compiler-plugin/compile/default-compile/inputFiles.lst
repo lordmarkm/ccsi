@@ -1,0 +1,11 @@
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/service/custom/TenantServiceCustomImpl.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/service/TemplateService.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/entity/Template.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/config/CcsiPersistenceConfig.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/util/MappingService.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/service/VariableService.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/entity/TenantVariable.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/entity/Tenant.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/service/custom/TenantServiceCustom.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/service/TenantService.java
+/home/mbmartinez/git/ccsi/ccsi-app/src/main/java/com/ccsi/app/config/CcsiCoreConfig.java
