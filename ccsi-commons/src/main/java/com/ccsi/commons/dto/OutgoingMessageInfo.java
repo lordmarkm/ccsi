@@ -1,17 +1,32 @@
 package com.ccsi.commons.dto;
 
+import org.springframework.core.style.ToStringCreator;
+
 /**
  * @author mbmartinez
  */
 public class OutgoingMessageInfo {
 
-    private String message_type;
-    private String mobile_number;
-    private String shortcode;
-    private String message_id;
-    private String message;
-    private String client_id;
-    private String secret_key;
+    protected String message_type;
+    protected String mobile_number;
+    protected String shortcode;
+    protected String message_id;
+    protected String message;
+    protected String client_id;
+    protected String secret_key;
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+            .append("msg type", message_type)
+            .append("mobile#", mobile_number)
+            .append("shortcode", shortcode)
+            .append("msg id", message_id)
+            .append("msg", message)
+            .append("client_id", client_id)
+            .append("secret_key", secret_key)
+            .toString();
+    }
 
     public String getMessage_type() {
         return message_type;

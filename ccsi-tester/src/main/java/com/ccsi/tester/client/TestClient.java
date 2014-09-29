@@ -5,7 +5,6 @@ import java.util.Date;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
-import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.IncomingMessageInfo;
 
 public class TestClient {
@@ -21,11 +20,11 @@ public class TestClient {
         msg.setMobile_number("639155411987");
         msg.setShortcode("292902274");
         msg.setRequest_id("12345");
-        msg.setMessage("gg LYWJ");
+        msg.setMessage("gg oeOInx");
         msg.setTimestamp(new Date().getTime());
 
         System.out.println("Sending message");
-        GenericHttpResponse response = rest.postForObject(url, msg, GenericHttpResponse.class);
+        String response = rest.postForObject(url, msg, String.class);
         System.err.println(response);
     }
 

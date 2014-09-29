@@ -72,6 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/message").permitAll()
                 .antMatchers("/notification").permitAll()
 
+                //Test endpoint
+                .antMatchers("/test").permitAll()
+
                 .antMatchers("/**").authenticated()
                 .and()
             .logout()

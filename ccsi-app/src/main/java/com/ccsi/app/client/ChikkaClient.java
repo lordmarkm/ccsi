@@ -13,7 +13,6 @@ import com.ccsi.app.util.MessageComposer;
 import com.ccsi.app.util.MessageUtil;
 import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.IncomingMessageInfo;
-import com.ccsi.commons.dto.OutgoingMessageInfo;
 import com.ccsi.commons.dto.ReplyMessageInfo;
 
 @Service
@@ -61,9 +60,10 @@ public class ChikkaClient {
         out.setClient_id(env.getProperty("client_id"));
         out.setSecret_key(env.getProperty("secret_key"));
 
-        LOG.debug("About to send reply message. msg={}", out);
-//        GenericHttpResponse response = rest.postForObject(env.getProperty("chikka_endpoint"), out, GenericHttpResponse.class);
-//        LOG.debug("Received response from chikka. response={}", response);
+        String endpoint = env.getProperty("chikka_endpoint");
+        LOG.debug("About to send reply message. endpt={}, msg={}", endpoint, out);
+        GenericHttpResponse response = rest.postForObject(endpoint, out, GenericHttpResponse.class);
+        LOG.debug("Received response from chikka. response={}", response);
     }
 
 }

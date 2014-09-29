@@ -13,7 +13,6 @@ import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
 import com.ccsi.commons.dto.DeliveryNotificationInfo;
 import com.ccsi.commons.dto.IncomingMessageInfo;
-import com.google.common.base.Splitter;
 
 @Service
 public class MessageHandlingServiceImpl implements MessageHandlingService {
@@ -33,6 +32,9 @@ public class MessageHandlingServiceImpl implements MessageHandlingService {
     @Autowired
     private TenantRecordService tenantRecordService;
 
+    /**
+     * TODO: Threadpool + runnable, etc etc
+     */
     @Override
     public void handleIncomingMessage(IncomingMessageInfo msg) {
         String[] breakdown = null;
