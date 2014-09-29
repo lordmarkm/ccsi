@@ -1,4 +1,4 @@
-package com.ccsi.app.service.custom;
+package com.ccsi.app.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import com.baldy.commons.security.models.Account;
 import com.baldy.commons.security.services.AccountService;
 import com.ccsi.app.entity.Tenant;
 import com.ccsi.app.service.TenantService;
+import com.ccsi.app.service.custom.TenantServiceCustom;
 import com.ccsi.app.util.MappingService;
 import com.ccsi.commons.dto.tenant.TenantInfo;
 

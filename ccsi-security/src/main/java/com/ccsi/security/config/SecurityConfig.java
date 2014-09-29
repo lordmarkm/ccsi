@@ -66,6 +66,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin**").hasRole(ADMIN)
                 .antMatchers("/tenant**").authenticated()
 //              .antMatchers("/operations**").hasAnyAuthority(OPERATOR, WAREHOUSE, MIXER, EXTRUDER, PRINTER, CUTTER)
+                .antMatchers("/register**").permitAll()
+                
+                //The endpoints used by chikka
+                .antMatchers("/message").permitAll()
+                .antMatchers("/notification").permitAll()
+
                 .antMatchers("/**").authenticated()
                 .and()
             .logout()

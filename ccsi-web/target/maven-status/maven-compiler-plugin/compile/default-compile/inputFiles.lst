@@ -4,5 +4,5 @@
 /home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/resource/TenantResource.java
 /home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/resource/VariableResource.java
 /home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/endpoint/ChikkaEndpoint.java
-/home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/client/ChikkaClient.java
+/home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/resource/TenantRecordResource.java
 /home/mbmartinez/git/ccsi/ccsi-web/src/main/java/com/ccsi/web/resource/TemplateResource.java

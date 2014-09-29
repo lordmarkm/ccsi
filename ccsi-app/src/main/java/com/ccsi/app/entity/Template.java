@@ -4,10 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.baldy.commons.models.BaseEntity;
 
 @Entity(name = "TEMPLATE")
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"TENANT_ID", "STATUS"})})
 public class Template extends BaseEntity {
 
     @ManyToOne

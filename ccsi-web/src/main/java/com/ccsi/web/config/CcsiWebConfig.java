@@ -30,11 +30,6 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 public class CcsiWebConfig extends WebMvcConfigurationSupport {
 
     @Bean
-    public DozerBeanMapper mapper() {
-        return new DozerBeanMapper();
-    }
-
-    @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

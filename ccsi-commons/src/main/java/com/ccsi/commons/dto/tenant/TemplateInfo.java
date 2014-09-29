@@ -5,7 +5,7 @@ import org.springframework.core.style.ToStringCreator;
 /**
  * @author mbmartinez
  */
-public class TemplateInfo {
+public class TemplateInfo extends BaseCcsiInfo {
 
     private String status;
     private String templateString;

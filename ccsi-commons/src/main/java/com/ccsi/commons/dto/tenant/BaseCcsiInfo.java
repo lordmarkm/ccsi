@@ -5,9 +5,9 @@ package com.ccsi.commons.dto.tenant;
  */
 public class BaseCcsiInfo {
 
-    private Long id;
-    private String name;
-    private String description;
+    protected Long id;
+    protected String name;
+    protected String description;
 
     public String getName() {
         return name;

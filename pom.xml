@@ -338,5 +338,6 @@
   <module>ccsi-commons</module>
   <module>ccsi-app</module>
   <module>ccsi-security</module>
+  <module>ccsi-tester</module>
   </modules>
 </project>

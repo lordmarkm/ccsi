@@ -13,5 +13,6 @@ import com.ccsi.app.service.custom.TenantServiceCustom;
 public interface TenantService extends TenantServiceCustom, JpaRepository<Tenant, Long> {
 
     List<Tenant> findByOwner_username(String name);
+    Tenant findByKeyword(String keyword);
 
 }

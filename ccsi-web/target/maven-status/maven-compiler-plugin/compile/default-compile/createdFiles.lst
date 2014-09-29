@@ -3,6 +3,6 @@ com/ccsi/web/resource/RegistrationResource.class
 com/ccsi/web/resource/VariableResource.class
 com/ccsi/web/config/CcsiWebConfig.class
 com/ccsi/web/resource/TenantResource.class
+com/ccsi/web/resource/TenantRecordResource.class
 com/ccsi/web/controller/RootController.class
 com/ccsi/web/endpoint/ChikkaEndpoint.class
-com/ccsi/web/client/ChikkaClient.class

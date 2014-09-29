@@ -11,7 +11,7 @@ import com.baldy.commons.models.BaseEntity;
  * @author mbmartinez
  */
 @Entity(name = "TENANT_VARIABLE")
-public class TenantVariable extends BaseEntity {
+public class Variable extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "TENANT_ID", nullable = false)

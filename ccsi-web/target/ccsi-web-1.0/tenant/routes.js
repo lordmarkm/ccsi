@@ -13,6 +13,7 @@ define(['tenant/app.js'], function(app) {
     })
     .state('tenant', {
       url: '/tenant/{tenantId}',
+      templateUrl: 'tenant/view/tenant.html',
       controller: 'TenantController'
     })
     .state('tenant.templates', {

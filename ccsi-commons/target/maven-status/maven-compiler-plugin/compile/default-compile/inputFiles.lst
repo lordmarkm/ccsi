@@ -1,7 +1,11 @@
+/home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/tenant/VariableInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/tenant/BaseCcsiInfo.java
+/home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/tenant/TenantRecordInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/OutgoingMessageInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/IncomingMessageInfo.java
+/home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/PageInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/tenant/TenantInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/GenericHttpResponse.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/ReplyMessageInfo.java
+/home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/tenant/TemplateInfo.java
 /home/mbmartinez/git/ccsi/ccsi-commons/src/main/java/com/ccsi/commons/dto/DeliveryNotificationInfo.java

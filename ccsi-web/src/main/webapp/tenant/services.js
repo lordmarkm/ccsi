@@ -20,6 +20,10 @@ define(['angular'], function(angular) {
     return $resource('/variable/:tenantId', {}, {
       page: {method: 'GET', isArray: false}
     });
+  })
+  .factory('RecordService', function($resource) {
+    return $resource('/record/:tenantId', {}, {
+      page: {method: 'GET', isArray: false}
+    });
   });
-
 });
