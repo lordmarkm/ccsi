@@ -41,12 +41,12 @@ public class ChikkaClient {
     private TransactionRecordService txnRecordService;
 
     public void sendInvalidTenantMessage(IncomingMessageInfo msg, TransactionRecord txn, String tenantCode) {
-        String outgoingMessage = "We could not find a tenant with code " + tenantCode;
+        String outgoingMessage = "We could not find a tenant with code " + tenantCode + ".";
         sendMessage(outgoingMessage, msg, txn);
     }
 
     public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn, String trackingNo) {
-        String outgoingMessage = "We could not find a transaction record with tracking number " + trackingNo;
+        String outgoingMessage = "We could not find a transaction record with tracking number " + trackingNo + ".";
         sendMessage(outgoingMessage, msg, txn);
     }
 
