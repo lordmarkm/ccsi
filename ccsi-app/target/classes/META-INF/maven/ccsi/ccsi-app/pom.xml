@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>ccsi</groupId>
+    <artifactId>ccsi</artifactId>
+    <version>1.0</version>
+  </parent>
+  <artifactId>ccsi-app</artifactId>
+  <name>CCSI :: App</name>
+
+  <properties>
+    <db.username>root</db.username>
+    <db.password>root</db.password>
+    <chikka.endpt>http://localhost:8080/test</chikka.endpt>
+    <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>qa</id>
+      <properties>
+        <db.username>ccsi</db.username>
+        <db.password>ccsi</db.password>
+        <chikka.endpt>https://post.chikka.com/smsapi/request</chikka.endpt>
+      </properties>
+    </profile>
+    <profile>
+      <id>purge</id>
+      <properties>
+        <hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+      </properties>
+    </profile>
+  </profiles>
+
+  <dependencies>
+    <dependency>
+      <groupId>ccsi</groupId>
+      <artifactId>ccsi-commons</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>baldy.commons.security</groupId>
+      <artifactId>baldy-commons-security-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>baldy.commons</groupId>
+      <artifactId>baldy-commons-models</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>baldy.commons</groupId>
+      <artifactId>baldy-commons-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>baldy.commons</groupId>
+      <artifactId>baldy-commons-data-mysql</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+</project>
