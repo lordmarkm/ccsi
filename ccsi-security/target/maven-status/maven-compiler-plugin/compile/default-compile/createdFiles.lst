@@ -1,9 +1,0 @@
-com/ccsi/security/config/CcsiSecurityConfigMarker.class
-com/ccsi/security/validator/RegistrationFormValidator.class
-com/ccsi/security/config/SecurityConfig.class
-com/ccsi/security/controller/RegistrationController.class
-com/ccsi/security/resource/AuthenticationResource.class
-com/ccsi/security/dto/RegistrationForm.class
-com/ccsi/security/controller/LoginController.class
-com/ccsi/security/config/SecurityPersistenceConfig.class
-com/ccsi/security/reference/Roles.class

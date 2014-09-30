@@ -1,9 +1,0 @@
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/reference/Roles.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/resource/AuthenticationResource.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/dto/RegistrationForm.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/config/CcsiSecurityConfigMarker.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/validator/RegistrationFormValidator.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/controller/RegistrationController.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/config/SecurityPersistenceConfig.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/config/SecurityConfig.java
-/home/mbmartinez/git/ccsi/ccsi-security/src/main/java/com/ccsi/security/controller/LoginController.java
