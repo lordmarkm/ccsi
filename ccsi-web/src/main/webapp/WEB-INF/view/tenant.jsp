@@ -4,7 +4,7 @@
 
 <head>
 <title>CCSI</title>
-<link rel="icon" type="image/x-icon" href="<@spring.url '/images/favicon.ico' />" />
+<link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/angular-ngtable/ng-table.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/font-awesome-4.1.0/css/font-awesome.min.css' />" />
