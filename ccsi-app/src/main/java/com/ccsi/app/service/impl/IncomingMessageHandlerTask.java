@@ -52,7 +52,7 @@ public class IncomingMessageHandlerTask implements Runnable {
         try {
             breakdown = messageBreakdown(msg.getMessage());
         } catch (Exception e) {
-            client.sendInvalidMessageMessage(txn);
+            client.sendInvalidMessageMessage(msg, txn);
             return;
         }
 
@@ -61,14 +61,14 @@ public class IncomingMessageHandlerTask implements Runnable {
 
         Tenant tenant = tenantService.findByKeyword(tenantCode);
         if (null == tenant) {
-            client.sendInvalidTenantMessage(msg, txn);
+            client.sendInvalidTenantMessage(msg, txn, tenantCode);
             return;
         }
         txn.setTenant(tenant);
 
         TenantRecord record = tenantRecordService.findByTrackingNoAndTenant_id(trackingNo, tenant.getId());
         if (null == record) {
-            client.sendInvalidTrackingNo(msg, txn);
+            client.sendInvalidTrackingNo(msg, txn, trackingNo);
             return;
         }
         txn.setRecord(record);

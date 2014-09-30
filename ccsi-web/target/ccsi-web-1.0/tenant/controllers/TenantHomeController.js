@@ -1,13 +1,12 @@
 define(['tenant/controllers/module.js'], function (controllers) {
   'use strict';
-  controllers.controller('TenantHomeController', ['$scope', '$state', 'ngTableParams', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
-    function($scope, $state, ngTableParams, tenants, TenantService, TemplateService, RecordService) {
+  controllers.controller('TenantHomeController', ['$scope', '$state', '$stateParams', 'ngTableParams', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
+    function($scope, $state, $stateParams, ngTableParams, tenants, TenantService, TemplateService, RecordService) {
 
     $scope.tenants = tenants;
 
     //Handle tenants
     $scope.loadTenant = function (tenant) {
-      console.debug('Loading tenant. name=' + tenant.name);
       $scope.tenant = tenant;
       $scope.statuses = TemplateService.query({tenantId: $scope.tenant.id}, function (templates) {
         if (templates.length) {
@@ -17,12 +16,17 @@ define(['tenant/controllers/module.js'], function (controllers) {
         }
       });
       $scope.reloadTable();
+      $scope.tenantIndex = findIndex(tenant);
     };
-//    $scope.tenants = TenantService.query(function (tenants) {
-//      if (tenants.length) {
-//        $scope.loadTenant(tenants[0]);
-//      }
-//    });
+    function findIndex(tenant) {
+      var i = tenants.length;
+      while (i--) {
+        if (tenants[i].id === tenant.id) {
+          return i;
+        }
+      }
+      return 0;
+    }
 
     //Handle records
     $scope.totalRecords = 0;
@@ -70,7 +74,9 @@ define(['tenant/controllers/module.js'], function (controllers) {
     });
 
     if (tenants.length) {
-      $scope.loadTenant(tenants[$stateParams.tenantIndex && $stateParams.tenantIndex < tenants.length ? $stateParams.tenantIndex : 0]);
+      var index = $stateParams.tenantIndex && $stateParams.tenantIndex < tenants.length ? $stateParams.tenantIndex : 0;
+      if ($stateParams.tenantIndex === '-1') index = tenants.length - 1;
+      $scope.loadTenant(tenants[index]);
     }
   }]);
 });

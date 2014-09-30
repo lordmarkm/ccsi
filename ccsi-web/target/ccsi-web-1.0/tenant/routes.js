@@ -11,7 +11,7 @@ define([
       resolve: TenantResolve
     })
     .state('tenant_create', {
-      url: '/tenant/create',
+      url: '/tenant/create?tenantIndex',
       templateUrl: 'tenant/view/create.html',
       controller: 'TenantCreateController'
     })
@@ -21,17 +21,17 @@ define([
       controller: 'TenantController'
     })
     .state('tenant.templates', {
-      url: '/templates',
+      url: '/templates?tenantIndex',
       templateUrl: 'tenant/view/templates.html',
       controller: 'TenantTemplatesController'
     })
     .state('tenant.transactions', {
-      url: '/transactions',
+      url: '/transactions?tenantIndex',
       templateUrl: 'tenant/view/transactions.html',
       controller: 'TenantTransactionsController'
     })
     .state('tenant.record_txns', {
-      url: '/recordtxn/{tenantRecordId}',
+      url: '/recordtxn/{tenantRecordId}?tenantIndex',
       templateUrl: 'tenant/view/transactions.html',
       controller: 'TenantTransactionsController'
     });

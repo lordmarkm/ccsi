@@ -15,7 +15,7 @@
   </div>
   <div class="row" style="margin-top: 5px;">
     <div class="col-sm-6">
-      <a ui-sref="tenant_create">Create new</a>
+      <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Create new</a>
     </div>
   </div>
 
@@ -28,9 +28,9 @@
         <dt>Keyword
         <dd>{{tenant.keyword}}
         <dt>Templates
-        <dd><a ui-sref="tenant.templates({tenantId: tenant.id})">Edit templates</a>
+        <dd><a ui-sref="tenant.templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Edit templates</a>
         <dt>Transactions
-        <dd><a ui-sref="tenant.transactions({tenantId: tenant.id})">View transactions</a>
+        <dd><a ui-sref="tenant.transactions({tenantId: tenant.id, tenantIndex: tenantIndex})">View transactions</a>
       </dl>
     </div>
     <div class="panel-heading">Tenant records</div>
@@ -71,7 +71,7 @@
             <td>{{record.customerName}}
             <td>{{record.transactionType}}
             <td>{{record.lastUpdated|date: 'MMM-dd-yyyy hh:mm'}}
-            <td><a ui-sref="tenant.record_txns({tenantId: tenant.id, tenantRecordId: record.id})">View</a>
+            <td><a ui-sref="tenant.record_txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">View</a>
             <td>
               <select ng-model="record.status" 
                 ng-options="template as template.status for template in statuses track by template.status"

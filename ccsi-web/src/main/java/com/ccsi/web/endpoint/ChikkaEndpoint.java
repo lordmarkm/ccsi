@@ -39,6 +39,7 @@ public class ChikkaEndpoint {
     @RequestMapping(value = "/notification", method = POST)
     public ResponseEntity<String> notification(@ModelAttribute DeliveryNotificationInfo msg) {
         LOG.debug("Delivery notification received. msg={}", msg);
+        handler.handleDeliveryNotification(msg);
         return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
     }
 

@@ -1,5 +1,7 @@
 package com.ccsi.commons.dto;
 
+import org.springframework.core.style.ToStringCreator;
+
 /**
  * @author mbmartinez
  */
@@ -11,6 +13,18 @@ public class DeliveryNotificationInfo {
     private String status;
     private String credits_cost;
     private String timestamp;
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+            .append("msg type", message_type)
+            .append("shortcode", shortcode)
+            .append("msg id", message_id)
+            .append("status", status)
+            .append("credits_cost", credits_cost)
+            .append("timestamp", timestamp)
+            .toString();
+    }
 
     public String getMessage_type() {
         return message_type;

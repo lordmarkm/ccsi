@@ -37,8 +37,11 @@ public class MessageHandlingServiceImpl implements MessageHandlingService {
     @Override
     public void handleDeliveryNotification(DeliveryNotificationInfo notif) {
         // TODO What else do we do with these?
-        LOG.debug("Delivery notification received. notif={}", notif);
         TransactionRecord txn = txnService.findByMessageId(notif.getMessage_id());
+        if (null == txn) {
+            LOG.warn("Transaction record not found. msg id={}", notif.getMessage_id());
+            return;
+        }
         txn.setDelivered(true);
         txnService.save(txn);
     }

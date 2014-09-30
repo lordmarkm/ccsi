@@ -17,6 +17,7 @@ public class TransactionRecordInfo {
     private LocalDateTime transactionDate;
     private BigDecimal cost;
     private String messageId;
+    private boolean delivered;
 
     public TenantRecordInfo getRecord() {
         return record;
@@ -59,6 +60,12 @@ public class TransactionRecordInfo {
     }
     public void setMessageId(String messageId) {
         this.messageId = messageId;
+    }
+    public boolean isDelivered() {
+        return delivered;
+    }
+    public void setDelivered(boolean delivered) {
+        this.delivered = delivered;
     }
 
 }

@@ -3,6 +3,8 @@ define(['tenant/controllers/module.js'], function (controllers) {
   controllers.controller('TenantTransactionsController', ['$scope', '$state', '$stateParams', 'ngTableParams', 'RecordService', 'TransactionRecordService',
     function($scope, $state, $stateParams, ngTableParams, RecordService, TransactionRecordService) {
 
+    $scope.tenantIndex = $stateParams.tenantIndex;
+
     var 
         tenantId = $stateParams.tenantId,
         tenantRecordId = $stateParams.tenantRecordId;
