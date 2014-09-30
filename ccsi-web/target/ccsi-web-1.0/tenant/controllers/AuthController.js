@@ -3,7 +3,9 @@ define(['tenant/controllers/module.js'], function (controllers) {
   controllers.controller('AuthController', ['$scope', '$state', 'AuthService',
     function($scope, $state, AuthService) {
 
-    $scope.principal = AuthService.get();
+    $scope.principal = AuthService.get(function (auth) {
+      $state.go('home');
+    });
 
   }]);
 });

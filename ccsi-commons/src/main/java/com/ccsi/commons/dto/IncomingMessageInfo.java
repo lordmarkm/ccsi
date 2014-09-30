@@ -12,7 +12,7 @@ public class IncomingMessageInfo {
     private String shortcode;
     private String request_id;
     private String message;
-    private long timestamp;
+    private String timestamp;
 
     @Override
     public String toString() {
@@ -56,10 +56,10 @@ public class IncomingMessageInfo {
     public void setMessage(String message) {
         this.message = message;
     }
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

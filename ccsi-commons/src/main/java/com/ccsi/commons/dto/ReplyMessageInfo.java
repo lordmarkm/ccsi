@@ -4,6 +4,8 @@ import org.springframework.core.style.ToStringCreator;
 
 public class ReplyMessageInfo extends OutgoingMessageInfo {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Amount you desire to charge the user who will receive the message. This will be deducted from the user's actual load.
      * Possible values:
@@ -33,6 +35,7 @@ public class ReplyMessageInfo extends OutgoingMessageInfo {
     }
 
     public void setRequest_cost(String request_cost) {
+        add("request_cost", request_cost);
         this.request_cost = request_cost;
     }
 
@@ -41,6 +44,7 @@ public class ReplyMessageInfo extends OutgoingMessageInfo {
     }
 
     public void setRequest_id(String request_id) {
+        add("request_id", request_id);
         this.request_id = request_id;
     }
 }

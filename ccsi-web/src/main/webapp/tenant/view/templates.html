@@ -1,3 +1,7 @@
+<div class="panel panel-default">
+<div class="panel-heading">Edit templates</div>
+<div class="panel-body">
+
 <div class="row">
   <form ng-submit="saveTemplate()" class="form form-inline">
     <div class="form-group col-sm-2">
@@ -40,5 +44,8 @@
 </table>
 
 <div class="text-right">
-  <button ui-sref="home" class="btn btn-default">Done</button>
+  <button ui-sref="home({tenantIndex: tenantIndex})" class="btn btn-default">Done</button>
+</div>
+
+</div>
 </div>

@@ -1,5 +1,6 @@
 com/ccsi/web/resource/TemplateResource.class
 com/ccsi/web/resource/RegistrationResource.class
+com/ccsi/web/resource/TransactionRecordResource.class
 com/ccsi/web/resource/VariableResource.class
 com/ccsi/web/config/CcsiWebConfig.class
 com/ccsi/web/resource/TenantResource.class

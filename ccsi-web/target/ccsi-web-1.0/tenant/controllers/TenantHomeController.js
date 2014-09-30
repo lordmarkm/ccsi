@@ -1,7 +1,9 @@
 define(['tenant/controllers/module.js'], function (controllers) {
   'use strict';
-  controllers.controller('TenantHomeController', ['$scope', '$state', 'ngTableParams', 'TenantService', 'TemplateService', 'RecordService',
-    function($scope, $state, ngTableParams, TenantService, TemplateService, RecordService) {
+  controllers.controller('TenantHomeController', ['$scope', '$state', 'ngTableParams', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
+    function($scope, $state, ngTableParams, tenants, TenantService, TemplateService, RecordService) {
+
+    $scope.tenants = tenants;
 
     //Handle tenants
     $scope.loadTenant = function (tenant) {
@@ -15,12 +17,12 @@ define(['tenant/controllers/module.js'], function (controllers) {
         }
       });
       $scope.reloadTable();
-    }
-    $scope.tenants = TenantService.query(function (tenants) {
-      if (tenants.length) {
-        $scope.loadTenant(tenants[0]);
-      }
-    });
+    };
+//    $scope.tenants = TenantService.query(function (tenants) {
+//      if (tenants.length) {
+//        $scope.loadTenant(tenants[0]);
+//      }
+//    });
 
     //Handle records
     $scope.totalRecords = 0;
@@ -66,5 +68,9 @@ define(['tenant/controllers/module.js'], function (controllers) {
         });
       }
     });
+
+    if (tenants.length) {
+      $scope.loadTenant(tenants[$stateParams.tenantIndex && $stateParams.tenantIndex < tenants.length ? $stateParams.tenantIndex : 0]);
+    }
   }]);
 });

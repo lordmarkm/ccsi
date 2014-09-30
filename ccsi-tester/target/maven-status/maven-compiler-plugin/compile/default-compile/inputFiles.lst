@@ -1,1 +1,5 @@
+/home/mbmartinez/git/ccsi/ccsi-tester/src/main/java/com/ccsi/tester/client/QATestClient.java
+/home/mbmartinez/git/ccsi/ccsi-tester/src/main/java/com/ccsi/tester/util/RestUtil.java
+/home/mbmartinez/git/ccsi/ccsi-tester/src/main/java/com/ccsi/tester/errorhandler/MyResponseErrorHandler.java
+/home/mbmartinez/git/ccsi/ccsi-tester/src/main/java/com/ccsi/tester/client/TestReplyClient.java
 /home/mbmartinez/git/ccsi/ccsi-tester/src/main/java/com/ccsi/tester/client/TestClient.java

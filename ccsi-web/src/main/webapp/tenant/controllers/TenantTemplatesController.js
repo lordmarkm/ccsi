@@ -3,6 +3,7 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
   controllers.controller('TenantTemplatesController', ['$scope', '$stateParams', '$state', 'TemplateService',
     function($scope, $stateParams, $state, TemplateService) {
 
+    $scope.tenantIndex = $stateParams.tenantIndex;
     $scope.templates = TemplateService.query({tenantId: $stateParams.tenantId});
 
     $scope.template = {};

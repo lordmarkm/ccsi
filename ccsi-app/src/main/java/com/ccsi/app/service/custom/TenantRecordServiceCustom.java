@@ -12,6 +12,7 @@ import com.ccsi.commons.dto.tenant.TenantRecordInfo;
  */
 public interface TenantRecordServiceCustom {
 
+    TenantRecordInfo findOneInfo(Long tenantRecordId);
     List<TenantRecordInfo> findInfoByTenantId(Long tenantId);
     PageInfo<TenantRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest);
     TenantRecordInfo saveInfo(Long tenantId, TenantRecordInfo record);

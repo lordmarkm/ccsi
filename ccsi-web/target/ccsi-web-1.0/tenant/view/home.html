@@ -1,5 +1,5 @@
 <div ng-if="!tenants.length">
-  It looks like you don't have any registered templates. <a ui-sref="tenant_create">Create one now</a>
+  It looks like you don't have any registered tenants. <a ui-sref="tenant_create">Create one now</a>
 </div>
 
 <div ng-if="tenant">
@@ -28,7 +28,9 @@
         <dt>Keyword
         <dd>{{tenant.keyword}}
         <dt>Templates
-        <dd><a ui-sref="tenant.templates({tenantId: tenant.id})">Edit</a>
+        <dd><a ui-sref="tenant.templates({tenantId: tenant.id})">Edit templates</a>
+        <dt>Transactions
+        <dd><a ui-sref="tenant.transactions({tenantId: tenant.id})">View transactions</a>
       </dl>
     </div>
     <div class="panel-heading">Tenant records</div>
@@ -59,6 +61,7 @@
             <th style="text-align: left;">Customer name
             <th style="text-align: left;">Transaction type
             <th style="text-align: left;">Last updated
+            <th style="text-align: left;">Transactions
             <th style="text-align: left;">Status
           </tr>
         </thead>
@@ -68,6 +71,7 @@
             <td>{{record.customerName}}
             <td>{{record.transactionType}}
             <td>{{record.lastUpdated|date: 'MMM-dd-yyyy hh:mm'}}
+            <td><a ui-sref="tenant.record_txns({tenantId: tenant.id, tenantRecordId: record.id})">View</a>
             <td>
               <select ng-model="record.status" 
                 ng-options="template as template.status for template in statuses track by template.status"

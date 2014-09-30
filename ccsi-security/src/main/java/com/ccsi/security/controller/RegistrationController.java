@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.persistence.PersistenceException;
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ import com.ccsi.security.validator.RegistrationFormValidator;
 public class RegistrationController extends GenericController {
 
     private static Logger LOG = LoggerFactory.getLogger(RegistrationController.class);
+
+    @Autowired
+    private ServletContext ctx;
 
     @Autowired
     private AccountService service;
@@ -69,7 +73,7 @@ public class RegistrationController extends GenericController {
                     .addObject("msg", "Username not available");
         }
 
-        return redirect("/auth/login?msg=reg_success");
+        return redirect(ctx.getContextPath() + "/auth/login?msg=reg_success");
     }
 
     @InitBinder

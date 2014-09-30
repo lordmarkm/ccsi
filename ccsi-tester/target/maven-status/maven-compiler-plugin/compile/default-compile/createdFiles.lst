@@ -1,1 +1,5 @@
+com/ccsi/tester/errorhandler/MyResponseErrorHandler.class
 com/ccsi/tester/client/TestClient.class
+com/ccsi/tester/client/TestReplyClient.class
+com/ccsi/tester/util/RestUtil.class
+com/ccsi/tester/client/QATestClient.class

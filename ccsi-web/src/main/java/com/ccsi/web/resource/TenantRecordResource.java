@@ -43,7 +43,13 @@ public class TenantRecordResource {
 
         return new ResponseEntity<>(pageResponse, OK);
     }
-    
+
+    @RequestMapping(value = "/{tenantRecordId}", method = GET)
+    public ResponseEntity<TenantRecordInfo> findOne(@PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
+        LOG.debug("Tenant record view request. tenant={}, record={}", tenantId, tenantRecordId);
+        return new ResponseEntity<>(service.findOneInfo(tenantRecordId), OK);
+    }
+
     @RequestMapping(method = POST)
     public ResponseEntity<TenantRecordInfo> save(@PathVariable Long tenantId,
             @RequestBody TenantRecordInfo record) {

@@ -11,6 +11,19 @@
   <packaging>war</packaging>
   <name>CCSI :: Web</name>
 
+  <properties>
+    <packageExcludePattern>%regex[WEB-INF/lib/(?!(ccsi|tyrael|baldy)).*\.jar]</packageExcludePattern>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>fatwar</id>
+      <properties>
+        <packageExcludePattern></packageExcludePattern>
+      </properties>
+    </profile>
+  </profiles>
+  
   <dependencies>
     <dependency>
       <groupId>ccsi</groupId>
@@ -44,4 +57,27 @@
       <version>2.3.3</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <!-- http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin -->
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.2.2-SNAPSHOT</version>
+        <configuration>
+          <webApp>
+            <contextPath>/ccsi</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <packagingExcludes>${packageExcludePattern}</packagingExcludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

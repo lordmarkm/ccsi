@@ -7,6 +7,7 @@ define(['tenant/controllers/module.js'], function (controllers) {
     $scope.saveTenant = function () {
       TenantService.save($scope.tenant, function (saved) {
         $scope.tenant = saved;
+        $state.go('home');
       });
     };
 

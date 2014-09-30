@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.ccsi.app.entity.TenantRecord;
+import com.ccsi.app.entity.TransactionRecord;
 import com.ccsi.commons.dto.tenant.TenantRecordInfo;
+import com.ccsi.commons.dto.tenant.TransactionRecordInfo;
 
 @Configuration
 public class CcsiSupportConfig {
@@ -28,6 +30,8 @@ public class CcsiSupportConfig {
             protected void configure() {
                 mapping(TenantRecord.class, TenantRecordInfo.class)
                     .fields("lastUpdated", "lastUpdated", copyByReference(), oneWay());
+                mapping(TransactionRecord.class, TransactionRecordInfo.class)
+                    .fields("transactionDate", "transactionDate", copyByReference());
             }
         });
     }

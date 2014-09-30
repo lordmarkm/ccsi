@@ -27,6 +27,11 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
     private TenantService tenantService;
 
     @Override
+    public TenantRecordInfo findOneInfo(Long tenantRecordId) {
+        return toDto(service.findOne(tenantRecordId));
+    }
+
+    @Override
     public List<TenantRecordInfo> findInfoByTenantId(Long tenantId) {
         return toDto(service.findByTenant_id(tenantId));
     }

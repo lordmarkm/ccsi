@@ -11,7 +11,8 @@ public class TestClient {
 
     private RestTemplate rest = new RestTemplate();
 
-    private static final String url = "http://localhost:8080/message";
+    //private static final String url = "http://localhost:8080/message";
+    private static final String url = "http://localhost:20058/ccsi/message";
 
     @Test
     public void sendTest() {
@@ -20,8 +21,8 @@ public class TestClient {
         msg.setMobile_number("639155411987");
         msg.setShortcode("292902274");
         msg.setRequest_id("12345");
-        msg.setMessage("gg oeOInx");
-        msg.setTimestamp(new Date().getTime());
+        msg.setMessage("gg 4anP");
+        msg.setTimestamp(String.valueOf(new Date().getTime()));
 
         System.out.println("Sending message");
         String response = rest.postForObject(url, msg, String.class);

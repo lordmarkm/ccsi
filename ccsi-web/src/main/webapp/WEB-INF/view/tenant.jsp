@@ -1,5 +1,5 @@
 <#import "/spring.ftl" as spring />
-
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -21,7 +21,7 @@
   <!-- NAVIGATION -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/#/">Chikka Service Interface</a>
+      <a class="navbar-brand" href="<@spring.url '/#/' />">Chikka Service Interface</a>
     </div>
     <ul class="nav navbar-nav">
       <!-- 
@@ -30,7 +30,7 @@
     </ul>
 
     <ul class="nav navbar-nav" ng-controller="AuthController">
-      <li class="dropdown" ng-if="principal.principal">
+      <li class="dropdown ng-hide" ng-show="principal.principal">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
           {{principal.principal.username}}<span class="caret" style="margin-left: 5px;"></span>
         </a>
@@ -39,7 +39,7 @@
           <li><a href="#/profile">Profile</a></li>
           -->
           <li><a href="<@spring.url '/#/' />">Home</a></li>
-          <li><a href="<@spring.url '/auth/logout' />">Logout</a></li>
+          <li><a href="<@spring.url '/logout' />">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -47,7 +47,7 @@
 
   <!-- Main Content -->
   <div class="container">
-    <div ui-view></div>
+    <div ui-view>Loading resources...</div>
   </div>
 
   <div style="margin-bottom: 30px;"></div>

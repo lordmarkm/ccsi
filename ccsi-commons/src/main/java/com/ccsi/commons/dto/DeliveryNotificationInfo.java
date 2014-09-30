@@ -10,7 +10,7 @@ public class DeliveryNotificationInfo {
     private String message_id;
     private String status;
     private String credits_cost;
-    private long timestamp;
+    private String timestamp;
 
     public String getMessage_type() {
         return message_type;
@@ -42,10 +42,10 @@ public class DeliveryNotificationInfo {
     public void setCredits_cost(String credits_cost) {
         this.credits_cost = credits_cost;
     }
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

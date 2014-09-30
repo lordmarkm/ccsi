@@ -15,7 +15,7 @@
           </div>
           <div class="panel-body">
             <#if msg??><div class="alert alert-info text-center">${msg }</div></#if>
-            <form action="/login/authenticate" method="post" class="form-horizontal">
+            <form action="<@spring.url '/login/authenticate' />" method="post" class="form-horizontal">
               <div class="form-group">
                 <label class="col-sm-4 control-label">Username</label>
                 <div class="col-sm-8">

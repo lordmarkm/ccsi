@@ -1,14 +1,21 @@
 package com.ccsi.app.client;
 
+import java.math.BigDecimal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ccsi.app.entity.TenantRecord;
+import com.ccsi.app.entity.TransactionRecord;
+import com.ccsi.app.service.TransactionRecordService;
 import com.ccsi.app.util.MessageComposer;
 import com.ccsi.app.util.MessageUtil;
 import com.ccsi.commons.dto.GenericHttpResponse;
@@ -33,22 +40,25 @@ public class ChikkaClient {
     @Autowired
     private MessageUtil messageUtil;
 
-    public void sendInvalidTenantMessage(IncomingMessageInfo msg) {
+    @Autowired
+    private TransactionRecordService txnRecordService;
+
+    public void sendInvalidTenantMessage(IncomingMessageInfo msg, TransactionRecord txn) {
         // TODO Auto-generated method stub
-        
+        txnRecordService.save(txn);
     }
 
-    public void sendInvalidTrackingNo(IncomingMessageInfo msg) {
+    public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn) {
         // TODO Auto-generated method stub
-        
+        txnRecordService.save(txn);
     }
 
-    public void sendInvalidMessageMessage() {
+    public void sendInvalidMessageMessage(TransactionRecord txn) {
         // TODO Auto-generated method stub
-        
+        txnRecordService.save(txn);
     }
 
-    public void sendTemplateReply(TenantRecord record, IncomingMessageInfo msg) {
+    public void sendTemplateReply(TenantRecord record, IncomingMessageInfo msg, TransactionRecord txn) {
         ReplyMessageInfo out = new ReplyMessageInfo();
         out.setMessage_type("REPLY");
         out.setMobile_number(msg.getMobile_number());
@@ -60,10 +70,27 @@ public class ChikkaClient {
         out.setClient_id(env.getProperty("client_id"));
         out.setSecret_key(env.getProperty("secret_key"));
 
+        txn.setCost(tryParse(out.getRequest_cost()));
+        txn.setOutgoingMessage(out.getMessage());
+        txn.setMessageId(out.getMessage_id());
+        txnRecordService.save(txn);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<ReplyMessageInfo> request = new HttpEntity<>(out, headers);
+
         String endpoint = env.getProperty("chikka_endpoint");
         LOG.debug("About to send reply message. endpt={}, msg={}", endpoint, out);
-        GenericHttpResponse response = rest.postForObject(endpoint, out, GenericHttpResponse.class);
+        String response = rest.postForObject(endpoint, request, String.class);
         LOG.debug("Received response from chikka. response={}", response);
+    }
+
+    private BigDecimal tryParse(String request_cost) {
+        try {
+            return new BigDecimal(request_cost);
+        } catch (NumberFormatException n) {
+            return BigDecimal.ZERO;
+        }
     }
 
 }

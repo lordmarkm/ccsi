@@ -1,5 +1,6 @@
 com/ccsi/commons/dto/tenant/TenantInfo.class
 com/ccsi/commons/dto/tenant/TenantRecordInfo.class
+com/ccsi/commons/dto/tenant/TransactionRecordInfo.class
 com/ccsi/commons/dto/tenant/BaseCcsiInfo.class
 com/ccsi/commons/dto/ReplyMessageInfo.class
 com/ccsi/commons/dto/tenant/VariableInfo.class

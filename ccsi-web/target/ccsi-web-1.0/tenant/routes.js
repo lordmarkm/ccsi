@@ -1,10 +1,14 @@
-define(['tenant/app.js'], function(app) {
+define([
+    'tenant/app.js',
+    'tenant/resolve/TenantResolve.js'
+  ], function(app, TenantResolve) {
   'use strict';
   return app.config(function($stateProvider) {
     $stateProvider.state('home', {
-      url: '/',
+      url: '/?tenantIndex',
       templateUrl: 'tenant/view/home.html',
-      controller: 'TenantHomeController'
+      controller: 'TenantHomeController',
+      resolve: TenantResolve
     })
     .state('tenant_create', {
       url: '/tenant/create',
@@ -20,6 +24,16 @@ define(['tenant/app.js'], function(app) {
       url: '/templates',
       templateUrl: 'tenant/view/templates.html',
       controller: 'TenantTemplatesController'
+    })
+    .state('tenant.transactions', {
+      url: '/transactions',
+      templateUrl: 'tenant/view/transactions.html',
+      controller: 'TenantTransactionsController'
+    })
+    .state('tenant.record_txns', {
+      url: '/recordtxn/{tenantRecordId}',
+      templateUrl: 'tenant/view/transactions.html',
+      controller: 'TenantTransactionsController'
     });
   });
 });

@@ -12,8 +12,26 @@
   <properties>
     <db.username>root</db.username>
     <db.password>root</db.password>
+    <chikka.endpt>http://localhost:8080/test</chikka.endpt>
     <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
   </properties>
+
+  <profiles>
+    <profile>
+      <id>qa</id>
+      <properties>
+        <db.username>ccsi</db.username>
+        <db.password>ccsi</db.password>
+        <chikka.endpt>https://post.chikka.com/smsapi/request</chikka.endpt>
+      </properties>
+    </profile>
+    <profile>
+      <id>purge</id>
+      <properties>
+        <hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto>
+      </properties>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
