@@ -1,5 +1,7 @@
 package com.ccsi.commons.dto.tenant;
 
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.LocalDateTime;
 import org.springframework.core.style.ToStringCreator;
 
@@ -9,6 +11,7 @@ import org.springframework.core.style.ToStringCreator;
 public class TenantRecordInfo extends BaseCcsiInfo {
 
     private String trackingNo;
+    @NotNull(message = "Record status must be defined. If you have not created any templates yet, please do so and try again.")
     private TemplateInfo status;
     private String customerName;
     private String transactionType;

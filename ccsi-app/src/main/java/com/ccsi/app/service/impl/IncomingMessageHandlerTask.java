@@ -8,11 +8,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.ccsi.app.client.ChikkaClient;
+import com.ccsi.app.entity.StockTemplate;
 import com.ccsi.app.entity.Tenant;
 import com.ccsi.app.entity.TenantRecord;
 import com.ccsi.app.entity.TransactionRecord;
+import com.ccsi.app.service.StockTemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
+import com.ccsi.app.util.MessageUtil;
 import com.ccsi.commons.dto.IncomingMessageInfo;
 
 @Component
@@ -29,6 +32,9 @@ public class IncomingMessageHandlerTask implements Runnable {
 
     @Autowired
     private TenantRecordService tenantRecordService;
+
+    @Autowired
+    private StockTemplateService stockTemplateService;
 
     private IncomingMessageInfo msg;
     private TransactionRecord txn;
@@ -50,48 +56,38 @@ public class IncomingMessageHandlerTask implements Runnable {
     private void sendReply() {
         String[] breakdown = null;
         try {
-            breakdown = messageBreakdown(msg.getMessage());
+            breakdown = MessageUtil.messageBreakdown(msg.getMessage());
         } catch (Exception e) {
             client.sendInvalidMessageMessage(msg, txn);
             return;
         }
 
         String tenantCode = breakdown[0];
-        String trackingNo = breakdown[1];
+        String trackingNoOrKeyword = breakdown[1];
+        LOG.debug("Determination complete. trackingNo/keyword={}, tenantCode={}", trackingNoOrKeyword, tenantCode);
 
-        Tenant tenant = tenantService.findByKeyword(tenantCode);
+        Tenant tenant = tenantService.findByKeywordIgnoreCase(tenantCode);
         if (null == tenant) {
             client.sendInvalidTenantMessage(msg, txn, tenantCode);
             return;
         }
         txn.setTenant(tenant);
 
-        TenantRecord record = tenantRecordService.findByTrackingNoAndTenant_id(trackingNo, tenant.getId());
+        //check for stock templates first
+        StockTemplate stock = stockTemplateService.findByTenantAndKeyword(tenant, trackingNoOrKeyword);
+        if (null != stock) {
+            client.sendStockTemplateReply(msg, txn, stock);
+            return;
+        }
+
+        //if a stock template is not found, then check for tenant records
+        TenantRecord record = tenantRecordService.findByTrackingNoIgnoreCaseAndTenant_id(trackingNoOrKeyword, tenant.getId());
         if (null == record) {
-            client.sendInvalidTrackingNo(msg, txn, trackingNo);
+            client.sendInvalidTrackingNo(msg, txn, trackingNoOrKeyword);
             return;
         }
         txn.setRecord(record);
-
         client.sendTemplateReply(record, msg, txn);
-    }
-
-    /**
-     * Tenant keyword = everything that comes before the last element
-     * Tracking no = always the last element
-     */
-    private String[] messageBreakdown(String message) throws Exception {
-        if (null == message || message.length() < 1) {
-            return null;
-        }
-        String msg = message.trim();
-        int lastSpace = msg.lastIndexOf(' ');
-        String trackingNo = msg.substring(lastSpace + 1);
-        String tenantCode = msg.substring(0, lastSpace);
-
-        LOG.debug("Determination complete. trackingNo={}, tenantCode={}", trackingNo, tenantCode);
-
-        return new String[]{tenantCode, trackingNo};
     }
 
     public void setMsg(IncomingMessageInfo msg) {

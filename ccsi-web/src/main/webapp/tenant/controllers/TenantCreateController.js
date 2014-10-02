@@ -1,7 +1,7 @@
 define(['tenant/controllers/module.js'], function (controllers) {
   'use strict';
-  controllers.controller('TenantCreateController', ['$scope', '$state', '$stateParams', 'TenantService',
-    function($scope, $state, $stateParams, TenantService) {
+  controllers.controller('TenantCreateController', ['$scope', '$state', '$stateParams', 'toaster', 'TenantService',
+    function($scope, $state, $stateParams, toaster, TenantService) {
 
     $scope.tenantIndex = $stateParams.tenantIndex;
     $scope.tenant = {};
@@ -9,6 +9,8 @@ define(['tenant/controllers/module.js'], function (controllers) {
       TenantService.save($scope.tenant, function (saved) {
         $scope.tenant = saved;
         $state.go('home', {tenantIndex: '-1'});
+      }, function (fail) {
+        toaster.pop('error', 'Create tenant failed', fail.data);
       });
     };
 

@@ -12,7 +12,12 @@ define(['angular'], function(angular) {
     });
   })
   .factory('TemplateService', function($resource) {
-    return $resource('template/:tenantId', {}, {
+    return $resource('template/:tenantId/:templateId', {}, {
+      page: {method: 'GET', isArray: false}
+    });
+  })
+  .factory('StockTemplateService', function($resource) {
+    return $resource('stock/:tenantId/:stockId', {}, {
       page: {method: 'GET', isArray: false}
     });
   })
@@ -31,5 +36,8 @@ define(['angular'], function(angular) {
     return $resource('txn/:tenantId/:tenantRecordId', {}, {
       page: {method: 'GET', isArray: false}
     });
+  })
+  .factory('PreviewService', function($resource) {
+    return $resource('preview/:tenantId/:tenantRecordId');
   });
 });

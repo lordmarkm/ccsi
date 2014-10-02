@@ -1,7 +1,10 @@
 define([
   'angular',
+  'angular-animate',
+  'angular-toaster',
   'bootstrap',
   'uiRouter',
+  'uiBootstrap',
   'ngResource',
   'ngTable',
   'sugar',
@@ -12,7 +15,10 @@ define([
   'use strict';
   return angular.module('op-app', [
     'ui.router',
+    'ui.bootstrap',
     'ngResource',
+    'ngAnimate',
+    'toaster',
     'ngTable',
     'app.controllers',
     'app.services',

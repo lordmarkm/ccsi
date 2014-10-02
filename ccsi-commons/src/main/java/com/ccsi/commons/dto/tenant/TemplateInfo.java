@@ -1,5 +1,6 @@
 package com.ccsi.commons.dto.tenant;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.core.style.ToStringCreator;
 
 /**
@@ -7,7 +8,9 @@ import org.springframework.core.style.ToStringCreator;
  */
 public class TemplateInfo extends BaseCcsiInfo {
 
+    @NotBlank(message = "Status can't be empty!")
     private String status;
+    @NotBlank(message = "Template string can't be empty!")
     private String templateString;
 
     @Override

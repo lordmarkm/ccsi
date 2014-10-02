@@ -1,0 +1,59 @@
+<div class="panel panel-info">
+  <div class="panel-heading pointer" ng-click="showHelp = !showHelp" ng-init="showHelp = false" style="font-family: monospace;">
+    <span ng-if="showHelp">[-]</span>
+    <span ng-if="!showHelp">[+]</span>
+    Help
+  </div>
+  <div class="panel-body" ng-show="showHelp">
+    <h2>Parts of a template</h2>
+    <ol>
+      <li>Status - This is the status of a customer record. Common examples are 'Ready', 'Not ready', 'Paid', 'Processed', etc.
+      <li>Template String - this is what the application will send back to the customer as an SMS if that customer's record's status matches the  template's status.
+    </ol>
+    <h2>Universal replaceable strings</h2>
+    <p>Given the following sample customer record
+    <div class="alert alert-info">
+      <dl class="dl-horizontal">
+        <dt>Tracking No.
+        <dd>ABC12
+        <dt>Customer name
+        <dd>Mark Martinez
+        <dt>Transaction type
+        <dd>laundry
+      </dl>
+    </div>
+
+    <p>You can use these strings to make personalized SMS replies:
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Replaceable string
+          <th>Description
+          <th>Example Template String
+          <th>Message after replacement
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>&lt;trackingNo&gt;
+          <td class="small">The automatically generated tracking number
+          <td>Your order with tracking no. &lt;trackingNo&gt; is ready for pickup!
+          <td>Your order with tracking no. ABC12 is ready for pickup!
+        </tr>
+        <tr>
+          <td>&lt;customerName&gt;
+          <td class="small">The value set in Customer Name
+          <td>Hello Mr./Ms. &lt;customerName&gt;, how are you today?
+          <td>Hello Mr./Ms. Mark Martinez, how are you today?
+        </tr>
+        <tr>
+          <td>&lt;transactionType&gt;
+          <td class="small">The value set in Transaction type
+          <td>Hello Mr./Ms. &lt;customerName&gt;, your &lt;transactionType&gt; is ready for pickup!
+          <td>Hello Mr./Ms. Mark Martinez, how are you today?
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

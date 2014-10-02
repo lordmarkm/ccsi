@@ -1,9 +1,16 @@
-define(['tenant/controllers/module.js'], function (controllers) {
+define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('TenantHomeController', ['$scope', '$state', '$stateParams', 'ngTableParams', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
-    function($scope, $state, $stateParams, ngTableParams, tenants, TenantService, TemplateService, RecordService) {
+  controllers.controller('TenantHomeController', ['$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
+    function($scope, $state, $stateParams, $modal, ngTableParams, toaster, tenants, TenantService, TemplateService, RecordService) {
 
     $scope.tenants = tenants;
+
+    //Handle record filtering
+    $scope.filter = {};
+    $scope.clearFilter = function () {
+      $scope.filter = {};
+      $scope.reloadTable();
+    };
 
     //Handle tenants
     $scope.loadTenant = function (tenant) {
@@ -31,13 +38,39 @@ define(['tenant/controllers/module.js'], function (controllers) {
     //Handle records
     $scope.totalRecords = 0;
     $scope.record = {};
+    $scope.updateRecord = function (record) {
+      if (!record) {
+        //create new
+        $scope.clearRecord();
+      } else {
+        //update
+        $scope.record = angular.copy(record);
+      }
+      return $modal.open({
+        scope: $scope,
+        templateUrl: 'modal-create-record',
+        backdrop: 'static',
+        controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+          $scope.confirm = function () {
+            $modalInstance.dismiss('ok');
+            $scope.saveRecord();
+          };
+          $scope.close = function () {
+            $modalInstance.dismiss('ok');
+          };
+        }]
+      });
+    };
     $scope.saveRecord = function (record) {
       if (!record) {
         record = $scope.record;
       }
-      RecordService.save({tenantId: $scope.tenant.id}, record, function (record) {
+      RecordService.save({tenantId: $scope.tenant.id}, record, function (saved) {
         $scope.clearRecord();
         $scope.reloadTable();
+        toaster.pop('success', record.id ? 'Record updated' : 'Record created', 'Successfully saved record with tracking number ' + saved.trackingNo + '.');
+      }, function (fail) {
+        toaster.pop('error', 'Save failed', fail.data);
       });
     };
     $scope.clearRecord = function () {
@@ -61,10 +94,14 @@ define(['tenant/controllers/module.js'], function (controllers) {
       }
     }, {
       total: 0,
-      counts: [5,10,25,50,100], //determines pager
+      counts: [5,10,25,50,100],
       getData: function($defer, params) {
-        //Ajax request to backend resource
+        //Inject some additional filtering parameters
         params.$params.tenantId = $scope.tenant.id;
+        params.$params.status = $scope.filter.status;
+        params.$params.trackingNo = $scope.filter.trackingNo;
+        params.$params.customerName = $scope.filter.customerName;
+        params.$params.transactionType = $scope.filter.transactionType;
         RecordService.page(params.$params, function(response) {
           params.total(response.total);
           $defer.resolve(response.data);

@@ -2,14 +2,14 @@
   <div class="panel-heading">Tenant/Record Info</div>
   <div class="panel-body">
     <div class="col-sm-6">
-    <dl class="dl-horizontal">
-      <dt>Name
-      <dd>{{tenant.name}}
-      <dt>Keyword
-      <dd>{{tenant.keyword}}
-      <dt ng-if="!tenantRecord">Total Transactions</dt>
-      <dd ng-if="!tenantRecord">{{totalRecords}}</dd>
-    </dl>
+      <dl class="dl-horizontal">
+        <dt>Name
+        <dd>{{tenant.name}}
+        <dt>Keyword
+        <dd>{{tenant.keyword}}
+        <dt ng-if="!tenantRecord">Total Transactions</dt>
+        <dd ng-if="!tenantRecord">{{totalRecords}}</dd>
+      </dl>
     </div>
     <div class="col-sm-6" ng-if="tenantRecord">
       <dl class="dl-horizontal">

@@ -1,6 +1,9 @@
 package com.ccsi.web.resource;
 
+import java.security.Principal;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +18,7 @@ import com.ccsi.app.service.TemplateService;
 import com.ccsi.commons.dto.tenant.TemplateInfo;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * @author mbmartinez
@@ -32,12 +35,27 @@ public class TemplateResource {
     @RequestMapping(method = GET)
     public ResponseEntity<List<TemplateInfo>> findByTenant(@PathVariable Long tenantId) {
         LOG.debug("Finding templates by tenant id. id={}", tenantId);
-        return new ResponseEntity<>(service.findInfoByTenantId(tenantId), OK);
+        return new ResponseEntity<>(service.findInfoByTenantId(tenantId, null), OK);
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<TemplateInfo> save(@PathVariable Long tenantId, @RequestBody TemplateInfo template) {
+    public ResponseEntity<TemplateInfo> save(@PathVariable Long tenantId,
+            @Valid @RequestBody TemplateInfo template) {
         LOG.debug("Saving template. tenant={}, template={}", template);
         return new ResponseEntity<>(service.saveInfo(tenantId, template), OK);
+    }
+
+    //TODO need @PreAuthorized here for sure
+    @RequestMapping(value = "/{templateId}", method = DELETE)
+    public ResponseEntity<String> delete(Principal principal, @PathVariable Long tenantId, @PathVariable Long templateId) {
+        LOG.debug("Delete template request. tenant={}, template={}", tenantId, templateId);
+
+        long recordCount = service.tryDelete(templateId);
+        if (recordCount == 0) {
+            return new ResponseEntity<>("Ok", OK);
+        } else {
+            String msg = "Can't delete this template due to " + recordCount + " dependent customer records. Change the status of those records then try again.";
+            return new ResponseEntity<>(msg, INTERNAL_SERVER_ERROR);
+        }
     }
 }

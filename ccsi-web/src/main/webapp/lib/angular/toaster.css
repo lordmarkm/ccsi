@@ -1,0 +1,227 @@
+/*
+ * Toastr
+ * Version 2.0.1
+ * Copyright 2012 John Papa and Hans Fj�llemark.  
+ * All Rights Reserved.  
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and 
+ * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+ *
+ * Author: John Papa and Hans Fj�llemark
+ * Project: https://github.com/CodeSeven/toastr
+ */
+.toast-title {
+  font-weight: bold;
+  padding-left: 30px;
+  font-size: 13px;
+}
+.toast-message {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+  padding-left: 30px;
+  font-size: 13px;
+}
+.toast-message a,
+.toast-message label {
+  color: #ffffff;
+}
+.toast-message a:hover {
+  color: #cccccc;
+  text-decoration: none;
+}
+
+.toast-close-button {
+  position: relative;
+  right: -0.3em;
+  top: -0.3em;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  -webkit-text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.8;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  filter: alpha(opacity=80);
+}
+.toast-close-button:hover,
+.toast-close-button:focus {
+  color: #000000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0.4;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+  filter: alpha(opacity=40);
+}
+
+/*Additional properties for button version
+ iOS requires the button element instead of an anchor tag.
+ If you want the anchor version, it requires `href="#"`.*/
+button.toast-close-button {
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+.toast-top-full-width {
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+.toast-bottom-full-width {
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+.toast-top-left {
+  top: 12px;
+  left: 12px;
+}
+.toast-top-right {
+  top: 52px;
+  right: 15px;
+}
+.toast-bottom-right {
+  right: 15px;
+  bottom: 12px;
+}
+.toast-bottom-left {
+  bottom: 12px;
+  left: 12px;
+}
+#toast-container {
+  position: fixed;
+  z-index: 999999;
+  /*overrides*/
+}
+#toast-container > div:before {
+  font-size: 24px;
+  float: left;
+  font-family: FontAwesome;
+  margin: -6px 0;
+}
+#toast-container * {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#toast-container > div {
+  margin: 0 0 3px;
+  padding: 10px;
+  min-width: 300px;
+  max-width: 500px;
+  width: auto;
+  -moz-border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  background-position: 15px center;
+  background-repeat: no-repeat;
+  color: #fff;
+  opacity: 0.95;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=95);
+  filter: alpha(opacity=95);
+  box-shadow: 0 0 12px #999999;
+  -moz-box-shadow: 0 0 12px #999999;
+  -webkit-box-shadow: 0 0 12px #999999;
+}
+#toast-container > div:not(:first-child) {
+  opacity: 0.7;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  filter: alpha(opacity=70);
+}
+#toast-container > :hover {
+  opacity: 1 !important;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100) !important;
+  filter: alpha(opacity=100) !important;
+  cursor: pointer;
+}
+#toast-container > .toast-info:before {
+  content: "\f05a";
+}
+#toast-container > .toast-error:before {
+  content: "\f057";
+}
+#toast-container > .toast-success:before {
+  content: "\f058";
+}
+#toast-container > .toast-warning:before {
+  content: "\f071";
+}
+#toast-container.toast-top-full-width > div,
+#toast-container.toast-bottom-full-width > div {
+  width: 96%;
+  margin: auto;
+}
+.toast {
+  background-color: #fafafa;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #dadada;
+}
+.toast-success {
+  background-color: #43ac6a;
+  border-color: #3c9a5f;
+}
+.toast-error {
+  background-color: #fb6b5b;
+  border-color: #f05c4b;
+}
+.toast-info {
+  background-color: #2391cc;
+  border-color: #0d7acc;
+}
+.toast-warning {
+  background-color: #e99002;
+  border-color: #d08002;
+}
+/*Responsive Design*/
+@media all and (max-width: 240px) {
+  #toast-container > div {
+    padding: 8px;
+    width: 11em;
+  }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
+  }
+}
+@media all and (min-width: 241px) and (max-width: 480px) {
+  #toast-container  > div {
+    padding: 8px;
+    width: 18em;
+  }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
+  }
+}
+@media all and (min-width: 481px) and (max-width: 768px) {
+  #toast-container > div {
+    padding: 10px;
+    width: 25em;
+  }
+}
+
+/*
+ * AngularJS-Toaster
+ * Version 0.3
+*/
+#toast-container > div.ng-enter,
+#toast-container > div.ng-leave
+{
+  -webkit-transition: 300ms cubic-bezier(0.100, 0.200, 0.300, 0.300) all;
+  -moz-transition: 300ms cubic-bezier(0.100, 0.200, 0.300, 0.300) all;
+  -ms-transition: 300ms cubic-bezier(0.100, 0.200, 0.300, 0.300) all;
+  -o-transition: 300ms cubic-bezier(0.100, 0.200, 0.300, 0.300) all;
+  transition: 300ms cubic-bezier(0.100, 0.200, 0.300, 0.300) all;
+}
+
+#toast-container > div.ng-enter.ng-enter-active,
+#toast-container > div.ng-leave {
+  opacity: 0.7;
+}
+
+#toast-container > div.ng-leave.ng-leave-active,
+#toast-container > div.ng-enter {
+  opacity: 0;
+}

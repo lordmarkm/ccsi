@@ -10,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.ccsi.app.entity.StockTemplate;
 import com.ccsi.app.entity.TenantRecord;
 import com.ccsi.app.entity.TransactionRecord;
 import com.ccsi.app.service.TransactionRecordService;
@@ -45,14 +46,18 @@ public class ChikkaClient {
         sendMessage(outgoingMessage, msg, txn);
     }
 
-    public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn, String trackingNo) {
-        String outgoingMessage = "We could not find a transaction record with tracking number " + trackingNo + ".";
+    public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn, String trackingNoOrKeyword) {
+        String outgoingMessage = "We could not find a keyword or transaction record matching " + trackingNoOrKeyword + ".";
         sendMessage(outgoingMessage, msg, txn);
     }
 
     public void sendInvalidMessageMessage(IncomingMessageInfo msg, TransactionRecord txn) {
         String outgoingMessage = "Your message was invalid. Please follow this format: <keyword> <trackingNo>.";
         sendMessage(outgoingMessage, msg, txn);
+    }
+
+    public void sendStockTemplateReply(IncomingMessageInfo msg, TransactionRecord txn, StockTemplate stock) {
+        sendMessage(stock.getReply(), msg, txn);
     }
 
     public void sendTemplateReply(TenantRecord record, IncomingMessageInfo msg, TransactionRecord txn) {

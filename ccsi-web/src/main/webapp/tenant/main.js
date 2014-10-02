@@ -1,6 +1,9 @@
 require.config({
   paths: {
     'angular':  '../lib/angular/angular',
+    'angular-animate': '../lib/angular/angular-animate',
+    'angular-toaster': '../lib/angular/angular-toaster',
+    'uiBootstrap': '../lib/angular-ui/ui-bootstrap-tpls-0.11.0.min',
     'jquery': 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min',
     'domReady': '../lib/require/domReady',
     'uiRouter': '../lib/angular/angular-ui-router.min',
@@ -14,6 +17,15 @@ require.config({
   shim: {
     'angular': {
       exports: 'angular'
+    },
+    'angular-animate': {
+      deps: ['angular']
+    },
+    'angular-toaster': {
+      deps: ['angular']
+    },
+    'uiBootstrap': {
+      deps: ['angular']
     },
     'uiRouter':{
       deps: ['angular']

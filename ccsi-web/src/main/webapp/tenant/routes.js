@@ -1,7 +1,8 @@
 define([
     'tenant/app.js',
-    'tenant/resolve/TenantResolve.js'
-  ], function(app, TenantResolve) {
+    'tenant/resolve/TenantResolve.js',
+    'tenant/resolve/PreviewResolve.js'
+  ], function(app, TenantResolve, PreviewResolve) {
   'use strict';
   return app.config(function($stateProvider) {
     $stateProvider.state('home', {
@@ -25,6 +26,16 @@ define([
       templateUrl: 'tenant/view/templates.html',
       controller: 'TenantTemplatesController'
     })
+    .state('tenant.stock_templates', {
+      url: '/stock?tenantIndex',
+      templateUrl: 'tenant/view/stock_templates.html',
+      controller: 'StockTemplatesController'
+    })
+    .state('tenant.variables', {
+      url: '/variables?tenantIndex',
+      templateUrl: 'tenant/view/variables.html',
+      controller: 'VariablesController'
+    })
     .state('tenant.transactions', {
       url: '/transactions?tenantIndex',
       templateUrl: 'tenant/view/transactions.html',
@@ -34,6 +45,12 @@ define([
       url: '/recordtxn/{tenantRecordId}?tenantIndex',
       templateUrl: 'tenant/view/transactions.html',
       controller: 'TenantTransactionsController'
+    })
+    .state('tenant.record_preview', {
+      url: '/preview/{tenantRecordId}?tenantIndex',
+      templateUrl: 'tenant/view/preview.html',
+      controller: 'PreviewController',
+      resolve: PreviewResolve
     });
   });
 });

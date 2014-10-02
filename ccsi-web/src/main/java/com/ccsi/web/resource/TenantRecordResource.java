@@ -1,29 +1,38 @@
 package com.ccsi.web.resource;
 
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.security.Principal;
+import java.util.Map;
 
+import javax.validation.Valid;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baldy.commons.web.controller.GenericController;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.commons.dto.PageInfo;
 import com.ccsi.commons.dto.tenant.TenantRecordInfo;
+import com.google.common.collect.Maps;
 
 @RestController
 @RequestMapping("/record/{tenantId}")
-public class TenantRecordResource {
+public class TenantRecordResource extends GenericController {
 
     @Autowired
     private TenantRecordService service;
@@ -34,12 +43,24 @@ public class TenantRecordResource {
     public ResponseEntity<PageInfo<TenantRecordInfo>> page(Principal principal,
             @PathVariable Long tenantId,
             @RequestParam int page,
-            @RequestParam int count) {
+            @RequestParam int count,
 
-        LOG.debug("User query. Principal={}, page={}, count={}", principal, page, count);
+            //Optional filtering params
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String trackingNo,
+            @RequestParam(required = false) String customerName,
+            @RequestParam(required = false) String transactionType) {
+
+        LOG.debug("User query. Principal={}, page={}, count={}", name(principal), page, count);
+
+        Map<String, String> optionalParams = Maps.newHashMap();
+        optionalParams.put("status", StringUtils.trimToNull(status));
+        optionalParams.put("trackingNo", StringUtils.trimToNull(trackingNo));
+        optionalParams.put("customerName", StringUtils.trimToNull(customerName));
+        optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
 
         PageRequest pageRequest = new PageRequest(page - 1, count, Direction.DESC, "lastUpdated");
-        PageInfo<TenantRecordInfo> pageResponse = service.pageInfo(tenantId, pageRequest);
+        PageInfo<TenantRecordInfo> pageResponse = service.pageInfo(tenantId, pageRequest, optionalParams);
 
         return new ResponseEntity<>(pageResponse, OK);
     }
@@ -51,11 +72,14 @@ public class TenantRecordResource {
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<TenantRecordInfo> save(@PathVariable Long tenantId,
-            @RequestBody TenantRecordInfo record) {
+    public ResponseEntity<Object> save(@PathVariable Long tenantId,
+            @Valid @RequestBody TenantRecordInfo record, BindingResult binding) {
 
         LOG.debug("Tenant record save request. tenant={}, record={}", tenantId, record);
 
-        return new ResponseEntity<>(service.saveInfo(tenantId, record), OK);
+        if (binding.hasErrors()) {
+            return new ResponseEntity<Object>(firstError(binding), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Object>(service.saveInfo(tenantId, record), OK);
     }
 }

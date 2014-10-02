@@ -1,0 +1,55 @@
+<div class="panel panel-default" style="margin-top:10px;">
+  <div class="panel-heading">Tenant/Record Info</div>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <dl class="dl-horizontal">
+        <dt>Name
+        <dd>{{tenant.name}}
+        <dt>Keyword
+        <dd>{{tenant.keyword}}
+      </dl>
+    </div>
+    <div class="col-sm-6" ng-if="tenantRecord">
+      <dl class="dl-horizontal">
+        <dt>Customer Name
+        <dd>{{tenantRecord.customerName}}
+        <dt>Transaction type
+        <dd>{{tenantRecord.transactionType}}
+        <dt>Query method
+        <dd>Send <strong>{{tenant.keyword}} {{tenantRecord.trackingNo}}</strong> to <strong>292902274</strong>
+        <dt style="margin-top: 5px;">Record status
+        <dd style="margin-top: 5px;"><select ng-model="tenantRecord.status" 
+                ng-options="template as template.status for template in templates track by template.status"
+                ng-change="saveRecord(tenantRecord)"
+                class="form-control" style="width: 50%;"></select>
+      </dl>
+    </div>
+  </div>
+  <div class="panel-heading">Tenant preview</div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="text-align: left;">Template code
+          <th style="text-align: left;">Preview
+          <th style="text-align: left;">Length (must be &lt; 160)
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="preview in previews" ng-class="{success: preview.active}">
+          <td>{{preview.template.status}}
+          <td>{{preview.preview}} This message is free
+          <td ng-init="msglen = preview.preview.length + ' This message is free'.length"
+           ng-class="{danger: msglen > 160}">{{msglen}}
+        </tr>
+        <tr ng-if="!previews.length">
+          <td colspan="2">This tenant doesn't have any templates</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="text-right" style="margin-top: 10px;">
+      <button ui-sref="home({tenantIndex: tenantIndex})" class="btn btn-default">Done</button>
+    </div>
+  </div>
+</div>

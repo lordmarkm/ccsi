@@ -23,4 +23,19 @@ public class MessageUtil {
         return "FREE";
     }
 
+    /**
+     * Tenant keyword = everything that comes before the last element
+     * Tracking no = always the last element
+     */
+    public static String[] messageBreakdown(String message) throws Exception {
+        if (null == message || message.length() < 1) {
+            return null;
+        }
+        String msg = message.trim();
+        int firstspace = msg.indexOf(' ');
+        String tenantCode = msg.substring(0, firstspace).trim();
+        String trackingNoOrKeyword = msg.substring(tenantCode.length()).trim();
+
+        return new String[]{tenantCode, trackingNoOrKeyword};
+    }
 }

@@ -1,0 +1,71 @@
+<div class="panel panel-default">
+<div class="panel-heading">Edit keyword templates</div>
+<div class="panel-body">
+
+<div class="row">
+  <form ng-submit="saveStock()" class="form form-inline">
+    <div class="form-group col-sm-2">
+      <label class="sr-only" for="keyword">Keyword</label>
+      <input type="text" ng-model="stock.keyword" required class="form-control" id="keyword" placeholder="Keyword">
+    </div>
+    <div class="form-group col-sm-6">
+      <label class="sr-only" for="reply">Template String</label>
+      <input type="text" ng-model="stock.reply" required class="form-control" id="reply"
+        placeholder="Reply" style="width: 100%; margin-left: 10px;">
+    </div>
+    <button type="submit"
+      ng-disabled="!stock.id && findStockByKeyword(stock.keyword)"
+      class="btn" ng-class="stock.id ? 'btn-success' : 'btn-primary'">
+      <span ng-if="!stock.id">Add new stock template</span>
+      <span ng-if="stock.id">Update stock template</span>
+    </button>
+    <span ng-click="clearStock()" class="btn btn-default">Clear</span>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Keyword
+      <th>Reply
+      <th>Reply Length
+      <th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="stock in stocks">
+      <td>{{stock.keyword}}
+      <td>{{stock.reply}}
+      <td ng-init="msglen = stock.reply.length + ' This msg is free'.length" ng-class="{danger: msglen > 160}">{{msglen}}
+      <td nowrap="nowrap">
+        <button ng-click="editStock(stock)" class="btn-default btn-xs">Edit</button>
+        <button ng-click="deleteStock(stock)" class="btn-danger btn-xs">Delete</button>
+      </td>
+    </tr>
+    <tr ng-if="!stocks.length">
+      <td colspan="4">No stock templates available</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-right">
+  <button ui-sref="home({tenantIndex: tenantIndex})" class="btn btn-default">Done</button>
+</div>
+
+</div>
+</div>
+
+<!-- Modals -->
+<script type="text/ng-template" id="modal-delete-stock">
+  <div class="modal-header modal-primary">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Delete keyword template</h3>
+  </div>
+  <div class="modal-body">
+      Are you sure you want to delete the keyword template with keyword <strong>{{toDelete.keyword}}</strong>? This cannot be undone.
+  </div>
+  <div class="modal-footer">
+    <span ng-click="confirm()" class="btn btn-danger btn-s-xs">Delete</span>
+    <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
+  </div>
+</script>

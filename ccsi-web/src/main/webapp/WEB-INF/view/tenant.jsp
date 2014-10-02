@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/angular-ngtable/ng-table.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/font-awesome-4.1.0/css/font-awesome.min.css' />" />
+<link rel="stylesheet" href="<@spring.url '/lib/angular/toaster.css' />" />
 <link rel="stylesheet" href="<@spring.url '/tenant/app.css' />" />
 <script src="<@spring.url '/lib/jquery/jquery.min.js' />"></script>
 <style>
@@ -17,7 +18,6 @@
 </head>
 
 <body>
-
   <!-- NAVIGATION -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
@@ -47,6 +47,7 @@
 
   <!-- Main Content -->
   <div class="container">
+    <toaster-container toaster-options="{'time-out': 4000, 'limit' : 3}"></toaster-container>
     <div ui-view>Loading resources...</div>
   </div>
 
