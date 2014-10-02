@@ -1,5 +1,6 @@
 package com.ccsi.commons.dto.tenant;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.core.style.ToStringCreator;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.core.style.ToStringCreator;
 public class VariableInfo {
 
     private Long id;
+    @NotEmpty(message = "Variable key can't be empty!")
     private String key;
     private String value;
 

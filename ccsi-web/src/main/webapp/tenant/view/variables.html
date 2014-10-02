@@ -1,49 +1,47 @@
 <div class="panel panel-default">
-<div class="panel-heading">Edit templates</div>
+<div class="panel-heading">Edit variables</div>
 <div class="panel-body">
 
 <div class="row">
-  <form ng-submit="saveTemplate()" class="form form-inline">
+  <form ng-submit="saveVariable()" class="form form-inline">
     <div class="form-group col-sm-2">
-      <label class="sr-only" for="status">Status</label>
-      <input type="text" ng-model="template.status" required class="form-control" id="status" placeholder="Status">
+      <label class="sr-only" for="status">Key</label>
+      <input type="text" ng-model="variable.key" required class="form-control" id="status" placeholder="Key">
     </div>
     <div class="form-group col-sm-6">
-      <label class="sr-only" for="templateString">Template String</label>
-      <input type="text" ng-model="template.templateString" required class="form-control" id="templateString"
-        placeholder="Template String" style="width: 100%; margin-left: 10px;">
+      <label class="sr-only" for="value">Default value</label>
+      <input type="text" ng-model="variable.value" required class="form-control" id="value"
+        placeholder="Default value" style="width: 100%; margin-left: 10px;">
     </div>
     <button type="submit"
-      ng-disabled="!template.id && findTemplateByStatus(template.status)"
-      class="btn" ng-class="template.id ? 'btn-success' : 'btn-primary'">
-      <span ng-if="!template.id">Add new template</span>
-      <span ng-if="template.id">Update template</span>
+      ng-disabled="!variable.id && findVariableByKey(variable.key)"
+      class="btn" ng-class="variable.id ? 'btn-success' : 'btn-primary'">
+      <span ng-if="!variable.id">Create new variable</span>
+      <span ng-if="variable.id">Update variable</span>
     </button>
-    <span ng-click="clearTemplate()" class="btn btn-default">Clear</span>
+    <span ng-click="clearVariable()" class="btn btn-default">Clear</span>
   </form>
 </div>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Status
-      <th>Template
-      <th>Length
+      <th>Key
+      <th>Default value
       <th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="template in templates">
-      <td>{{template.status}}
-      <td>{{template.templateString}}
-      <td>{{template.templateString.length}}
+    <tr ng-repeat="variable in variables">
+      <td>{{variable.key}}
+      <td>{{variable.value}}
       <td nowrap="nowrap">
-        <button ng-click="editTemplate(template)" class="btn-default btn-xs">Edit</button>
-        <button ng-click="deleteTemplate(template)" class="btn-danger btn-xs">Delete</button>
+        <button ng-click="editVariable(variable)" class="btn-default btn-xs">Edit</button>
+        <button ng-click="deleteVariable(variable)" class="btn-danger btn-xs">Delete</button>
       </td>
     </tr>
-    <tr ng-if="!templates.length">
-      <td colspan="3">No templates available</td>
+    <tr ng-if="!variables.length">
+      <td colspan="3">No variables available</td>
     </tr>
   </tbody>
 </table>
@@ -55,16 +53,15 @@
 </div>
 </div>
 
-<ng-include src="'tenant/helpfiles/templates_help.html'"></ng-include>
-
 <!-- Modals -->
-<script type="text/ng-template" id="modal-delete-template">
+<script type="text/ng-template" id="modal-delete-variable">
   <div class="modal-header modal-primary">
     <button type="button" class="close" ng-click="close()">&times;</button>
-    <h3 class="modal-title">Delete template</h3>
+    <h3 class="modal-title">Delete variable</h3>
   </div>
   <div class="modal-body">
-      Are you sure you want to delete the template with status <strong>{{toDelete.status}}</strong>? This cannot be undone.
+      Are you sure you want to delete the variable with key <strong>{{toDelete.key}}</strong>? This cannot be undone. Customer records
+      using this variable will retain its custom value unless you delete them individually.
   </div>
   <div class="modal-footer">
     <span ng-click="confirm()" class="btn btn-danger btn-s-xs">Delete</span>

@@ -1,7 +1,7 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('PreviewController', ['$scope', '$stateParams', '$state', 'templates', 'previews', 'tenantRecord', 'RecordService', 'PreviewService',
-    function($scope, $stateParams, $state, templates, previews, tenantRecord, RecordService, PreviewService) {
+  controllers.controller('PreviewController', ['$scope', '$stateParams', '$state', 'templates', 'previews', 'tenantRecord', 'RecordService', 'PreviewService', 'VariablesService',
+    function($scope, $stateParams, $state, templates, previews, tenantRecord, RecordService, PreviewService, VariablesService) {
 
     $scope.tenantIndex = $stateParams.tenantIndex;
     $scope.previews = previews;
@@ -15,5 +15,10 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
          });
       });
     };
+
+    //Advanced
+    $scope.tenantVariables = VariablesService.query({tenantId: $stateParams.tenantId});
+    $scope.recordVariables = VariablesService.get({tenantId: $stateParams.tenantId, recordId: $stateParams.tenantRecordId});
+
   }]);
 });

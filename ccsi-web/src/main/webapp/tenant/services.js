@@ -21,8 +21,8 @@ define(['angular'], function(angular) {
       page: {method: 'GET', isArray: false}
     });
   })
-  .factory('VariableService', function($resource) {
-    return $resource('variable/:tenantId', {}, {
+  .factory('VariablesService', function($resource) {
+    return $resource('variable/:tenantId/:recordId/:variableId', {}, {
       page: {method: 'GET', isArray: false}
     });
   })

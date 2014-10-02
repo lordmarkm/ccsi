@@ -17,6 +17,10 @@ public class Variable extends BaseEntity {
     @JoinColumn(name = "TENANT_ID", nullable = false)
     private Tenant tenant;
 
+    @ManyToOne
+    @JoinColumn(name = "RECORD_ID")
+    private TenantRecord record;
+
     @Column(name = "VAR_KEY", nullable = false)
     private String key;
 
@@ -45,5 +49,13 @@ public class Variable extends BaseEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public TenantRecord getRecord() {
+        return record;
+    }
+
+    public void setRecord(TenantRecord record) {
+        this.record = record;
     }
 }
