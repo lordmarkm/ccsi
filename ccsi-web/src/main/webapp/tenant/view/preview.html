@@ -38,8 +38,8 @@
       <tbody>
         <tr ng-repeat="preview in previews" ng-class="{success: preview.active}">
           <td>{{preview.template.status}}
-          <td>{{preview.preview}} This message is free
-          <td ng-init="msglen = preview.preview.length + ' This message is free'.length"
+          <td>{{preview.preview}} This msg is free.
+          <td ng-init="msglen = preview.preview.length + ' This msg is free.'.length"
            ng-class="{danger: msglen > 160}">{{msglen}}
         </tr>
         <tr ng-if="!previews.length">
@@ -65,16 +65,16 @@
         <tr>
           <th>Variable key
           <th>Value
-          <td>
+          <th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="variable in tenantVariables">
           <td>{{variable.key}}
-          <td>{{recordVariables[variable.key] || variable.value + ' (default)'}}
+          <td>{{getRecordVariable(variable.key).value === '' ? '' : getRecordVariable(variable.key).value || variable.value + ' (default)'}}
           <td>
-            <button class="btn btn-xs btn-default">Edit</button>
-            <button class="btn btn-xs btn-danger">Use default</button>
+            <button ng-click="updateVariable(variable)" class="btn btn-xs btn-default">Edit</button>
+            <button ng-click="clearVariable(variable)" class="btn btn-xs btn-danger">Use default</button>
           </td>
         </tr>
       </tbody>
@@ -89,29 +89,18 @@
 <script type="text/ng-template" id="modal-assign-variable">
   <div class="modal-header modal-primary">
     <button type="button" class="close" ng-click="close()">&times;</button>
-    <h3 ng-if="!record.id" class="modal-title">Create new record</h3>
-    <h3 ng-if="record.id" class="modal-title">Update record</h3>
+    <h3 class="modal-title">Update variable value</h3>
   </div>
   <form ng-submit="confirm()" class="form form-inline">
   <div class="modal-body">
       <div class="form-group">
-        <label class="sr-only" for="status">Status</label>
-        <select ng-model="record.status" required
-          ng-options="template as template.status for template in statuses track by template.status" id="status" class="form-control"></select>
+        <label for="variableValue" class="control-label" style="margin-right: 5px;"><strong>{{variable.key}}</strong></label>
+        <input type="text" ng-model="variableValue.value" class="form-control" id="variableValue" placeholder="{{variable.value}}">
       </div>
-      <div class="form-group">
-        <label class="sr-only" for="customerName">Customer name</label>
-        <input type="text" ng-model="record.customerName" class="form-control" id="customerName" placeholder="Customer name">
-      </div>
-      <div class="form-group">
-        <label class="sr-only" for="transactionType">Transaction type</label>
-        <input type="text" ng-model="record.transactionType" class="form-control" id="transactionType" placeholder="Transaction type">
-      </div>
-      <span ng-if="!record.id" ng-click="clearRecord()" class="btn btn-default">Clear</span>
+      <span ng-click="variableValue.value = ''" class="btn btn-default">Clear</span>
   </div>
   <div class="modal-footer">
-    <button ng-if="!record.id" class="btn btn-s-xs btn-primary">Create</button>
-    <button ng-if="record.id" class="btn btn-s-xs btn-success">Update</button>
+    <button class="btn btn-s-xs btn-success">Update</button>
     <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
   </div>
   </form>

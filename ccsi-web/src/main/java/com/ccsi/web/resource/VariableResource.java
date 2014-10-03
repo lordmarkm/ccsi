@@ -40,11 +40,24 @@ public class VariableResource {
         return new ResponseEntity<>(service.findInfoByTenantId(tenantId, null), OK);
     }
 
+    @RequestMapping(value = "/{recordId}", method = GET)
+    public ResponseEntity<List<VariableInfo>> findByRecordId(@PathVariable Long tenantId, @PathVariable Long recordId) {
+        LOG.debug("Finding variables by record id. tenantId={}, recordId={}", tenantId, recordId);
+        return new ResponseEntity<>(service.findInfoByRecordId(tenantId, recordId, null), OK);
+    }
+
+    @RequestMapping(value = "/{recordId}", method = POST)
+    public ResponseEntity<VariableInfo> saveRecordVariable(@PathVariable Long tenantId, @PathVariable Long recordId,
+            @Valid @RequestBody VariableInfo variable) {
+        LOG.debug("Saving record variable. tenantId={}, recordId={}, var={}", tenantId, recordId, variable);
+        return new ResponseEntity<>(service.saveInfo(tenantId, recordId, variable), OK);
+    }
+
     @RequestMapping(method = POST)
-    public ResponseEntity<VariableInfo> save(@PathVariable Long tenantId,
+    public ResponseEntity<VariableInfo> saveTenantVariable(@PathVariable Long tenantId,
             @Valid @RequestBody VariableInfo variable) {
         LOG.debug("Saving variable. tenant={}, variable={}", variable);
-        return new ResponseEntity<>(service.saveInfo(tenantId, variable), OK);
+        return new ResponseEntity<>(service.saveInfo(tenantId, null, variable), OK);
     }
 
     //TODO need @PreAuthorized here for sure

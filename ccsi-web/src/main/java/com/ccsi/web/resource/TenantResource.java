@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baldy.commons.web.controller.GenericController;
 import com.ccsi.app.service.TenantService;
 import com.ccsi.commons.dto.tenant.TenantInfo;
+import com.ccsi.web.validator.CreateTenantValidator;
 
 /**
  * @author mbmartinez
@@ -35,6 +38,9 @@ public class TenantResource extends GenericController {
 
     @Autowired
     private TenantService service;
+
+    @Autowired
+    private CreateTenantValidator validator;
 
     @RequestMapping(method = GET)
     public ResponseEntity<List<TenantInfo>> findAllTenants(Principal principal) {
@@ -55,5 +61,10 @@ public class TenantResource extends GenericController {
             return new ResponseEntity<Object>(firstError(binding), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Object>(service.saveInfo(principal.getName(), tenant), OK);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
     }
 }

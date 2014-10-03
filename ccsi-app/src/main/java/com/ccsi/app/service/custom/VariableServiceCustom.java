@@ -9,6 +9,7 @@ import com.ccsi.commons.dto.tenant.VariableInfo;
 public interface VariableServiceCustom {
 
     List<VariableInfo> findInfoByTenantId(Long tenantId, Sort sort);
-    VariableInfo saveInfo(Long tenantId, VariableInfo variable);
+    List<VariableInfo> findInfoByRecordId(Long tenantId, Long recordId, Sort sort);
+    VariableInfo saveInfo(Long tenantId, Long recordId, VariableInfo variable);
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ccsi.app.entity.TenantRecord;
 import com.ccsi.app.service.TemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.util.MessageComposer;
@@ -39,7 +40,7 @@ public class PreviewResource {
     public ResponseEntity<List<TemplatePreview>> preview(@PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
         Sort sort = new Sort(Direction.ASC, "status");
         List<TemplateInfo> templates = templateService.findInfoByTenantId(tenantId, sort);
-        TenantRecordInfo record = tenantRecordService.findOneInfo(tenantRecordId);
+        TenantRecord record = tenantRecordService.findOne(tenantRecordId);
 
         List<TemplatePreview> previews = Lists.newArrayList();
         for (TemplateInfo template : templates) {

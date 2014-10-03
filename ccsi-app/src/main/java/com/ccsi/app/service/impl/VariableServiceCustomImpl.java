@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import com.ccsi.app.entity.Variable;
+import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
 import com.ccsi.app.service.VariableService;
 import com.ccsi.app.service.custom.VariableServiceCustom;
@@ -19,6 +20,8 @@ public class VariableServiceCustomImpl extends MappingService<Variable, Variable
     private VariableService service;
     @Autowired
     private TenantService tenantService;
+    @Autowired
+    private TenantRecordService recordService;
 
     @Override
     public List<VariableInfo> findInfoByTenantId(Long tenantId, Sort sort) {
@@ -26,9 +29,17 @@ public class VariableServiceCustomImpl extends MappingService<Variable, Variable
     }
 
     @Override
-    public VariableInfo saveInfo(Long tenantId, VariableInfo variableInfo) {
+    public List<VariableInfo> findInfoByRecordId(Long tenantId, Long recordId, Sort sort) {
+        return toDto(service.findByTenant_idAndRecord_id(tenantId, recordId, sort));
+    }
+
+    @Override
+    public VariableInfo saveInfo(Long tenantId, Long recordId, VariableInfo variableInfo) {
         Variable variable = toEntity(variableInfo);
         variable.setTenant(tenantService.findOne(tenantId));
+        if (null != recordId) {
+            variable.setRecord(recordService.findOne(recordId));
+        }
         return toDto(service.save(variable));
     }
 
