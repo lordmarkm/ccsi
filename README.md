@@ -14,3 +14,9 @@ versions
 ---
 1. Added keyword templates
 2. Added variables
+
+3.0 (WIP)
+---
+1. Admin & costing
+2. Tenant "load" & admin control over this
+3. Tenant "push"
