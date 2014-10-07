@@ -1,17 +1,37 @@
-.settings/
-bin/
-target/
-*.class
-.project
+# generated files
+bin
+target
+webapp-build
+generated
+overlays
+id_file
+selenium_standalone_*
+*.log
+subsystem/erx-billing/*.jasper
+subsystems/erx-reports/**/*.jasper
+subsystems/erx-reports/**/adm-census/*.jasper
+
+# dev folders
+erx_data_dev
+activemq-data
+logs
+**/solr_home_*/*/data
+subsystems/erx-reports/reports-kettle/temp
+
+# Eclipse Ignores
 .classpath
+.project
+.settings
+.metadata
+.checkstyle
+*.eclipse.jdt.core.prefs
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# IDEA Ignores
+*.iml
+*.ipr
+*.iws
+.idea
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# MAC ignores
+.DS_Store
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
