@@ -12,6 +12,7 @@ import com.ccsi.app.entity.StockTemplate;
 import com.ccsi.app.entity.Tenant;
 import com.ccsi.app.entity.TenantRecord;
 import com.ccsi.app.entity.TransactionRecord;
+import com.ccsi.app.reference.ReservedWord;
 import com.ccsi.app.service.StockTemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
@@ -35,6 +36,9 @@ public class IncomingMessageHandlerTask implements Runnable {
 
     @Autowired
     private StockTemplateService stockTemplateService;
+
+    @Autowired
+    private StatusUpdater statusUpdater;
 
     private IncomingMessageInfo msg;
     private TransactionRecord txn;
@@ -73,7 +77,14 @@ public class IncomingMessageHandlerTask implements Runnable {
         }
         txn.setTenant(tenant);
 
-        //check for stock templates first
+        //check for update requests first
+        if (trackingNoOrKeyword.toUpperCase().startsWith(ReservedWord.UPDATE.getKeyword())) {
+            statusUpdater.doUpdate(tenant, trackingNoOrKeyword, txn);
+            client.sendUpdateReply(msg, txn);
+            return;
+        }
+
+        //check for stock templates second
         StockTemplate stock = stockTemplateService.findByTenantAndKeyword(tenant, trackingNoOrKeyword);
         if (null != stock) {
             client.sendStockTemplateReply(msg, txn, stock);

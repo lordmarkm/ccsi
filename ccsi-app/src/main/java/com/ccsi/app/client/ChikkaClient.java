@@ -65,6 +65,10 @@ public class ChikkaClient {
         sendMessage(outgoingMessage, msg, txn);
     }
 
+    public void sendUpdateReply(IncomingMessageInfo msg, TransactionRecord txn) {
+        sendMessage(txn.getOutgoingMessage(), msg, txn);
+    }
+
     private void sendMessage(String outgoingMessage, IncomingMessageInfo msg, TransactionRecord txn) {
         ReplyMessageInfo out = new ReplyMessageInfo();
         out.setMessage_type("REPLY");

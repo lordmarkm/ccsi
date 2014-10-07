@@ -35,10 +35,10 @@ public class LoginController extends GenericController {
     public String redirect(Principal principal, HttpServletRequest request) {
         LOG.debug("Redirecing user. principal={}", principal);
 
-        if (request.isUserInRole(Roles.asRole(Roles.ADMIN))) {
-            return "redirect:/manage";
-        } else {
+//        if (request.isUserInRole(Roles.asRole(Roles.ADMIN))) {
+//            return "redirect:/manage";
+//        } else {
             return "redirect:/";
-        }
+//        }
     }
 }

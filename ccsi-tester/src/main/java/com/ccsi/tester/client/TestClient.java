@@ -26,7 +26,7 @@ public class TestClient {
         msg.setMobile_number("639155411987");
         msg.setShortcode("292902274");
         msg.setRequest_id("12345");
-        msg.setMessage("laundry help open");
+        msg.setMessage("laundry update 45UP0  ggs");
         msg.setTimestamp(String.valueOf(new Date().getTime()));
 
         LinkedMultiValueMap<String, Object> m = new LinkedMultiValueMap<String, Object>();

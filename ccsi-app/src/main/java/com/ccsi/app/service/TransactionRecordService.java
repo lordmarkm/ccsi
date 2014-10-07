@@ -3,6 +3,7 @@ package com.ccsi.app.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 import com.ccsi.app.entity.TransactionRecord;
 import com.ccsi.app.service.custom.TransactionRecordServiceCustom;
@@ -11,7 +12,7 @@ import com.ccsi.app.service.custom.TransactionRecordServiceCustom;
  * @author mbmartinez
  */
 public interface TransactionRecordService extends TransactionRecordServiceCustom,
-    JpaRepository<TransactionRecord, Long> {
+    JpaRepository<TransactionRecord, Long>, QueryDslPredicateExecutor<TransactionRecord> {
 
     TransactionRecord findByMessageId(String message_id);
     Page<TransactionRecord> findByTenant_id(Long tenantId, Pageable pageRequest);

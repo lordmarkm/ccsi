@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 
+import com.ccsi.app.exception.ReservedWordCollisionException;
 import com.ccsi.commons.dto.tenant.StockTemplateInfo;
 
 /**
@@ -12,6 +13,6 @@ import com.ccsi.commons.dto.tenant.StockTemplateInfo;
 public interface StockTemplateServiceCustom {
 
     List<StockTemplateInfo> findInfoByTenantId(Long tenantId, Sort sort);
-    StockTemplateInfo saveInfo(Long tenantId, StockTemplateInfo template);
+    StockTemplateInfo saveInfo(Long tenantId, StockTemplateInfo template) throws ReservedWordCollisionException;
 
 }

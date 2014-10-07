@@ -31,14 +31,15 @@
 
     <ul class="nav navbar-nav" ng-controller="AuthController">
       <li class="dropdown ng-hide" ng-show="principal.principal">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+        <a href="javascript:;" class="dropdown-toggle">
           {{principal.principal.username}}<span class="caret" style="margin-left: 5px;"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
           <!--
           <li><a href="#/profile">Profile</a></li>
           -->
-          <li><a href="<@spring.url '/#/' />">Home</a></li>
+          <li ng-if="!hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/' />">Home</a></li>
+          <li ng-if="hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/admin' />">Home</a></li>
           <li><a href="<@spring.url '/logout' />">Logout</a></li>
         </ul>
       </li>

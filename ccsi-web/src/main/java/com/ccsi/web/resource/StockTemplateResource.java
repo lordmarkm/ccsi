@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baldy.commons.web.controller.GenericController;
+import com.ccsi.app.exception.ReservedWordCollisionException;
 import com.ccsi.app.service.StockTemplateService;
 import com.ccsi.commons.dto.tenant.StockTemplateInfo;
 
@@ -50,7 +51,11 @@ public class StockTemplateResource extends GenericController {
         if (binding.hasErrors()) {
             return new ResponseEntity<Object>(firstError(binding), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Object>(service.saveInfo(tenantId, template), OK);
+        try {
+            return new ResponseEntity<Object>(service.saveInfo(tenantId, template), OK);
+        } catch (ReservedWordCollisionException e) {
+            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     //TODO need @PreAuthorized here for sure

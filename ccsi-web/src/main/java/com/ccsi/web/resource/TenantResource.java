@@ -12,6 +12,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,10 +22,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baldy.commons.web.controller.GenericController;
 import com.ccsi.app.service.TenantService;
+import com.ccsi.commons.dto.PageInfo;
 import com.ccsi.commons.dto.tenant.TenantInfo;
 import com.ccsi.web.validator.CreateTenantValidator;
 
@@ -46,6 +50,20 @@ public class TenantResource extends GenericController {
     public ResponseEntity<List<TenantInfo>> findAllTenants(Principal principal) {
         LOG.info("Finding all tenants. owner={}", principal.getName());
         return new ResponseEntity<>(service.findByOwnerInfo(principal.getName()), OK);
+    }
+
+    //TODO @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @RequestMapping(method = GET, params={"page", "count"})
+    public ResponseEntity<PageInfo<TenantInfo>> page(Principal principal,
+            @RequestParam int page,
+            @RequestParam int count) {
+
+        LOG.debug("Tenant query query. Principal={}, page={}, count={}", name(principal), page, count);
+
+        PageRequest pageRequest = new PageRequest(page - 1, count, Direction.ASC, "keyword");
+        PageInfo<TenantInfo> pageResponse = service.pageInfo(pageRequest);
+
+        return new ResponseEntity<>(pageResponse, OK);
     }
 
     @RequestMapping(value = "/{tenantId}", method = GET)

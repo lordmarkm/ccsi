@@ -14,5 +14,6 @@ import com.ccsi.app.service.custom.TemplateServiceCustom;
 public interface TemplateService extends JpaRepository<Template, Long>, TemplateServiceCustom {
 
     List<Template> findByTenant_id(Long tenantId, Sort sort);
+    Template findByTenant_idAndStatus(Long id, String status);
 
 }

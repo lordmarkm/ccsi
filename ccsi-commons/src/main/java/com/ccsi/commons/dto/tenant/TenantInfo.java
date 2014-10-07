@@ -15,6 +15,10 @@ public class TenantInfo extends BaseCcsiInfo {
     @Pattern(regexp = "[a-zA-Z0-9]*", message = "Please choose an alphanumeric keyword with no spaces.")
     private String keyword;
 
+    private String owner;
+    private long recordCount;
+    private long transactionCount;
+
     public String getKeyword() {
         return keyword;
     }
@@ -29,6 +33,30 @@ public class TenantInfo extends BaseCcsiInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public long getTransactionCount() {
+        return transactionCount;
+    }
+
+    public void setTransactionCount(long transactionCount) {
+        this.transactionCount = transactionCount;
+    }
+
+    public long getRecordCount() {
+        return recordCount;
+    }
+
+    public void setRecordCount(long recordCount) {
+        this.recordCount = recordCount;
     }
 
 }

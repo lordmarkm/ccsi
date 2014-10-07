@@ -1,0 +1,33 @@
+<div class="panel panel-default">
+<div class="panel-heading">CCSI Administrator - Tenants overview</div>
+<div class="panel-body">
+
+
+<table ng-table="tableParams" class="table table-striped">
+  <thead>
+    <tr>
+      <th style="text-align: left;">Name
+      <th style="text-align: left;">Keyword
+      <th style="text-align: left;">Owner
+      <th style="text-align: left;">Customer Records
+      <th style="text-align: left;">Reply cost
+      <th style="text-align: left;">Transactions
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="tenant in $data">
+      <td>{{tenant.name}}
+      <td>{{tenant.keyword}}
+      <td>{{tenant.owner}}
+      <td>{{tenant.recordCount}}
+      <td>FREE
+      <td>{{tenant.transactionCount}}
+    </tr>
+    <tr ng-if="!totalRecords">
+      <td colspan="5">No tenants found</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+</div>

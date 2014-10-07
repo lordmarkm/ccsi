@@ -7,5 +7,8 @@ define([
   'tenant/controllers/StockTemplatesController.js',
   'tenant/controllers/VariablesController.js',
   'tenant/controllers/TenantTransactionsController.js',
-  'tenant/controllers/PreviewController.js'
+  'tenant/controllers/PreviewController.js',
+
+  //admin controllers
+  'admin/controllers/AdminController.js'
 ], function () {});

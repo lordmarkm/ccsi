@@ -1,8 +1,9 @@
 define([
     'tenant/app.js',
     'tenant/resolve/TenantResolve.js',
-    'tenant/resolve/PreviewResolve.js'
-  ], function(app, TenantResolve, PreviewResolve) {
+    'tenant/resolve/PreviewResolve.js',
+    'admin/resolve/AdminResolve.js'
+  ], function(app, TenantResolve, PreviewResolve, AdminResolve) {
   'use strict';
   return app.config(function($stateProvider) {
     $stateProvider.state('home', {
@@ -51,6 +52,14 @@ define([
       templateUrl: 'tenant/view/preview.html',
       controller: 'PreviewController',
       resolve: PreviewResolve
-    });
+    })
+
+    //admin states
+    .state('admin', {
+      url: '/admin',
+      templateUrl: 'admin/view/index.html',
+      controller: 'AdminController',
+      resolve: AdminResolve
+    })
   });
 });
