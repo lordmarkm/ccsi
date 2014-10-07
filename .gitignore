@@ -7,16 +7,11 @@ overlays
 id_file
 selenium_standalone_*
 *.log
-subsystem/erx-billing/*.jasper
-subsystems/erx-reports/**/*.jasper
-subsystems/erx-reports/**/adm-census/*.jasper
 
 # dev folders
-erx_data_dev
 activemq-data
 logs
 **/solr_home_*/*/data
-subsystems/erx-reports/reports-kettle/temp
 
 # Eclipse Ignores
 .classpath
