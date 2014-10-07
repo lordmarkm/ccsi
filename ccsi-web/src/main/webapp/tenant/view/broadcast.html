@@ -1,0 +1,118 @@
+<div class="panel panel-default">
+<div class="panel-heading">Broadcast</div>
+<div class="panel-body">
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <dl class="dl-horizontal">
+        <dt>Name
+        <dd>{{tenant.name}}
+        <dt>Keyword
+        <dd>{{tenant.keyword}}
+        <dt>Filtered records</dt>
+        <dd>{{totalRecords}}</dd>
+        <dt>Push credits
+        <dd>{{tenant.pushCredits}}
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="panel-heading">Filter records</div>
+<div class="panel-body">
+  <form ng-submit="reloadTable()" class="form form-inline" style="margin-top: 10px;">
+    <div class="form-group">
+      <label class="sr-only" for="status">Status</label>
+      <select ng-model="filter.status" class="form-control">
+        <option value="" selected="selected"></option>
+        <option ng-repeat="template in statuses">{{template.status}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="filterTrackingNo">Tracking Number</label>
+      <input type="text" ng-model="filter.trackingNo" class="form-control" id="filterTrackingNo" placeholder="Tracking no.">
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="customerName">Customer name</label>
+      <input type="text" ng-model="filter.customerName" class="form-control" id="customerName" placeholder="Customer name">
+    </div>
+    <div class="form-group">
+      <label class="sr-only" for="transactionType">Transaction type</label>
+      <input type="text" ng-model="filter.transactionType" class="form-control" id="transactionType" placeholder="Transaction type">
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <i class="fa fa-search"></i> Filter
+    </button>
+    <button ng-click="clearFilter()" class="btn btn-default">Clear</button>
+  </form>
+  <table ng-table="tableParams" show-filter="true" class="table table-striped" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="text-align: left;">Tracking code
+        <th style="text-align: left;">Customer name
+        <th style="text-align: left;">Transaction type
+        <th style="text-align: left;">Last updated
+        <th style="text-align: left;">Status
+        <th style="text-align: left;">Broadcast No.
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="record in $data">
+        <td>{{record.trackingNo}}
+        <td>{{record.customerName}}
+        <td>{{record.transactionType}}
+        <td>{{record.lastUpdated|date: 'MMM-dd-yyyy hh:mm'}}
+        <td>{{record.status.status}}
+        <td>{{record.broadcastNo}}
+      </tr>
+      <tr ng-if="!totalRecords">
+        <td colspan="7">No records found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="panel-heading">Do broadcast</div>
+<div class="panel-body">
+  <div class="row">
+    <div class="col-sm-3"><button ng-click="broadcast('status')" ng-disabled="!totalRecords" class="btn btn-primary form-control">Broadcast status message</button></div>
+    <div class="col-sm-9"><p class="form-control-static">Broadcast the message based on tenant record's status.</div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-3"><button ng-click="broadcast('stock')" ng-disabled="!stocks.length || !totalRecords" class="btn btn-success form-control">Broadcast keyword template</button></div>
+    <div class="col-sm-3">
+      <select ng-if="stocks.length" ng-model="stockBroadcast" ng-options="stock.keyword as stock.keyword for stock in stocks" class="form-control"></select>
+      <p class="form-control-static" ng-if="!stocks.length">No keyword templates available
+    </div>
+  </div>
+  <div class="row" style="margin-top: 10px;">
+    <div class="col-sm-3"><button ng-click="broadcast('custom')" ng-disabled="!totalRecords" class="btn btn-warning form-control">Broadcast custom message</button></div>
+    <div class="col-sm-3"><input type="text" placeholder="Message to broadcast" ng-model="customBroadcast" class="form-control" /></div>
+    <div class="col-sm-6"><p class="form-control-static">Broadcast this message. Replaceable strings still apply.</div>
+  </div>
+  <div class="text-right" style="margin-top: 10px;">
+    <span ui-sref="home({tenantIndex: tenantIndex})" class="btn btn-default">Done</span>
+  </div>
+</div>
+</div>
+
+<!-- Modals -->
+<script type="text/ng-template" id="modal-confirm-broadcast">
+  <div class="modal-header modal-primary">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Confirm broadcast</h3>
+  </div>
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+      <dt>Type
+      <dd ng-switch="type">
+        <span ng-switch-when="status">Based on status</span>
+        <span ng-switch-when="stock">Keyword template ({{stockBroadcast}})</span>
+        <span ng-switch-when="custom">Custom ({{customBroadcast}})</span>
+      </dd>
+      <dt>Records
+      <dd>{{totalRecords}}
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button ng-click="confirm()" class="btn btn-s-xs btn-success">Broadcast</button>
+    <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
+  </div>
+</script>

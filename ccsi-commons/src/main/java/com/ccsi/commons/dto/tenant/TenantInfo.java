@@ -1,5 +1,7 @@
 package com.ccsi.commons.dto.tenant;
 
+import java.math.BigDecimal;
+
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -18,6 +20,15 @@ public class TenantInfo extends BaseCcsiInfo {
     private String owner;
     private long recordCount;
     private long transactionCount;
+    private BigDecimal pushCredits;
+
+    public BigDecimal getPushCredits() {
+        return pushCredits;
+    }
+
+    public void setPushCredits(BigDecimal pushCredits) {
+        this.pushCredits = pushCredits;
+    }
 
     public String getKeyword() {
         return keyword;

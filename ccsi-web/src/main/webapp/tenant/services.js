@@ -39,5 +39,8 @@ define(['angular'], function(angular) {
   })
   .factory('PreviewService', function($resource) {
     return $resource('preview/:tenantId/:tenantRecordId');
+  })
+  .factory('BroadcastService', function($resource) {
+    return $resource('broadcast/:tenantId');
   });
 });

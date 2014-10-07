@@ -58,6 +58,23 @@
       <button ui-sref="home({tenantIndex: tenantIndex})" class="btn btn-default">Done</button>
     </div>
   </div>
+
+
+  <!-- Save/update broadcast number -->
+  <div ng-show="showAdvanced" class="panel-heading">Save/update broadcast number</div>
+  <div ng-show="showAdvanced" class="panel-body">
+    <form name="broadcastNoForm" id="broadcastNoForm" ng-submit="saveBroadcastNo(broadcastNoForm.$valid)" class="form form-horizontal">
+      <label class="sr-only control-label">Broadcast No.</label>
+      <div class="col-sm-4">
+        <input type="text" ng-model="broadcastNo" ng-pattern="mobileNoPattern" placeholder="Broadcast number" class="form-control" required />
+      </div>
+      <button class="btn btn-success">Save</button>
+      <small class="help-block" style="margin-left: 13px;">12 digits 63xxx format; e.g 639155411987</small>
+    </form>
+  </div>
+
+
+  <!-- Customer variables -->
   <div ng-show="showAdvanced" class="panel-heading">Customer variables</div>
   <div ng-show="showAdvanced" class="panel-body">
     <table class="table table-striped">
@@ -76,6 +93,9 @@
             <button ng-click="updateVariable(variable)" class="btn btn-xs btn-default">Edit</button>
             <button ng-click="clearVariable(variable)" class="btn btn-xs btn-danger">Use default</button>
           </td>
+        </tr>
+        <tr ng-if="!tenantVariables.length">
+          <td colspan="3">No variables to be defined</td>
         </tr>
       </tbody>
     </table>

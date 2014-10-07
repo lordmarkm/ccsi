@@ -37,6 +37,17 @@ public class TenantRecord extends BaseEntity {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime lastUpdated;
 
+    @Column(name = "BROADCAST_NO")
+    private String broadcastNo;
+
+    public String getBroadcastNo() {
+        return broadcastNo;
+    }
+
+    public void setBroadcastNo(String broadcastNo) {
+        this.broadcastNo = broadcastNo;
+    }
+
     public String getTrackingNo() {
         return trackingNo;
     }

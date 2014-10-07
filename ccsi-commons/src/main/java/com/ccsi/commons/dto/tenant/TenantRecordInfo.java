@@ -1,6 +1,7 @@
 package com.ccsi.commons.dto.tenant;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.core.style.ToStringCreator;
@@ -16,6 +17,15 @@ public class TenantRecordInfo extends BaseCcsiInfo {
     private String customerName;
     private String transactionType;
     private LocalDateTime lastUpdated;
+    @Pattern(regexp = "^639\\d{9}$", message = "Invalid broadcast number pattern (must match 639XXXXXXXXX)")
+    private String broadcastNo;
+    public String getBroadcastNo() {
+        return broadcastNo;
+    }
+
+    public void setBroadcastNo(String broadcastNo) {
+        this.broadcastNo = broadcastNo;
+    }
 
     @Override
     public String toString() {

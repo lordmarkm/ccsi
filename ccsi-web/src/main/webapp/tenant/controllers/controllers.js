@@ -8,6 +8,7 @@ define([
   'tenant/controllers/VariablesController.js',
   'tenant/controllers/TenantTransactionsController.js',
   'tenant/controllers/PreviewController.js',
+  'tenant/controllers/BroadcastController.js',
 
   //admin controllers
   'admin/controllers/AdminController.js'

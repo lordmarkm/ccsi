@@ -7,6 +7,7 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
     $scope.previews = previews;
     $scope.tenantRecord = tenantRecord;
     $scope.templates = templates;
+    $scope.mobileNoPattern = /^639\d{9}$/;
 
     function reloadVariablesAndPreviews() {
       reloadVariables();
@@ -18,10 +19,27 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
       });
     }
     $scope.saveRecord = function (record) {
-      RecordService.save({tenantId: $stateParams.tenantId}, record, reloadPreviews);
+      RecordService.save({tenantId: $stateParams.tenantId}, record, function () {
+        toaster.pop('success', 'Update successful', 'Successfully updated tenant record.');
+        reloadPreviews();
+      }, function (fail) {
+        toaster.pop('error', 'Update failed', fail.data);
+      });
     };
 
     //Advanced
+    //Broadcast number
+    $scope.broadcastNo = $scope.tenantRecord.broadcastNo;
+    $scope.saveBroadcastNo = function (valid) {
+      if (!valid) {
+        toaster.pop('error', 'Pattern error', 'Please enter a 12 digit mobile number following the pattern 639XXXXXXXXX');
+        return;
+      }
+      $scope.tenantRecord.broadcastNo = $scope.broadcastNo;
+      $scope.saveRecord($scope.tenantRecord);
+    };
+
+    //Variables
     $scope.tenantVariables = VariablesService.query({tenantId: $stateParams.tenantId});
     $scope.recordVariables = VariablesService.query({tenantId: $stateParams.tenantId, recordId: $stateParams.tenantRecordId});
 

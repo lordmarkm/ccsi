@@ -53,6 +53,11 @@ define([
       controller: 'PreviewController',
       resolve: PreviewResolve
     })
+    .state('tenant.broadcast', {
+      url: '/broadcast?tenantIndex',
+      templateUrl: 'tenant/view/broadcast.html',
+      controller: 'BroadcastController'
+    })
 
     //admin states
     .state('admin', {

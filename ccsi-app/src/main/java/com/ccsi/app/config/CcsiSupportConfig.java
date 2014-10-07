@@ -31,7 +31,8 @@ public class CcsiSupportConfig {
             @Override
             protected void configure() {
                 mapping(Tenant.class, TenantInfo.class)
-                    .fields("owner.username", "owner", oneWay());
+                    .fields("owner.username", "owner", oneWay())
+                    .fields("pushCredits", "pushCredits", oneWay());
                 mapping(TenantRecord.class, TenantRecordInfo.class)
                     .fields("lastUpdated", "lastUpdated", copyByReference(), oneWay());
                 mapping(TransactionRecord.class, TransactionRecordInfo.class)

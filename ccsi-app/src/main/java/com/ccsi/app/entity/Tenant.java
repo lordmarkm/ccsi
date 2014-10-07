@@ -1,5 +1,7 @@
 package com.ccsi.app.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,17 @@ public class Tenant extends BaseBaldyEntity {
 
     @Column(name = "KEYWORD", nullable = false, unique = true)
     private String keyword;
+
+    @Column(name = "PUSH_CREDITS")
+    private BigDecimal pushCredits = BigDecimal.ZERO;
+
+    public BigDecimal getPushCredits() {
+        return pushCredits;
+    }
+
+    public void setPushCredits(BigDecimal pushCredits) {
+        this.pushCredits = pushCredits;
+    }
 
     public Account getOwner() {
         return owner;
