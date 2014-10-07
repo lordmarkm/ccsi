@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -40,6 +41,9 @@ public class RegistrationController extends GenericController {
     @Autowired
     private RegistrationFormValidator validator;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @RequestMapping(method = GET)
     public ModelAndView register(@RequestParam(required = false) String msg) {
         return mav("register")
@@ -61,7 +65,7 @@ public class RegistrationController extends GenericController {
 
         Account account = new Account();
         account.setUsername(form.getUsername());
-        account.setPassword(form.getPassword());
+        account.setPassword(passwordEncoder.encode(form.getPassword()));
         account.setAuthorities("ROLE_TENANT");
 
         try {
