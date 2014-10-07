@@ -1,0 +1,18 @@
+<div class="panel panel-info">
+  <div class="panel-heading pointer" ng-click="showHelp = !showHelp" ng-init="showHelp = false" style="font-family: monospace;">
+    <span ng-if="showHelp">[-]</span>
+    <span ng-if="!showHelp">[+]</span>
+    Help
+  </div>
+  <div class="panel-body" ng-show="showHelp">
+    <h2>Tenants</h2>
+    <p>A tenant is a single business, organization, person, or any other entity using CCSI to interact with their customers
+       or employees.
+    <ol>
+      <li><strong>Tenant Name</strong> - The name you want your business to be known by
+      <li><strong>Keyword</strong> - This is the keyword that your customers will use to indicate that they want to interact with your business.
+        Every message meant for your business will begin with this keyword. <strong>Keyword must be alphanumberic and be a single
+        word. Capitalization is ignored.</strong> Leading and trailing whitespaces will be removed.
+    </ol>
+  </div>
+</div>

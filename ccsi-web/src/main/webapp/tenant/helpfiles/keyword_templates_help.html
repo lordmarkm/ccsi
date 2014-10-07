@@ -1,0 +1,16 @@
+<div class="panel panel-info">
+  <div class="panel-heading pointer" ng-click="showHelp = !showHelp" ng-init="showHelp = false" style="font-family: monospace;">
+    <span ng-if="showHelp">[-]</span>
+    <span ng-if="!showHelp">[+]</span>
+    Help
+  </div>
+  <div class="panel-body" ng-show="showHelp">
+    <h2>Keyword templates</h2>
+    <p>Keyword templates are triggered by a predefined keyword. When a customer sends the keyword, the system will automatically reply
+       with the keyword template's reply. <strong>Keyword templates do not use replaceable strings.</strong>
+    <ol>
+      <li>Keyword - The keyword used to trigger the template.
+      <li>Reply - The reply that will be sent out.
+    </ol>
+  </div>
+</div>
