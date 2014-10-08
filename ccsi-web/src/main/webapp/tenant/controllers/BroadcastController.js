@@ -60,6 +60,7 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
         params.$params.trackingNo = $scope.filter.trackingNo;
         params.$params.customerName = $scope.filter.customerName;
         params.$params.transactionType = $scope.filter.transactionType;
+        params.$params.requireBroadcastNo = 'true';
         RecordService.page(params.$params, function(response) {
           params.total(response.total);
           $defer.resolve(response.data);
@@ -87,8 +88,7 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
     };
     function doBroadcast(broadcastType) {
       BroadcastService.save({
-        tenantId: $stateParams.tenantId
-      },{
+        tenantId: $stateParams.tenantId,
         broadcastType: broadcastType,
         stockBroadcast: $scope.stockBroadcast,
         customBroadcast: $scope.customBroadcast,
@@ -96,8 +96,10 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
         trackingNo : $scope.lastfilter.trackingNo,
         customerName : $scope.lastfilter.customerName,
         transactionType : $scope.lastfilter.transactionType
+      },{
+
       }, function (response) {
-        toaster.pop('success', 'Successful broadcast', $scope.totalRecords + ' messages successfully send.');
+        toaster.pop('success', 'Successful broadcast', $scope.totalRecords + ' messages successfully sent.');
       }, function (fail) {
         toaster.pop('error', 'Broadcast failed', fail.data);
       });

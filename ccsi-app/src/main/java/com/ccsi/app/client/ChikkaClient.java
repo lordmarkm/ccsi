@@ -2,6 +2,8 @@ package com.ccsi.app.client;
 
 import java.math.BigDecimal;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.ccsi.app.util.MessageComposer;
 import com.ccsi.app.util.MessageUtil;
 import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.IncomingMessageInfo;
+import com.ccsi.commons.dto.OutgoingMessageInfo;
 import com.ccsi.commons.dto.ReplyMessageInfo;
 
 @Service
@@ -41,53 +44,83 @@ public class ChikkaClient {
     @Autowired
     private TransactionRecordService txnRecordService;
 
+    private String endpoint;
+    private String clientId;
+    private String secretKey;
+    private String shortcode;
+
+    @PostConstruct
+    public void init() {
+        endpoint = env.getProperty("chikka_endpoint");
+        clientId = env.getProperty("client_id");
+        secretKey = env.getProperty("secret_key");
+        shortcode = env.getProperty("shortcode");
+    }
+
     public void sendInvalidTenantMessage(IncomingMessageInfo msg, TransactionRecord txn, String tenantCode) {
         String outgoingMessage = "We could not find a tenant with code " + tenantCode + ".";
-        sendMessage(outgoingMessage, msg, txn);
+        sendReply(outgoingMessage, msg, txn);
     }
 
     public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn, String trackingNoOrKeyword) {
         String outgoingMessage = "We could not find a keyword or transaction record matching " + trackingNoOrKeyword + ".";
-        sendMessage(outgoingMessage, msg, txn);
+        sendReply(outgoingMessage, msg, txn);
     }
 
     public void sendInvalidMessageMessage(IncomingMessageInfo msg, TransactionRecord txn) {
         String outgoingMessage = "Your message was invalid. Please follow this format: <keyword> <trackingNo>.";
-        sendMessage(outgoingMessage, msg, txn);
+        sendReply(outgoingMessage, msg, txn);
     }
 
     public void sendStockTemplateReply(IncomingMessageInfo msg, TransactionRecord txn, StockTemplate stock) {
-        sendMessage(stock.getReply(), msg, txn);
+        sendReply(stock.getReply(), msg, txn);
     }
 
     public void sendTemplateReply(TenantRecord record, IncomingMessageInfo msg, TransactionRecord txn) {
         String outgoingMessage = messageComposer.composeMessage(record);
-        sendMessage(outgoingMessage, msg, txn);
+        sendReply(outgoingMessage, msg, txn);
     }
 
     public void sendUpdateReply(IncomingMessageInfo msg, TransactionRecord txn) {
-        sendMessage(txn.getOutgoingMessage(), msg, txn);
+        sendReply(txn.getOutgoingMessage(), msg, txn);
     }
 
-    private void sendMessage(String outgoingMessage, IncomingMessageInfo msg, TransactionRecord txn) {
+    public void push(TransactionRecord txn) {
+        OutgoingMessageInfo out = new OutgoingMessageInfo();
+        out.setMessage_type("SEND");
+        out.setMobile_number(txn.getMobileNumber());
+        out.setShortcode(shortcode);
+        out.setMessage_id(messageUtil.generateId());
+        out.setMessage(txn.getOutgoingMessage());
+        out.setClient_id(clientId);
+        out.setSecret_key(secretKey);
+
+        txn.setMessageId(out.getMessage_id());
+        txnRecordService.save(txn);
+
+        LOG.debug("About to send PUSH message. endpt={}, msg={}", endpoint, out);
+        GenericHttpResponse response = rest.postForObject(endpoint, out, GenericHttpResponse.class);
+        LOG.debug("Received response from chikka. response={}", response);
+    }
+
+    private void sendReply(String outgoingMessage, IncomingMessageInfo msg, TransactionRecord txn) {
         ReplyMessageInfo out = new ReplyMessageInfo();
         out.setMessage_type("REPLY");
         out.setMobile_number(msg.getMobile_number());
-        out.setShortcode(env.getProperty("shortcode"));
+        out.setShortcode(shortcode);
         out.setRequest_id(msg.getRequest_id());
         out.setMessage_id(messageUtil.generateId());
         out.setMessage(outgoingMessage);
         out.setRequest_cost(messageUtil.determineCost(msg));
-        out.setClient_id(env.getProperty("client_id"));
-        out.setSecret_key(env.getProperty("secret_key"));
+        out.setClient_id(clientId);
+        out.setSecret_key(secretKey);
 
         txn.setCost(tryParse(out.getRequest_cost()));
         txn.setOutgoingMessage(out.getMessage());
         txn.setMessageId(out.getMessage_id());
         txnRecordService.save(txn);
 
-        String endpoint = env.getProperty("chikka_endpoint");
-        LOG.debug("About to send reply message. endpt={}, msg={}", endpoint, out);
+        LOG.debug("About to send REPLY message. endpt={}, msg={}", endpoint, out);
         GenericHttpResponse response = rest.postForObject(endpoint, out, GenericHttpResponse.class);
         LOG.debug("Received response from chikka. response={}", response);
     }

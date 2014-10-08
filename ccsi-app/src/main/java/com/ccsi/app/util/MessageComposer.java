@@ -24,7 +24,7 @@ public class MessageComposer {
     @Autowired
     private VariableService variableService;
 
-    private String composeMessage(TenantRecord record, String templateStr) {
+    public String composeMessage(TenantRecord record, String templateStr) {
         templateStr = templateStr
                 .replaceAll(TRACKING_NO_PH, record.getTrackingNo())
                 .replaceAll(CUSTOMER_NAME_PH, record.getCustomerName())

@@ -64,8 +64,27 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
 
     @Override
     public PageInfo<TenantRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest, Map<String, String> optionalParams) {
-        //Page<TenantRecord> records = service.findByTenant_id(tenantId, pageRequest);
 
+        BooleanExpression predicate = prepareFiltrationQuery(tenantId, optionalParams);
+
+        Page<TenantRecord> records = service.findAll(predicate, pageRequest);
+
+        List<TenantRecordInfo> userInfos = toDto(records);
+
+        PageInfo<TenantRecordInfo> pageResponse = new PageInfo<>();
+        pageResponse.setData(userInfos);
+        pageResponse.setTotal(records.getTotalElements());
+
+        return pageResponse;
+    }
+
+    @Override
+    public List<TenantRecord> findAllByParams(Long tenantId, Map<String, String> optionalParams) {
+        BooleanExpression predicate = prepareFiltrationQuery(tenantId, optionalParams);
+        return (List<TenantRecord>) service.findAll(predicate);
+    }
+
+    private BooleanExpression prepareFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {
         String trackingNo = optionalParams.get("trackingNo");
         String status = optionalParams.get("status");
         String customerName = optionalParams.get("customerName");
@@ -86,15 +105,12 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
             }
         }
 
-        Page<TenantRecord> records = service.findAll(predicate, pageRequest);
+        //broadcast no. filter
+        if (null != optionalParams.get("requireBroadcastNo")) {
+            predicate = predicate.and(tenantRecord.broadcastNo.isNotNull());
+        }
 
-        List<TenantRecordInfo> userInfos = toDto(records);
-
-        PageInfo<TenantRecordInfo> pageResponse = new PageInfo<>();
-        pageResponse.setData(userInfos);
-        pageResponse.setTotal(records.getTotalElements());
-
-        return pageResponse;
+        return predicate;
     }
 
 }

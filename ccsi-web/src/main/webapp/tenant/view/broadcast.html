@@ -42,8 +42,9 @@
       <i class="fa fa-search"></i> Filter
     </button>
     <button ng-click="clearFilter()" class="btn btn-default">Clear</button>
+    <small class="help-block">Note: Only records whose Broadcast numbers have been set are searchable here.</small>
   </form>
-  <table ng-table="tableParams" show-filter="true" class="table table-striped" style="margin-top: 10px;">
+  <table ng-table="tableParams" show-filter="true" class="table table-striped" style="margin-top: 15px;">
     <thead>
       <tr>
         <th style="text-align: left;">Tracking code

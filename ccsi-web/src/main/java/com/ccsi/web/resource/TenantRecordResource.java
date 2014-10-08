@@ -49,7 +49,10 @@ public class TenantRecordResource extends GenericController {
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String trackingNo,
             @RequestParam(required = false) String customerName,
-            @RequestParam(required = false) String transactionType) {
+            @RequestParam(required = false) String transactionType,
+
+            //This method is also used by BroadcastController, which will set this to true
+            @RequestParam(required = false) String requireBroadcastNo) {
 
         LOG.debug("User query. Principal={}, page={}, count={}", name(principal), page, count);
 
@@ -58,7 +61,7 @@ public class TenantRecordResource extends GenericController {
         optionalParams.put("trackingNo", StringUtils.trimToNull(trackingNo));
         optionalParams.put("customerName", StringUtils.trimToNull(customerName));
         optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
-
+        optionalParams.put("requireBroadcastNo", requireBroadcastNo);
         PageRequest pageRequest = new PageRequest(page - 1, count, Direction.DESC, "lastUpdated");
         PageInfo<TenantRecordInfo> pageResponse = service.pageInfo(tenantId, pageRequest, optionalParams);
 

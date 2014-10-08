@@ -55,6 +55,7 @@ public class BroadcastResource extends GenericController {
         optionalParams.put("trackingNo", StringUtils.trimToNull(trackingNo));
         optionalParams.put("customerName", StringUtils.trimToNull(customerName));
         optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
+        optionalParams.put("requireBroadcastNo", "true");
 
         try {
             switch (broadcastType) {
@@ -72,8 +73,11 @@ public class BroadcastResource extends GenericController {
                 if (null == customBroadcast) {
                     return error("Custom message required for this broadcast type.");
                 }
+                optionalParams.put("customBroadcast", customBroadcast);
                 broadcaster.broadcastCustom(tenantId, optionalParams);
                 break;
+            default:
+                return error("Unrecognized broadcast type=" + broadcastType);
             }
         } catch (Exception e) {
             return error(e.getMessage());
