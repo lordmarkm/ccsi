@@ -3,6 +3,7 @@ package com.ccsi.web.resource;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baldy.commons.web.controller.GenericController;
 import com.ccsi.app.service.BroadcastHandlingService;
+import com.ccsi.commons.dto.GenericHttpResponse;
 import com.google.common.collect.Maps;
 
 /**
@@ -57,24 +59,25 @@ public class BroadcastResource extends GenericController {
         optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
         optionalParams.put("requireBroadcastNo", "true");
 
+        BigDecimal newbalance;
         try {
             switch (broadcastType) {
             case "status":
-                broadcaster.broadcastStatus(tenantId, optionalParams);
+                newbalance = broadcaster.broadcastStatus(tenantId, optionalParams);
                 break;
             case "stock":
                 if (null == stockBroadcast) {
                     return error("Keyword template required for keyword template broadcast");
                 }
                 optionalParams.put("keyword", stockBroadcast);
-                broadcaster.broadcastStock(tenantId, optionalParams);
+                newbalance = broadcaster.broadcastStock(tenantId, optionalParams);
                 break;
             case "custom":
                 if (null == customBroadcast) {
                     return error("Custom message required for this broadcast type.");
                 }
                 optionalParams.put("customBroadcast", customBroadcast);
-                broadcaster.broadcastCustom(tenantId, optionalParams);
+                newbalance = broadcaster.broadcastCustom(tenantId, optionalParams);
                 break;
             default:
                 return error("Unrecognized broadcast type=" + broadcastType);
@@ -83,7 +86,7 @@ public class BroadcastResource extends GenericController {
             return error(e.getMessage());
         }
 
-        return new ResponseEntity<Object>("Ok", OK);
+        return new ResponseEntity<Object>(new GenericHttpResponse(OK.name(), newbalance.toString()), OK);
     }
 
     private ResponseEntity<Object> error(String message) {

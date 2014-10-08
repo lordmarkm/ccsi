@@ -10,6 +10,14 @@ public class GenericHttpResponse {
     private String status;
     private String message;
 
+    public GenericHttpResponse(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+    public GenericHttpResponse() {
+        //default
+    }
+
     @Override
     public String toString() {
         return new ToStringCreator(this)

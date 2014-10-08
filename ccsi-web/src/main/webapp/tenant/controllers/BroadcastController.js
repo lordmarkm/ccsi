@@ -87,6 +87,10 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
       });
     };
     function doBroadcast(broadcastType) {
+      if ($scope.totalRecords > $scope.tenant.pushCredits) {
+        toaster.pop('error', 'Insufficient push credits', 'Not enough push credits to complete this broadcast.');
+        return;
+      }
       BroadcastService.save({
         tenantId: $stateParams.tenantId,
         broadcastType: broadcastType,
@@ -98,8 +102,9 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
         transactionType : $scope.lastfilter.transactionType
       },{
 
-      }, function (response) {
+      }, function (success) {
         toaster.pop('success', 'Successful broadcast', $scope.totalRecords + ' messages successfully sent.');
+        $scope.tenant.pushCredits = success.message;
       }, function (fail) {
         toaster.pop('error', 'Broadcast failed', fail.data);
       });

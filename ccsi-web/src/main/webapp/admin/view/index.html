@@ -12,6 +12,8 @@
       <th style="text-align: left;">Customer Records
       <th style="text-align: left;">Reply cost
       <th style="text-align: left;">Transactions
+      <th style="text-align: left;">Push credits
+      <th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +24,11 @@
       <td>{{tenant.recordCount}}
       <td>FREE
       <td>{{tenant.transactionCount}}
+      <td>{{tenant.pushCredits|number:2}}
+      <td>
+        <button ng-click="giveCredits(tenant)" title="Give push credits" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></button>
+        <button ng-click="takeCredits(tenant)" title="Remove push credits" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i></button>
+      </td>
     </tr>
     <tr ng-if="!totalRecords">
       <td colspan="5">No tenants found</td>
@@ -31,3 +38,49 @@
 
 </div>
 </div>
+
+<!-- Modals -->
+<script type="text/ng-template" id="modal-give-credits">
+  <div class="modal-header modal-primary">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Give push credits</h3>
+  </div>
+  <form ng-submit="confirm()">
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+      <dt>Tenant
+      <dd>{{tenant.name}}
+      <dt class="form-control-static">Credits to give
+      <dd>
+        <input type="number" ng-model="giveCredits.pushCredits" class="form-control" required />
+      </dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-s-xs btn-success">Confirm</button>
+    </form>
+    <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
+  </div>
+</script>
+<script type="text/ng-template" id="modal-take-credits">
+  <div class="modal-header modal-primary">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Removing push credits</h3>
+  </div>
+  <form ng-submit="confirm()">
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+      <dt>Tenant
+      <dd>{{tenant.name}}
+      <dt class="form-control-static">Credits to remove
+      <dd>
+        <input type="number" ng-model="takeCredits.pushCredits" class="form-control" required />
+      </dd>
+    </dl>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-s-xs btn-success">Confirm</button>
+    </form>
+    <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
+  </div>
+</script>

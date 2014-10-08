@@ -6,6 +6,7 @@
       </pattern>
     </encoder>
   </appender>
+  <!-- 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>C:\Users\Mark\Desktop\ppla.log</file>
     <encoder>
@@ -13,7 +14,7 @@
       </pattern>
     </encoder>
   </appender>
-
+  -->
   <logger name="com.ccsi" level="debug" />
 
   <root level="info">
