@@ -24,4 +24,6 @@ public interface TenantRecordServiceCustom {
      * @return List of tenantRecords matching the criteria in optionalParmas AND broadcastNo != null
      */
     List<TenantRecord> findAllByParams(Long tenantId, Map<String, String> optionalParams);
+
+    int batchUpdate(Long tenantId, Map<String, String> optionalParams, String newStatus);
 }

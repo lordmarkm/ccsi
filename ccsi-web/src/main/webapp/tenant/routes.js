@@ -58,7 +58,11 @@ define([
       templateUrl: 'tenant/view/broadcast.html',
       controller: 'BroadcastController'
     })
-
+    .state('tenant.batchupdate', {
+      url: '/batch?tenantIndex',
+      templateUrl: 'tenant/view/batchupdate.html',
+      controller: 'BatchUpdateController'
+    })
     //admin states
     .state('admin', {
       url: '/admin',

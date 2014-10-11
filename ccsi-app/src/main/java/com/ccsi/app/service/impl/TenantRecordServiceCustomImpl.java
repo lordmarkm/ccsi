@@ -12,8 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import com.ccsi.app.entity.QTenantRecord;
+import com.ccsi.app.entity.Template;
 import com.ccsi.app.entity.Tenant;
 import com.ccsi.app.entity.TenantRecord;
+import com.ccsi.app.service.TemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
 import com.ccsi.app.service.custom.TenantRecordServiceCustom;
@@ -30,6 +32,9 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
 
     @Autowired
     private TenantService tenantService;
+
+    @Autowired
+    private TemplateService templateService;
 
     @Override
     public TenantRecordInfo findOneInfo(Long tenantRecordId) {
@@ -57,6 +62,8 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
                 candidate = RandomStringUtils.randomAlphanumeric(5).toUpperCase();
             }
             record.setTrackingNo(candidate);
+        } else {
+            record.setTrackingNo(record.getTrackingNo().toUpperCase());
         }
 
         return toDto(service.save(record));
@@ -80,8 +87,19 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
 
     @Override
     public List<TenantRecord> findAllByParams(Long tenantId, Map<String, String> optionalParams) {
-        BooleanExpression predicate = prepareFiltrationQuery(tenantId, optionalParams);
-        return (List<TenantRecord>) service.findAll(predicate);
+        BooleanExpression query = prepareFiltrationQuery(tenantId, optionalParams);
+        return (List<TenantRecord>) service.findAll(query);
+    }
+
+    @Override
+    public int batchUpdate(Long tenantId, Map<String, String> optionalParams, String newStatus) {
+        BooleanExpression query = prepareFiltrationQuery(tenantId, optionalParams);
+        Template status = templateService.findByTenant_idAndStatus(tenantId, newStatus);
+        Iterable<TenantRecord> records = service.findAll(query);
+        for (TenantRecord record : records) {
+            record.setStatus(status);
+        }
+        return service.save(records).size();
     }
 
     private BooleanExpression prepareFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {

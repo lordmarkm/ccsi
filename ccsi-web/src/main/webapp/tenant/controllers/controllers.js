@@ -9,6 +9,7 @@ define([
   'tenant/controllers/TenantTransactionsController.js',
   'tenant/controllers/PreviewController.js',
   'tenant/controllers/BroadcastController.js',
+  'tenant/controllers/BatchUpdateController.js',
 
   //admin controllers
   'admin/controllers/AdminController.js'

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.baldy.commons.web.controller.GenericController;
 import com.ccsi.app.service.TenantRecordService;
+import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.PageInfo;
 import com.ccsi.commons.dto.tenant.TenantRecordInfo;
 import com.google.common.collect.Maps;
@@ -68,6 +69,36 @@ public class TenantRecordResource extends GenericController {
         return new ResponseEntity<>(pageResponse, OK);
     }
 
+    /**
+     * Batch update
+     **/
+    @RequestMapping(method = POST, params="newStatus")
+    public ResponseEntity<GenericHttpResponse> batchUpdate(Principal principal,
+            @PathVariable Long tenantId,
+
+            //Optional filtering params
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String trackingNo,
+            @RequestParam(required = false) String customerName,
+            @RequestParam(required = false) String transactionType,
+
+            //This status will be set on all records that match the above params
+            @RequestParam String newStatus) {
+
+        LOG.debug("Batch update request. Principal={}", name(principal));
+
+        Map<String, String> optionalParams = Maps.newHashMap();
+        optionalParams.put("status", StringUtils.trimToNull(status));
+        optionalParams.put("trackingNo", StringUtils.trimToNull(trackingNo));
+        optionalParams.put("customerName", StringUtils.trimToNull(customerName));
+        optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
+
+        LOG.debug("About to do batch updatd. new status={}, filters={}", newStatus, optionalParams);
+        int updated = service.batchUpdate(tenantId, optionalParams, newStatus);
+
+        return new ResponseEntity<>(new GenericHttpResponse(OK.name(), String.valueOf(updated)), OK);
+    }
+
     @RequestMapping(value = "/{tenantRecordId}", method = GET)
     public ResponseEntity<TenantRecordInfo> findOne(@PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
         LOG.debug("Tenant record view request. tenant={}, record={}", tenantId, tenantRecordId);
@@ -83,6 +114,12 @@ public class TenantRecordResource extends GenericController {
         if (binding.hasErrors()) {
             return new ResponseEntity<Object>(firstError(binding), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Object>(service.saveInfo(tenantId, record), OK);
+        
+        //Catch duplicate trackingNo save attempts
+        try {
+            return new ResponseEntity<Object>(service.saveInfo(tenantId, record), OK);
+        } catch (Exception e) {
+            return new ResponseEntity<Object>("Duplicate tracking number", HttpStatus.BAD_REQUEST);
+        }
     }
 }

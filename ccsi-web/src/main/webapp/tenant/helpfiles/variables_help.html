@@ -1,0 +1,15 @@
+<div class="panel panel-info">
+  <div class="panel-heading pointer" ng-click="showHelp = !showHelp" ng-init="showHelp = false" style="font-family: monospace;">
+    <span ng-if="showHelp">[-]</span>
+    <span ng-if="!showHelp">[+]</span>
+    Help
+  </div>
+  <div class="panel-body" ng-show="showHelp">
+    <h2>Custom Variables</h2>
+    <p>Custom variables are similar to the &lt;customerName&gt; and &lt;transactionType&gt; variables in that they are replaced in replies
+       by values that you define. 
+    <p>When you create a custom variable for your business, you are required to enter a default value. This value
+       is used when a customer record has no defined value for this variable. However, by going to the customer record's preview page
+       and viewing advanced options, you may enter a custom value. This will override the default.
+  </div>
+</div>

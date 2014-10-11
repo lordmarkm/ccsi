@@ -49,6 +49,8 @@
         <dd><a ui-sref="tenant.variables({tenantId: tenant.id, tenantIndex: tenantIndex})">Edit</a>
         <dt>Broadcast
         <dd><a ui-sref="tenant.broadcast({tenantId: tenant.id, tenantIndex: tenantIndex})">Do broadcast</a>
+        <dt>Batch update
+        <dd><a ui-sref="tenant.batchupdate({tenantId: tenant.id, tenantIndex: tenantIndex})">Do batch update</a>
         <!-- 
         <dd>Not supported just yet
         -->
@@ -119,7 +121,6 @@
         </tbody>
       </table>
     </div>
-    </div>
   </div>
 </div>
 
@@ -130,20 +131,32 @@
     <h3 ng-if="!record.id" class="modal-title">Create new record</h3>
     <h3 ng-if="record.id" class="modal-title">Update record</h3>
   </div>
-  <form ng-submit="confirm()" class="form form-inline">
+  <form ng-submit="confirm()" class="form form-horizontal">
   <div class="modal-body">
-      <div class="form-group">
-        <label class="sr-only" for="status">Status</label>
-        <select ng-model="record.status" required
-          ng-options="template as template.status for template in statuses track by template.status" id="status" class="form-control"></select>
+      <div ng-if="record.trackingNo" class="form-group">
+        <label for="trackingNo" class="col-sm-3">Tracking No.</label>
+        <div class="col-sm-8">
+          <input type="text" ng-model="record.trackingNo" maxlength="10" class="form-control" id="customerName" placeholder="Tracker">
+        </div>
       </div>
       <div class="form-group">
-        <label class="sr-only" for="customerName">Customer name</label>
-        <input type="text" ng-model="record.customerName" class="form-control" id="customerName" placeholder="Customer name">
+        <label for="customerName" class="col-sm-3">Customer name</label>
+        <div class="col-sm-8">
+          <input type="text" ng-model="record.customerName" class="form-control" id="customerName" placeholder="Customer name">
+        </div>
       </div>
       <div class="form-group">
-        <label class="sr-only" for="transactionType">Transaction type</label>
-        <input type="text" ng-model="record.transactionType" class="form-control" id="transactionType" placeholder="Transaction type">
+        <label for="transactionType" class="col-sm-3">Transaction type</label>
+        <div class="col-sm-8">
+          <input type="text" ng-model="record.transactionType" class="form-control" id="transactionType" placeholder="Transaction type">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="status" class="col-sm-3">Status</label>
+        <div class="col-sm-8">
+          <select ng-model="record.status" required
+            ng-options="template as template.status for template in statuses track by template.status" id="status" class="form-control"></select>
+        </div>
       </div>
       <span ng-if="!record.id" ng-click="clearRecord()" class="btn btn-default">Clear</span>
   </div>

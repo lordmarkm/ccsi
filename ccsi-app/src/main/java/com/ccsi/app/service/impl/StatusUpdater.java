@@ -1,5 +1,8 @@
 package com.ccsi.app.service.impl;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +13,7 @@ import com.ccsi.app.entity.TransactionRecord;
 import com.ccsi.app.service.TemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 
 @Service
 public class StatusUpdater {
@@ -31,7 +35,7 @@ public class StatusUpdater {
         try {
             breakdown = updateBreakdown(updateRequest);
         } catch (Exception e) {
-            txn.setOutgoingMessage(e.getMessage());
+            txn.setOutgoingMessage("Bad update request. Format must always be 'Update <trackingNo> <status>'");
             return;
         }
 
@@ -57,6 +61,26 @@ public class StatusUpdater {
         txn.setOutgoingMessage("Successful update. trackingNo=" + trackingNo + ", status=" + status);
     }
 
+    public String[] updateBreakdownMultiwordStatus(String updateRequest) {
+        Iterable<String> splitted = Splitter.on(' ').trimResults()
+            .omitEmptyStrings()
+            .split(updateRequest);
+
+        String trackingNo = null;
+        StringBuilder status = new StringBuilder();
+
+        Iterator<String> it = splitted.iterator();
+        it.next(); //discard 'update'
+        trackingNo = it.next();
+        while (it.hasNext()) {
+            status.append(it.next());
+            if (it.hasNext()) status.append(' ');
+        }
+
+        return new String[] {trackingNo, status.toString()};
+    }
+
+    @Deprecated
     public String[] updateBreakdown(String updateRequest) {
         String sanitized = updateRequest.replaceAll("\\s+", " ").trim();
         String[] updateBreakdown = sanitized.split(" ");
