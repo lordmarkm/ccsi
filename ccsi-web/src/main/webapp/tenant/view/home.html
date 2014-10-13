@@ -1,5 +1,5 @@
 <div ng-if="!tenants.length">
-  It looks like you don't have any registered tenants. <a ui-sref="tenant_create">Create one now</a>
+  It looks like you don't have any registered businesses. <a ui-sref="tenant_create">Create one now</a>
 </div>
 
 <div ng-if="tenant">
@@ -15,12 +15,12 @@
   </div>
   <div class="row" style="margin-top: 5px;">
     <div class="col-sm-6">
-      <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Create new tenant</a>
+      <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Add another business</a>
     </div>
   </div>
 
   <div class="panel panel-default" style="margin-top:10px;">
-    <div class="panel-heading">Tenant Info</div>
+    <div class="panel-heading">Business Info</div>
     <div class="panel-body">
       <dl class="dl-horizontal">
         <dt>Name
@@ -56,7 +56,7 @@
         -->
       </dl>
     </div>
-    <div class="panel-heading">Tenant records</div>
+    <div class="panel-heading">Customer records</div>
     <div class="panel-body">
       <a href="javascript:;" ng-click="updateRecord()">Create new customer record</a>
       <form ng-submit="reloadTable()" class="form form-inline" style="margin-top: 10px;">

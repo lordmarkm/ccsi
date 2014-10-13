@@ -23,6 +23,19 @@ define(['tenant/controllers/module.js'], function (controllers) {
       }
     });
 
+    //Control reply charging schemes
+    $scope.replyChargingSchemes = ['PISO', 'TWO_FIFTY', 'FIVE'];
+    $scope.schemeDescription = {
+        'PISO': 'Smart: P1.00, Globe: P1.00, Sun: P2.00',
+        'TWO_FIFTY': 'Smart: P2.50, Globe: P2.50, Sun: P2.00',
+        'FIVE': 'Smart: P5.00, Globe: P5.00, Sun: P2.00'
+    };
+    $scope.saveTenant = function (tenant) {
+      TenantService.save(tenant, function (tenant) {
+        toaster.pop('success', 'Save success', 'Tenant ' + tenant.name + ' updated.');
+      });
+    };
+
     //Give/take credits
     $scope.giveCredits = function (tenant) {
       return $modal.open({

@@ -3,7 +3,7 @@
 <html>
 
 <head>
-<title>CCSI</title>
+<title>App to date</title>
 <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/angular-ngtable/ng-table.min.css' />" />
@@ -21,7 +21,9 @@
   <!-- NAVIGATION -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="<@spring.url '/#/' />">Chikka Service Interface</a>
+      <a class="navbar-brand" href="<@spring.url '/#/' />">App to date
+         <small style="font-size: 0.5em;">Powered by Chikka</small>
+      </a>
     </div>
     <ul class="nav navbar-nav">
       <!-- 

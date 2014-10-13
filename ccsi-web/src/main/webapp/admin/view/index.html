@@ -10,7 +10,7 @@
       <th style="text-align: left;">Keyword
       <th style="text-align: left;">Owner
       <th style="text-align: left;">Customer Records
-      <th style="text-align: left;">Reply cost
+      <th style="text-align: left;">Reply charging scheme
       <th style="text-align: left;">Transactions
       <th style="text-align: left;">Push credits
       <th>
@@ -22,7 +22,10 @@
       <td>{{tenant.keyword}}
       <td>{{tenant.owner}}
       <td>{{tenant.recordCount}}
-      <td>FREE
+      <td>
+        <select ng-change="saveTenant(tenant)" ng-model="tenant.replyCharge" ng-options="replyCharge as replyCharge for replyCharge in replyChargingSchemes"></select><br />
+        <small>{{schemeDescription[tenant.replyCharge]}}</small>
+      </td>
       <td>{{tenant.transactionCount}}
       <td>{{tenant.pushCredits|number:2}}
       <td>
@@ -31,7 +34,7 @@
       </td>
     </tr>
     <tr ng-if="!totalRecords">
-      <td colspan="5">No tenants found</td>
+      <td colspan="7">No tenants found</td>
     </tr>
   </tbody>
 </table>

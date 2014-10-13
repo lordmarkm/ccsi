@@ -47,8 +47,10 @@ public class TenantServiceCustomImpl extends MappingService<Tenant, TenantInfo>
     @Override
     public TenantInfo saveInfo(String ownerName, TenantInfo tenantInfo) {
         Tenant tenant = toEntity(tenantInfo);
-        Account account = accounts.findByUsername(ownerName);
-        tenant.setOwner(account);
+        if (null == tenant.getOwner()) {
+            Account account = accounts.findByUsername(ownerName);
+            tenant.setOwner(account);
+        }
         return toDto(service.save(tenant));
     }
 

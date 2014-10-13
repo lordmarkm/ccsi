@@ -38,6 +38,10 @@ public class CreateTenantValidator  implements Validator{
         defaultValidator.validate(target, errors);
 
         TenantInfo tenant = (TenantInfo) target;
+        if (tenant.getId() != null) {
+            LOG.debug("Skip validating existing tenant.");
+            return;
+        }
         if (service.findByKeywordIgnoreCase(StringUtils.trimToEmpty(tenant.getKeyword())) != null) {
             errors.rejectValue("keyword", "keyword.unavailable", "Sadly, that keyword is already in use.");
         }

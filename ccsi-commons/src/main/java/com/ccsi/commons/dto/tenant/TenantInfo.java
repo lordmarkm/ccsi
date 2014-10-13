@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.ccsi.commons.reference.ReplyChargingScheme;
+
 public class TenantInfo extends BaseCcsiInfo {
 
     @NotBlank(message = "Tenant name can't be blank!")
@@ -21,6 +23,7 @@ public class TenantInfo extends BaseCcsiInfo {
     private long recordCount;
     private long transactionCount;
     private BigDecimal pushCredits;
+    private ReplyChargingScheme replyCharge;
 
     public BigDecimal getPushCredits() {
         return pushCredits;
@@ -68,6 +71,14 @@ public class TenantInfo extends BaseCcsiInfo {
 
     public void setRecordCount(long recordCount) {
         this.recordCount = recordCount;
+    }
+
+    public ReplyChargingScheme getReplyCharge() {
+        return replyCharge;
+    }
+
+    public void setReplyCharge(ReplyChargingScheme replyCharge) {
+        this.replyCharge = replyCharge;
     }
 
 }

@@ -4,6 +4,7 @@
 <head>
   <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.0.3/css/bootstrap.min.css' />">
   <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
+  <title>Login</title>
 </head>
 
 <body>
@@ -12,7 +13,7 @@
       <div class="col-sm-6 col-md-offset-3" style="margin-top: 100px;">
         <div class="panel panel-primary">
           <div class="text-center panel-heading">
-            <div class="panel-title"><strong>CSI: </strong> Chikka Service Interface</div>
+            <div class="panel-title"><strong>App to date</strong> <br/><small>Powered by Chikka</small></div>
           </div>
           <div class="panel-body">
             <#if msg??><div class="alert alert-info text-center">${msg }</div></#if>
