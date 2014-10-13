@@ -24,8 +24,9 @@ define(['tenant/controllers/module.js'], function (controllers) {
     });
 
     //Control reply charging schemes
-    $scope.replyChargingSchemes = ['PISO', 'TWO_FIFTY', 'FIVE'];
+    $scope.replyChargingSchemes = ['FREE', 'PISO', 'TWO_FIFTY', 'FIVE'];
     $scope.schemeDescription = {
+        'FREE': 'Smart: free, Globe: free, Sun: P2.00',
         'PISO': 'Smart: P1.00, Globe: P1.00, Sun: P2.00',
         'TWO_FIFTY': 'Smart: P2.50, Globe: P2.50, Sun: P2.00',
         'FIVE': 'Smart: P5.00, Globe: P5.00, Sun: P2.00'
