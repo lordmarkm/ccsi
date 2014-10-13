@@ -1,10 +1,13 @@
 require.config({
   paths: {
-    'angular':  '../lib/angular/angular',
+    //Get 2 biggest libs from cdn
+    //'angular':  '../lib/angular/angular',
+    'angular': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min',
+    //'jquery': 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min',
+    'jquery': '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min',
     'angular-animate': '../lib/angular/angular-animate',
     'angular-toaster': '../lib/angular/angular-toaster',
     'uiBootstrap': '../lib/angular-ui/ui-bootstrap-tpls-0.11.0.min',
-    'jquery': 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min',
     'domReady': '../lib/require/domReady',
     'uiRouter': '../lib/angular/angular-ui-router.min',
     'ngResource': '../lib/angular/angular-resource.min',

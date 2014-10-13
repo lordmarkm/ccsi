@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -67,7 +68,7 @@ public class TenantResource extends GenericController {
     }
 
     @RequestMapping(value = "/{tenantId}", method = GET)
-    public ResponseEntity<TenantInfo> findOneInfo(@PathVariable Long tenantId) {
+    public ResponseEntity<TenantInfo> findOneInfo(Principal principal, @PathVariable Long tenantId) {
         LOG.info("Finding single tenant. id={}", tenantId);
         return new ResponseEntity<>(service.findOneInfo(tenantId), OK);
     }

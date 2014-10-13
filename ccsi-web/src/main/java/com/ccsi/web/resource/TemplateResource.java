@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class TemplateResource {
     private TemplateService service;
 
     @RequestMapping(method = GET)
-    public ResponseEntity<List<TemplateInfo>> findByTenant(@PathVariable Long tenantId) {
+    public ResponseEntity<List<TemplateInfo>> findByTenant(Principal principal, @PathVariable Long tenantId) {
         LOG.debug("Finding templates by tenant id. id={}", tenantId);
         return new ResponseEntity<>(service.findInfoByTenantId(tenantId, null), OK);
     }
