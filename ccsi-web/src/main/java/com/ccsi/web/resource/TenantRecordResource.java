@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,7 @@ import com.google.common.collect.Maps;
 
 @RestController
 @RequestMapping("/record/{tenantId}")
+@PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
 public class TenantRecordResource extends GenericController {
 
     @Autowired
@@ -100,13 +102,13 @@ public class TenantRecordResource extends GenericController {
     }
 
     @RequestMapping(value = "/{tenantRecordId}", method = GET)
-    public ResponseEntity<TenantRecordInfo> findOne(@PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
+    public ResponseEntity<TenantRecordInfo> findOne(Principal principal, @PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
         LOG.debug("Tenant record view request. tenant={}, record={}", tenantId, tenantRecordId);
         return new ResponseEntity<>(service.findOneInfo(tenantRecordId), OK);
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<Object> save(@PathVariable Long tenantId,
+    public ResponseEntity<Object> save(Principal principal, @PathVariable Long tenantId,
             @Valid @RequestBody TenantRecordInfo record, BindingResult binding) {
 
         LOG.debug("Tenant record save request. tenant={}, record={}", tenantId, record);

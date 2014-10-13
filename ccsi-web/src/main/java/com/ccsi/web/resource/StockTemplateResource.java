@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ import com.ccsi.commons.dto.tenant.StockTemplateInfo;
 
 @RestController
 @RequestMapping("/stock/{tenantId}")
+@PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
 public class StockTemplateResource extends GenericController {
     private static Logger LOG = LoggerFactory.getLogger(StockTemplateResource.class);
 
@@ -37,14 +39,15 @@ public class StockTemplateResource extends GenericController {
     private StockTemplateService service;
 
     @RequestMapping(method = GET)
-    public ResponseEntity<List<StockTemplateInfo>> findByTenant(@PathVariable Long tenantId) {
+    public ResponseEntity<List<StockTemplateInfo>> findByTenant(Principal principal, @PathVariable Long tenantId) {
         LOG.debug("Finding templates by tenant id. id={}", tenantId);
         Sort sort = new Sort(Direction.ASC, "keyword");
         return new ResponseEntity<>(service.findInfoByTenantId(tenantId, sort), OK);
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<Object> save(@PathVariable Long tenantId,
+    public ResponseEntity<Object> save(Principal principal,
+            @PathVariable Long tenantId,
             @Valid @RequestBody StockTemplateInfo template,
             BindingResult binding) {
         LOG.debug("Template save request. tenant={}, template={}", tenantId, template);

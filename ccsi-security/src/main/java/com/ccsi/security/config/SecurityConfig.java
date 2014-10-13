@@ -31,6 +31,7 @@ import com.baldy.commons.security.services.BaseBaldyUserDetailsService;
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.ccsi.security",
     basePackageClasses = BaldyCommonsSecurityServicesMarker.class)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -54,6 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return Encryptors.noOpText();
     }
 
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     public void configure(WebSecurity builder) throws Exception {
         builder
@@ -64,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeUrls()
+            .csrf().disable()
+            .authorizeRequests()
                 .antMatchers("/admin**").hasRole(ADMIN)
                 .antMatchers("/tenant**").authenticated()
 //              .antMatchers("/operations**").hasAnyAuthority(OPERATOR, WAREHOUSE, MIXER, EXTRUDER, PRINTER, CUTTER)
@@ -97,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void registerAuthentication(AuthenticationManagerBuilder  builder) throws Exception {
+    protected void configure(AuthenticationManagerBuilder  builder) throws Exception {
         builder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 }

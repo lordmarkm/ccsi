@@ -42,6 +42,12 @@
     <dependency>
       <groupId>baldy.commons.security</groupId>
       <artifactId>baldy-commons-security-services</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-javaconfig</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>baldy.commons</groupId>

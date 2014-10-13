@@ -26,6 +26,7 @@ import static org.springframework.http.HttpStatus.*;
  */
 @RestController
 @RequestMapping("/template/{tenantId}")
+@PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
 public class TemplateResource {
 
     private static Logger LOG = LoggerFactory.getLogger(TemplateResource.class);
@@ -40,7 +41,7 @@ public class TemplateResource {
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity<TemplateInfo> save(@PathVariable Long tenantId,
+    public ResponseEntity<TemplateInfo> save(Principal principal, @PathVariable Long tenantId,
             @Valid @RequestBody TemplateInfo template) {
         LOG.debug("Saving template. tenant={}, template={}", template);
         return new ResponseEntity<>(service.saveInfo(tenantId, template), OK);

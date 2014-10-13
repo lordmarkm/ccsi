@@ -53,7 +53,7 @@ public class TenantResource extends GenericController {
         return new ResponseEntity<>(service.findByOwnerInfo(principal.getName()), OK);
     }
 
-    //TODO @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = GET, params={"page", "count"})
     public ResponseEntity<PageInfo<TenantInfo>> page(Principal principal,
             @RequestParam int page,
@@ -67,12 +67,14 @@ public class TenantResource extends GenericController {
         return new ResponseEntity<>(pageResponse, OK);
     }
 
+    @PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
     @RequestMapping(value = "/{tenantId}", method = GET)
     public ResponseEntity<TenantInfo> findOneInfo(Principal principal, @PathVariable Long tenantId) {
         LOG.info("Finding single tenant. id={}", tenantId);
         return new ResponseEntity<>(service.findOneInfo(tenantId), OK);
     }
 
+    //No preauthorize here. Whatever principal saves will be attributed to him anyway
     @RequestMapping(method = POST)
     public ResponseEntity<Object> save(Principal principal, @Valid @RequestBody TenantInfo tenant, BindingResult binding) {
         LOG.info("Save tenant request. tenant={}", tenant);
