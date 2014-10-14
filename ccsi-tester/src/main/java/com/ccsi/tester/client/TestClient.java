@@ -10,7 +10,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.ccsi.commons.dto.IncomingMessageInfo;
-import com.ccsi.commons.dto.ReplyMessageInfo;
 
 public class TestClient {
 
@@ -23,10 +22,10 @@ public class TestClient {
     public void sendTest() {
         IncomingMessageInfo msg = new IncomingMessageInfo();
         msg.setMessage_type("incoming");
-        msg.setMobile_number("639155411987");
+        msg.setMobile_number("639305411987");
         msg.setShortcode("292902274");
         msg.setRequest_id("12345");
-        msg.setMessage("laundry update 45UP0  ggs");
+        msg.setMessage("laundry 45UP0");
         msg.setTimestamp(String.valueOf(new Date().getTime()));
 
         LinkedMultiValueMap<String, Object> m = new LinkedMultiValueMap<String, Object>();

@@ -1,5 +1,7 @@
 package com.ccsi.app.util;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +40,5 @@ public class MessageUtil {
 
         return new String[]{tenantCode, trackingNoOrKeyword};
     }
+
 }

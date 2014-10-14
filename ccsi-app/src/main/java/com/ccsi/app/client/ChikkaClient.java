@@ -18,10 +18,12 @@ import com.ccsi.app.entity.TransactionRecord;
 import com.ccsi.app.service.TransactionRecordService;
 import com.ccsi.app.util.MessageComposer;
 import com.ccsi.app.util.MessageUtil;
+import com.ccsi.app.util.PricingUtil;
 import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.IncomingMessageInfo;
 import com.ccsi.commons.dto.OutgoingMessageInfo;
 import com.ccsi.commons.dto.ReplyMessageInfo;
+import com.ccsi.commons.exception.NetworkNotSupportedException;
 
 @Service
 @PropertySource("classpath:app.properties")
@@ -42,6 +44,9 @@ public class ChikkaClient {
     private MessageUtil messageUtil;
 
     @Autowired
+    private PricingUtil pricingUtil;
+
+    @Autowired
     private TransactionRecordService txnRecordService;
 
     private String endpoint;
@@ -58,31 +63,67 @@ public class ChikkaClient {
     }
 
     public void sendInvalidTenantMessage(IncomingMessageInfo msg, TransactionRecord txn, String tenantCode) {
-        String outgoingMessage = "We could not find a tenant with code " + tenantCode + ".";
-        sendReply(outgoingMessage, msg, txn);
+        String outgoingMessage = "We could not find a business with keyword " + tenantCode + ".";
+        try {
+            txn.setCost(pricingUtil.determineErrorCost(msg.getMobile_number(), txn));
+            sendReply(outgoingMessage, msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No error message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void sendInvalidTrackingNo(IncomingMessageInfo msg, TransactionRecord txn, String trackingNoOrKeyword) {
         String outgoingMessage = "We could not find a keyword or transaction record matching " + trackingNoOrKeyword + ".";
-        sendReply(outgoingMessage, msg, txn);
+        try {
+            txn.setCost(pricingUtil.determineErrorCost(msg.getMobile_number(), txn));
+            sendReply(outgoingMessage, msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No error message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void sendInvalidMessageMessage(IncomingMessageInfo msg, TransactionRecord txn) {
         String outgoingMessage = "Your message was invalid. Please follow this format: <keyword> <trackingNo>.";
-        sendReply(outgoingMessage, msg, txn);
+        try {
+            txn.setCost(pricingUtil.determineErrorCost(msg.getMobile_number(), txn));
+            sendReply(outgoingMessage, msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No error message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void sendStockTemplateReply(IncomingMessageInfo msg, TransactionRecord txn, StockTemplate stock) {
-        sendReply(stock.getReply(), msg, txn);
+        try {
+            txn.setCost(pricingUtil.determineReplyCost(txn.getTenant().getReplyCharge(), msg.getMobile_number(), txn));
+            sendReply(stock.getReply(), msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No reply message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void sendTemplateReply(TenantRecord record, IncomingMessageInfo msg, TransactionRecord txn) {
         String outgoingMessage = messageComposer.composeMessage(record);
-        sendReply(outgoingMessage, msg, txn);
+        try {
+            txn.setCost(pricingUtil.determineReplyCost(txn.getTenant().getReplyCharge(), msg.getMobile_number(), txn));
+            sendReply(outgoingMessage, msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No reply message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void sendUpdateReply(IncomingMessageInfo msg, TransactionRecord txn) {
-        sendReply(txn.getOutgoingMessage(), msg, txn);
+        try {
+            txn.setCost(pricingUtil.determineReplyCost(txn.getTenant().getReplyCharge(), msg.getMobile_number(), txn));
+            sendReply(txn.getOutgoingMessage(), msg, txn);
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No reply message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+        }
     }
 
     public void push(TransactionRecord txn) {
@@ -111,11 +152,10 @@ public class ChikkaClient {
         out.setRequest_id(msg.getRequest_id());
         out.setMessage_id(messageUtil.generateId());
         out.setMessage(outgoingMessage);
-        out.setRequest_cost(messageUtil.determineCost(msg));
+        out.setRequest_cost(pricingUtil.asCostString(txn.getCost()));
         out.setClient_id(clientId);
         out.setSecret_key(secretKey);
 
-        txn.setCost(tryParse(out.getRequest_cost()));
         txn.setOutgoingMessage(out.getMessage());
         txn.setMessageId(out.getMessage_id());
         txnRecordService.save(txn);
@@ -123,14 +163,6 @@ public class ChikkaClient {
         LOG.debug("About to send REPLY message. endpt={}, msg={}", endpoint, out);
         GenericHttpResponse response = rest.postForObject(endpoint, out, GenericHttpResponse.class);
         LOG.debug("Received response from chikka. response={}", response);
-    }
-
-    private BigDecimal tryParse(String request_cost) {
-        try {
-            return new BigDecimal(request_cost);
-        } catch (NumberFormatException n) {
-            return BigDecimal.ZERO;
-        }
     }
 
 }

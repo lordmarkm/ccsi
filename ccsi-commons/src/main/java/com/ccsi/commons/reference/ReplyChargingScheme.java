@@ -1,7 +1,8 @@
 package com.ccsi.commons.reference;
 
 import java.math.BigDecimal;
-import static java.math.BigDecimal.ZERO;
+
+import com.ccsi.commons.exception.NetworkNotSupportedException;
 
 /**
  * @author mbmartinez
@@ -25,20 +26,24 @@ public enum ReplyChargingScheme {
         this.sun = new BigDecimal(sun).setScale(2);
     }
 
-    public String getAmount(Network network) {
+    public BigDecimal getAmount(Network network) throws NetworkNotSupportedException {
+        if (null == network) {
+            throw new NetworkNotSupportedException();
+        }
+
         switch (network) {
         case Globe:
-            return ZERO.compareTo(globe) == 0 ? "FREE" : globe.toString();
+            return globe;
         case Smart:
-            return ZERO.compareTo(smart) == 0 ? "FREE" : smart.toString();
+            return smart;
         case Sun:
-            return ZERO.compareTo(sun) == 0 ? "FREE" : sun.toString();
+            return sun;
         default:
-            throw new IllegalArgumentException("Unrecognized network: " + network);
+            throw new NetworkNotSupportedException();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NetworkNotSupportedException {
         System.out.println(FREE.getAmount(Network.Smart));
         System.out.println(TWO_FIFTY.getAmount(Network.Globe));
         System.out.println(TEN.getAmount(Network.Sun));

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -11,6 +13,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
 import com.baldy.commons.models.BaseEntity;
+import com.ccsi.commons.reference.Network;
 
 @Entity(name = "TRANSACTION_RECORD")
 public class TransactionRecord extends BaseEntity {
@@ -50,6 +53,13 @@ public class TransactionRecord extends BaseEntity {
 
     @Column(name = "DELIVERED")
     private boolean delivered = false;
+
+    @Column(name = "NETWORK")
+    @Enumerated(EnumType.STRING)
+    private Network network;
+
+    @Column(name = "NETWORK_DESCRIPTION")
+    private String networkDescription;
 
     public TenantRecord getRecord() {
         return record;
@@ -130,4 +140,21 @@ public class TransactionRecord extends BaseEntity {
     public void setMessageId(String messageId) {
         this.messageId = messageId;
     }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
+
+    public String getNetworkDescription() {
+        return networkDescription;
+    }
+
+    public void setNetworkDescription(String networkDescription) {
+        this.networkDescription = networkDescription;
+    }
+
 }
