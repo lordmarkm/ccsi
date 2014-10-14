@@ -18,6 +18,7 @@ import com.ccsi.app.service.custom.TenantServiceCustom;
 import com.ccsi.app.util.MappingService;
 import com.ccsi.commons.dto.PageInfo;
 import com.ccsi.commons.dto.tenant.TenantInfo;
+import com.ccsi.commons.reference.ReplyChargingScheme;
 
 public class TenantServiceCustomImpl extends MappingService<Tenant, TenantInfo>
     implements TenantServiceCustom {
@@ -50,6 +51,9 @@ public class TenantServiceCustomImpl extends MappingService<Tenant, TenantInfo>
         if (null == tenant.getOwner()) {
             Account account = accounts.findByUsername(ownerName);
             tenant.setOwner(account);
+        }
+        if (null == tenant.getReplyCharge()) {
+            tenant.setReplyCharge(ReplyChargingScheme.PISO);
         }
         return toDto(service.save(tenant));
     }

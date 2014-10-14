@@ -90,7 +90,7 @@ public class PricingUtil {
     }
 
     public String asCostString(BigDecimal cost) {
-        return BigDecimal.ZERO.compareTo(cost) == 0 ? "FREE" : cost.toString();
+        return BigDecimal.ZERO.compareTo(cost) == 0 ? "FREE" : "P" + cost.toString();
     }
 
 }
