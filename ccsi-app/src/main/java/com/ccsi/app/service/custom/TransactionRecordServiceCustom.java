@@ -10,6 +10,7 @@ import com.ccsi.commons.dto.tenant.TransactionRecordInfo;
  */
 public interface TransactionRecordServiceCustom {
 
+    PageInfo<TransactionRecordInfo> pageInfo(PageRequest pageRequest);
     PageInfo<TransactionRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest);
     PageInfo<TransactionRecordInfo> pageInfo(Long tenantId,
             Long tenantRecordId, PageRequest pageRequest);

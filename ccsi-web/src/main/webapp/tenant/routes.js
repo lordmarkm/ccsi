@@ -70,5 +70,10 @@ define([
       controller: 'AdminController',
       resolve: AdminResolve
     })
+    .state('admin_txn', {
+      url: '/transactions',
+      templateUrl: 'admin/view/transactions.html',
+      controller: 'AdminReportsController'
+    })
   });
 });

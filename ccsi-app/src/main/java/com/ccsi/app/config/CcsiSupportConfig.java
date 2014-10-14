@@ -36,7 +36,8 @@ public class CcsiSupportConfig {
                 mapping(TenantRecord.class, TenantRecordInfo.class)
                     .fields("lastUpdated", "lastUpdated", copyByReference(), oneWay());
                 mapping(TransactionRecord.class, TransactionRecordInfo.class)
-                    .fields("transactionDate", "transactionDate", copyByReference());
+                    .fields("transactionDate", "transactionDate", copyByReference())
+                    .fields("tenant.name", "tenantName", oneWay());
             }
         });
     }

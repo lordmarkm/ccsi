@@ -23,6 +23,18 @@ public class TransactionRecordServiceCustomImpl extends MappingService<Transacti
     private TransactionRecordService service;
 
     @Override
+    public PageInfo<TransactionRecordInfo> pageInfo(PageRequest pageRequest) {
+        Page<TransactionRecord> records = service.findAll(pageRequest);
+        List<TransactionRecordInfo> userInfos = toDto(records);
+
+        PageInfo<TransactionRecordInfo> pageResponse = new PageInfo<>();
+        pageResponse.setData(userInfos);
+        pageResponse.setTotal(records.getTotalElements());
+
+        return pageResponse;
+    }
+
+    @Override
     public PageInfo<TransactionRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest) {
         Page<TransactionRecord> records = service.findByTenant_id(tenantId, pageRequest);
         List<TransactionRecordInfo> userInfos = toDto(records);

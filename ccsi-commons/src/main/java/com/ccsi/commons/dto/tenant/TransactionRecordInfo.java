@@ -18,6 +18,7 @@ public class TransactionRecordInfo {
     private BigDecimal cost;
     private String messageId;
     private boolean delivered;
+    private String tenantName;
 
     public TenantRecordInfo getRecord() {
         return record;
@@ -66,6 +67,12 @@ public class TransactionRecordInfo {
     }
     public void setDelivered(boolean delivered) {
         this.delivered = delivered;
+    }
+    public String getTenantName() {
+        return tenantName;
+    }
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
     }
 
 }

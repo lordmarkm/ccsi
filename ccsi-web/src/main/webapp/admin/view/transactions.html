@@ -1,0 +1,43 @@
+<div class="panel panel-default" style="margin-top:10px;">
+  <div class="panel-heading">All the transactions</div>
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <dl class="dl-horizontal">
+        <dt ng-if="!tenantRecord">Total Transactions</dt>
+        <dd ng-if="!tenantRecord">{{totalRecords}}</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel-heading">Business transactions</div>
+  <div class="panel-body">
+    <table ng-table="tableParams" show-filter="true" class="table table-striped">
+      <thead>
+        <tr>
+          <th style="text-align: left;">Txn date
+          <th style="text-align: left;">Tenant
+          <th style="text-align: left;">Mobile #
+          <th style="text-align: left;">Customer
+          <th style="text-align: left;">Request
+          <th style="text-align: left;">Response
+          <th style="text-align: left;">Delivered
+          <th style="text-align: left;">Reply cost
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="record in $data">
+          <td>{{record.transactionDate|date: 'MMM-dd-yyyy hh:mm a'}}
+          <td>{{record.tenantName}}
+          <td>{{record.mobileNumber}}
+          <td>{{record.record ? record.record.customerName : ''}}
+          <td>{{record.incomingMessage}}
+          <td>{{record.outgoingMessage}}
+          <td>{{record.delivered ? 'Y' : 'N'}}
+          <td>{{record.cost|number:2}}
+        </tr>
+        <tr ng-if="!totalRecords">
+          <td colspan="8">No records found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

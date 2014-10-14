@@ -12,5 +12,6 @@ define([
   'tenant/controllers/BatchUpdateController.js',
 
   //admin controllers
-  'admin/controllers/AdminController.js'
+  'admin/controllers/AdminController.js',
+  'admin/controllers/AdminReportsController.js'
 ], function () {});

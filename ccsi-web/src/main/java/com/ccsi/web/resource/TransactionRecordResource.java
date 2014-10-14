@@ -23,8 +23,7 @@ import com.ccsi.commons.dto.PageInfo;
 import com.ccsi.commons.dto.tenant.TransactionRecordInfo;
 
 @RestController
-@RequestMapping("/txn/{tenantId}")
-@PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
+@RequestMapping("/txn")
 public class TransactionRecordResource extends GenericController {
 
     private static Logger LOG = LoggerFactory.getLogger(TransactionRecordResource.class);
@@ -32,7 +31,22 @@ public class TransactionRecordResource extends GenericController {
     @Autowired
     private TransactionRecordService service;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(method = GET)
+    public ResponseEntity<PageInfo<TransactionRecordInfo>> adminQuery(Principal principal,
+            @RequestParam int page,
+            @RequestParam int count) {
+
+        LOG.debug("Admin txn query. Principal={}, page={}, count={}", name(principal), page, count);
+
+        PageRequest pageRequest = new PageRequest(page - 1, count, Direction.DESC, "transactionDate");
+        PageInfo<TransactionRecordInfo> pageResponse = service.pageInfo(pageRequest);
+
+        return new ResponseEntity<>(pageResponse, OK);
+    }
+
+    @PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
+    @RequestMapping(value = "/{tenantId}", method = GET)
     public ResponseEntity<PageInfo<TransactionRecordInfo>> page(Principal principal,
             @PathVariable Long tenantId,
             @RequestParam int page,
@@ -46,7 +60,8 @@ public class TransactionRecordResource extends GenericController {
         return new ResponseEntity<>(pageResponse, OK);
     }
 
-    @RequestMapping(value = "/{tenantRecordId}", method = GET)
+    @PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
+    @RequestMapping(value = "/{tenantId}/{tenantRecordId}", method = GET)
     public ResponseEntity<PageInfo<TransactionRecordInfo>> pageByTenantRecord(Principal principal,
             @PathVariable Long tenantId,
             @PathVariable Long tenantRecordId,

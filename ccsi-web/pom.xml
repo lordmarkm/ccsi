@@ -22,6 +22,12 @@
         <packageExcludePattern></packageExcludePattern>
       </properties>
     </profile>
+    <profile>
+      <id>qa</id>
+      <build>
+        <finalName>apptodate</finalName>
+      </build>
+    </profile>
   </profiles>
   
   <dependencies>
@@ -59,6 +65,7 @@
   </dependencies>
 
   <build>
+    <finalName>apptodate-dev</finalName>
     <plugins>
       <plugin>
         <!-- http://docs.codehaus.org/display/JETTY/Maven+Jetty+Plugin -->
