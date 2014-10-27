@@ -33,6 +33,9 @@ public class Tenant extends BaseBaldyEntity {
     @Enumerated(EnumType.STRING)
     private ReplyChargingScheme replyCharge = ReplyChargingScheme.PISO;
 
+    @Column(name = "DELETED")
+    private boolean deleted = false;
+
     public BigDecimal getPushCredits() {
         return pushCredits;
     }
@@ -63,6 +66,14 @@ public class Tenant extends BaseBaldyEntity {
 
     public void setReplyCharge(ReplyChargingScheme replyCharge) {
         this.replyCharge = replyCharge;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
 }
