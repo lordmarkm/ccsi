@@ -2,6 +2,7 @@
 
 <html>
 <head>
+  <title>App-to-date Register</title>
   <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.0.3/css/bootstrap.min.css' />">
   <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
   <title>Register</title>
