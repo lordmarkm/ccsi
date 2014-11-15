@@ -77,13 +77,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/tenant**").authenticated()
 //              .antMatchers("/operations**").hasAnyAuthority(OPERATOR, WAREHOUSE, MIXER, EXTRUDER, PRINTER, CUTTER)
                 .antMatchers("/register**").permitAll()
-                
+                .antMatchers("/info").permitAll()
+                .antMatchers("/help").permitAll()
+
+                //Allow customers to check status online
+                .antMatchers("/check").permitAll()
+
                 //The endpoints used by chikka
                 .antMatchers("/message").permitAll()
                 .antMatchers("/notification").permitAll()
 
-                //Test endpoint
-                .antMatchers("/test").permitAll()
+                //Tests endpoint
+                .antMatchers("/test**").permitAll()
 
                 .antMatchers("/**").authenticated()
                 .and()

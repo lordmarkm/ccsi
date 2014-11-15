@@ -12,7 +12,7 @@
   <properties>
     <db.username>root</db.username>
     <db.password>root</db.password>
-    <chikka.endpt>http://localhost:8080/test</chikka.endpt>
+    <chikka.endpt>http://localhost:8080/testreply</chikka.endpt>
     <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto>
   </properties>
 

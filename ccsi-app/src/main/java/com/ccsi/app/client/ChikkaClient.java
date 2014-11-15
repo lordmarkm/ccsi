@@ -1,7 +1,5 @@
 package com.ccsi.app.client;
 
-import java.math.BigDecimal;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;

@@ -17,4 +17,12 @@ public class RootController extends GenericController {
         return mav("tenant");
     }
 
+    @RequestMapping("/help")
+    public ModelAndView help() {
+        return mav("help");
+    }
+    @RequestMapping("/info")
+    public ModelAndView info() {
+        return mav("info");
+    }
 }

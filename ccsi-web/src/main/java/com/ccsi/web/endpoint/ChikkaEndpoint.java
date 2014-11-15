@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ccsi.app.service.MessageHandlingService;
 import com.ccsi.commons.dto.DeliveryNotificationInfo;
-import com.ccsi.commons.dto.GenericHttpResponse;
 import com.ccsi.commons.dto.IncomingMessageInfo;
-import com.ccsi.commons.dto.ReplyMessageInfo;
 
 /**
  * @author mbmartinez
@@ -42,12 +40,4 @@ public class ChikkaEndpoint {
         return new ResponseEntity<>("OK", HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/test", method = POST)
-    public ResponseEntity<GenericHttpResponse> test(@ModelAttribute ReplyMessageInfo reply) {
-        LOG.debug("Reply received. msg={}", reply);
-        GenericHttpResponse resp = new GenericHttpResponse();
-        resp.setStatus("200");
-        resp.setMessage("OK");
-        return new ResponseEntity<>(resp, HttpStatus.OK);
-    }
 }

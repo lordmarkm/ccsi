@@ -3,7 +3,7 @@
 <html>
 
 <head>
-<title>App to date</title>
+<title>Apptodate</title>
 <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/angular-ngtable/ng-table.min.css' />" />
