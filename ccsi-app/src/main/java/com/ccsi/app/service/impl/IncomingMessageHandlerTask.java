@@ -16,8 +16,13 @@ import com.ccsi.app.reference.ReservedWord;
 import com.ccsi.app.service.StockTemplateService;
 import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
+import com.ccsi.app.service.TransactionRecordService;
+import com.ccsi.app.util.MessageComposer;
 import com.ccsi.app.util.MessageUtil;
+import com.ccsi.app.util.NetworkAndPricingUtil;
 import com.ccsi.commons.dto.IncomingMessageInfo;
+import com.ccsi.commons.exception.NetworkNotSupportedException;
+import com.google.common.base.Preconditions;
 
 @Component
 @Scope("prototype")
@@ -40,29 +45,52 @@ public class IncomingMessageHandlerTask implements Runnable {
     @Autowired
     private StatusUpdater statusUpdater;
 
+    @Autowired
+    private NetworkAndPricingUtil networkAndPricingUtil;
+
+    @Autowired
+    private MessageComposer messageComposer;
+
+    @Autowired
+    private TransactionRecordService txnRecordService;
+
     private IncomingMessageInfo msg;
     private TransactionRecord txn;
 
     @Override
     public void run() {
+        Preconditions.checkNotNull(msg);
         createTransactionRecord();
-        sendReply();
+        try {
+            prepareReply();
+        } catch (NetworkNotSupportedException e) {
+            LOG.error("Network is not supported. No reply message to be sent. Mobile#={}", msg.getMobile_number());
+            txnRecordService.save(txn);
+            return;
+        }
+        doSend();
     }
 
+    /**
+     * Create transaction record but do not persist. Some txn records
+     * may be from the test client and will not be persisted.
+     */
     private void createTransactionRecord() {
         txn = new TransactionRecord();
         txn.setIncomingMessage(msg.getMessage());
         txn.setRequestId(msg.getRequest_id());
         txn.setMobileNumber(msg.getMobile_number());
         txn.setTransactionDate(new LocalDateTime());
+        txn.setMobileNumber(msg.getMobile_number());
+        txn.setRequestId(msg.getRequest_id());
     }
 
-    private void sendReply() {
+    private void prepareReply() throws NetworkNotSupportedException {
         String[] breakdown = null;
         try {
             breakdown = MessageUtil.messageBreakdown(msg.getMessage());
         } catch (Exception e) {
-            client.sendInvalidMessageMessage(msg, txn);
+            txn.setOutgoingMessage("Your message was invalid. Please follow this format: <keyword> <trackingNo>.");
             return;
         }
 
@@ -72,7 +100,8 @@ public class IncomingMessageHandlerTask implements Runnable {
 
         Tenant tenant = tenantService.findByKeywordIgnoreCase(tenantCode);
         if (null == tenant) {
-            client.sendInvalidTenantMessage(msg, txn, tenantCode);
+            txn.setOutgoingMessage("We could not find a business with keyword " + tenantCode + ".");
+            networkAndPricingUtil.setErrorParams(txn);
             return;
         }
         txn.setTenant(tenant);
@@ -80,25 +109,34 @@ public class IncomingMessageHandlerTask implements Runnable {
         //check for update requests first
         if (trackingNoOrKeyword.toUpperCase().startsWith(ReservedWord.UPDATE.getKeyword())) {
             statusUpdater.doUpdate(tenant, trackingNoOrKeyword, txn);
-            client.sendUpdateReply(msg, txn);
+            networkAndPricingUtil.setReplyParams(tenant.getReplyCharge(), txn);
             return;
         }
 
         //check for stock templates second
         StockTemplate stock = stockTemplateService.findByTenantAndKeyword(tenant, trackingNoOrKeyword);
         if (null != stock) {
-            client.sendStockTemplateReply(msg, txn, stock);
+            txn.setOutgoingMessage(stock.getReply());
+            networkAndPricingUtil.setReplyParams(tenant.getReplyCharge(), txn);
             return;
         }
 
         //if a stock template is not found, then check for tenant records
         TenantRecord record = tenantRecordService.findByTrackingNoIgnoreCaseAndTenant_id(trackingNoOrKeyword, tenant.getId());
         if (null == record) {
-            client.sendInvalidTrackingNo(msg, txn, trackingNoOrKeyword);
+            txn.setOutgoingMessage("We could not find a keyword or transaction record matching " + trackingNoOrKeyword + ".");
+            networkAndPricingUtil.setErrorParams(txn);
             return;
         }
+
+        //If you reach this point, it's a template reply
+        networkAndPricingUtil.setReplyParams(tenant.getReplyCharge(), txn);
         txn.setRecord(record);
-        client.sendTemplateReply(record, msg, txn);
+        txn.setOutgoingMessage(messageComposer.composeMessage(record));
+    }
+
+    private void doSend() {
+        client.reply(txn);
     }
 
     public void setMsg(IncomingMessageInfo msg) {

@@ -24,13 +24,11 @@ import com.google.common.collect.Maps;
 
 /**
  * @author mbmartinez
- * @deprecated see NetworkAndPricingUtil
  */
 @Service
-@Deprecated
-public class PricingUtil {
+public class NetworkAndPricingUtil {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PricingUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NetworkAndPricingUtil.class);
     private static final String PREFIXES = "prefixes.csv";
     private static final String COLUMN_PREFIX = "Prefix";
     private static final String COLUMN_DESCRIPTION = "Description";
@@ -56,8 +54,10 @@ public class PricingUtil {
      * mobile_number: 639157777777, determinant here is 915
      * @throws NetworkNotSupportedException 
      */
-    public BigDecimal determineErrorCost(String mobile_number, TransactionRecord txn) throws NetworkNotSupportedException {
-        String determinant = mobile_number.substring(2, 5);
+    public void setErrorParams(TransactionRecord txn) throws NetworkNotSupportedException {
+        LOG.debug("Setting error params. tnx={}", txn);
+        String mobileNumber = txn.getMobileNumber();
+        String determinant = mobileNumber.substring(2, 5);
         NetworkInfo networkInfo = prefixMap.get(determinant);
         if (null == networkInfo) {
             throw new NetworkNotSupportedException();
@@ -68,18 +68,24 @@ public class PricingUtil {
 
         switch (networkInfo.getNetwork()) {
         case Globe:
-            return ErrorChargingScheme.ERROR_COST_GLOBE;
+            txn.setCost(ErrorChargingScheme.ERROR_COST_GLOBE);
+            break;
         case Smart:
-            return ErrorChargingScheme.ERROR_COST_SMART;
+            txn.setCost(ErrorChargingScheme.ERROR_COST_SMART);
+            break;
         case Sun:
-            return ErrorChargingScheme.ERROR_COST_SUN;
+            txn.setCost(ErrorChargingScheme.ERROR_COST_SUN);
+            break;
         default:
             throw new NetworkNotSupportedException();
         }
     }
 
-    public BigDecimal determineReplyCost(ReplyChargingScheme replyCharge, String mobile_number, TransactionRecord txn) throws NetworkNotSupportedException {
-        String determinant = mobile_number.substring(2, 5);
+    public void setReplyParams(ReplyChargingScheme replyCharge, TransactionRecord txn) throws NetworkNotSupportedException {
+        LOG.debug("Setting reply params. tnx={}", txn);
+
+        String mobileNumber = txn.getMobileNumber();
+        String determinant = mobileNumber.substring(2, 5);
         NetworkInfo networkInfo = prefixMap.get(determinant);
         if (null == networkInfo) {
             throw new NetworkNotSupportedException();
@@ -87,8 +93,7 @@ public class PricingUtil {
 
         txn.setNetwork(networkInfo.getNetwork());
         txn.setNetworkDescription(networkInfo.getDescription());
-
-        return replyCharge.getAmount(networkInfo.getNetwork());
+        txn.setCost(replyCharge.getAmount(networkInfo.getNetwork()));
     }
 
     public String asCostString(BigDecimal cost) {

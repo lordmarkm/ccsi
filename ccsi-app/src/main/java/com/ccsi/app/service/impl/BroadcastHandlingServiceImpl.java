@@ -1,5 +1,6 @@
 package com.ccsi.app.service.impl;
 
+import static com.ccsi.app.util.BigDecimalUtil.zeroIfNull;
 import static java.math.BigDecimal.ZERO;
 
 import java.math.BigDecimal;
@@ -27,7 +28,6 @@ import com.ccsi.app.service.TenantRecordService;
 import com.ccsi.app.service.TenantService;
 import com.ccsi.app.util.MessageComposer;
 import com.google.common.base.Preconditions;
-import static com.ccsi.app.util.BigDecimalUtil.*;
 
 /**
  * @author pilabaldeh

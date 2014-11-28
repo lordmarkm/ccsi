@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
+import org.springframework.core.style.ToStringCreator;
 
 import com.baldy.commons.models.BaseEntity;
 import com.ccsi.commons.reference.Network;
@@ -60,6 +61,24 @@ public class TransactionRecord extends BaseEntity {
 
     @Column(name = "NETWORK_DESCRIPTION")
     private String networkDescription;
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+            .append("tenant", null == tenant ? "No tenant" : tenant.getName())
+            .append("tenant record", null == record ? "No tenant record" : record.getCustomerName())
+            .append("mobileNumber", mobileNumber)
+            .append("incomingMessage", incomingMessage)
+            .append("outgoingMessage", outgoingMessage)
+            .append("transactionDate", transactionDate)
+            .append("cost", cost)
+            .append("requestId", requestId)
+            .append("messageId", messageId)
+            .append("delivered", delivered)
+            .append("network", network)
+            .append("networkDescription", networkDescription)
+            .toString();
+    }
 
     public TenantRecord getRecord() {
         return record;
