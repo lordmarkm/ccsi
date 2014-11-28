@@ -2,10 +2,9 @@
 
 <html>
 <head>
-  <title>App-to-date Login</title>
+  <title>Login</title>
   <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.0.3/css/bootstrap.min.css' />">
   <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
-  <title>Login</title>
 </head>
 
 <body>
@@ -51,6 +50,9 @@
             </form>
           </div>
         </div>
+        <hr>
+        Need help? Check out the <a href="<@spring.url '/help' />">Help page</a><br/>
+        Just need to check your status? You can do that from the <a href="<@spring.url '/info' />">Info Page</a>
       </div>
     </div>
   </div>

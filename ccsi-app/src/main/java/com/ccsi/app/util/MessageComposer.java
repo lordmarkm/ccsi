@@ -5,12 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ccsi.app.entity.Template;
 import com.ccsi.app.entity.TenantRecord;
 import com.ccsi.app.entity.Variable;
 import com.ccsi.app.service.VariableService;
 import com.ccsi.commons.dto.tenant.TemplateInfo;
-import com.ccsi.commons.dto.tenant.TenantRecordInfo;
 
 @Service
 public class MessageComposer {
