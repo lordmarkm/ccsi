@@ -70,12 +70,12 @@
   </nav>
   -->
   <!-- Main Content -->
-  <div class="container">
+  <div class="container-fluid">
     <toaster-container toaster-options="{'time-out': 4000, 'limit' : 3}"></toaster-container>
     <div class="row">
       <div ui-view="sidebar"></div>
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <div ui-view>Loading resources...</div>
+      <div class="col-sm-10 main">
+        <div ui-view="main">Loading resources...</div>
       </div>
     </div>
   </div>

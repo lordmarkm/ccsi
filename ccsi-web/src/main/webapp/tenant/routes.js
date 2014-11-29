@@ -8,18 +8,39 @@ define([
   return app.config(function($stateProvider) {
     $stateProvider.state('home', {
       url: '/?tenantIndex',
-      templateUrl: 'tenant/view/home.html',
-      controller: 'TenantHomeController',
-      resolve: TenantResolve
+      views: {
+        main: {
+          templateUrl: 'tenant/view/home.html',
+          controller: 'TenantHomeController',
+          resolve: TenantResolve
+        },
+        sidebar: {
+          templateUrl: 'tenant/view/sidebar.html'
+        }
+      }
     })
     .state('tenant_create', {
       url: '/tenant/create?tenantIndex',
-      templateUrl: 'tenant/view/create.html',
-      controller: 'TenantCreateController'
+      views: {
+        main: {
+          templateUrl: 'tenant/view/create.html',
+          controller: 'TenantCreateController'
+        },
+        sidebar: {
+          templateUrl: 'tenant/view/sidebar.html'
+        }
+      }
     })
     .state('tenant', {
       url: '/tenant/{tenantId}',
-      templateUrl: 'tenant/view/tenant.html',
+      views: {
+        main: {
+          templateUrl: 'tenant/view/tenant.html',
+        },
+        sidebar: {
+          templateUrl: 'tenant/view/sidebar.html'
+        }
+      },
       controller: 'TenantController'
     })
     .state('tenant.templates', {

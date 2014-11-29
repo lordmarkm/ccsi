@@ -2,6 +2,10 @@ html {
   overflow-y: scroll;
 }
 
+body {
+  padding-top: 70px; 
+}
+
 .pointer {
   cursor: pointer;
   cursor: hand;
