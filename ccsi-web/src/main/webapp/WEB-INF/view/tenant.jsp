@@ -61,6 +61,8 @@
           <li ng-if="!hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/' />">Home</a></li>
           <li ng-if="hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/admin' />">Home</a></li>
           <li ng-if="hasRole('ROLE_ADMIN')"><a ui-sref="admin_txn">Transaction & Reports</a></li>
+          <li><a href="<@spring.url '/help' />">Help</a></li>
+          <li><a href="<@spring.url '/info' />">Info / Test</a></li>
           <li><a href="<@spring.url '/logout' />">Logout</a></li>
         </ul>
       </li>

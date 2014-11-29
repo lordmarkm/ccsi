@@ -17,7 +17,7 @@
         <div class="panel-heading">Check status</div>
         <div class="panel-body">
           <div class="col-sm-12" id="test-response" style="font-size: 1.1em;">
-            <strong>Send a test message to receive a response.</strong>
+            <strong>Simulate a text message to receive a response.</strong>
           </div>
           <div class="col-sm-12" style="margin-top: 20px;"></div>
           <form id="form-test">
@@ -25,7 +25,7 @@
               <div class="col-sm-4">
                 <input type="text" id="test-input" class="form-control" />
               </div>
-              <input type="submit" class="btn btn-success" value="Send Test Message" />
+              <input type="submit" class="btn btn-success" value="Send" />
             </div>
           </form>
         </div>
