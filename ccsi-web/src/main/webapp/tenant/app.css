@@ -1,10 +1,19 @@
 html {
   overflow-y: scroll;
 }
+
 .pointer {
   cursor: pointer;
   cursor: hand;
 }
+
 .mt10 {
   margin-top: 10px;
+}
+
+.img-thumbnail {
+  max-height: 64px;
+  max-width: 64px;
+  width: 64px;
+  height: 64px;
 }
