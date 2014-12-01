@@ -3,8 +3,8 @@
 </div>
 
 <div ng-if="tenant">
+  <!-- Dropdown for all tenants. Has been moved to the sidebar.
   <div class="row">
-    <!-- Dropdown for available tenants -->
     <div class="col-sm-6">
       <select ng-model="tenant"
         ng-options="tenant as tenant.name for tenant in tenants track by tenant.keyword"
@@ -18,8 +18,9 @@
       <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Add another business</a>
     </div>
   </div>
+  -->
 
-  <div class="panel panel-default" style="margin-top:10px;">
+  <div class="panel panel-default">
     <div class="panel-heading">Business Info</div>
     <div class="panel-body">
       <dl class="dl-horizontal">
@@ -103,8 +104,8 @@
             <td>{{record.customerName}}
             <td>{{record.transactionType}}
             <td>{{record.lastUpdated|date: 'MMM-dd-yyyy hh:mm'}}
-            <td><a ui-sref="tenant.record_txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a>
-            <td><a ui-sref="tenant.record_preview({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Preview</a>
+            <td><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a>
+            <td><a ui-sref="record.preview({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Preview</a>
             <td>
               <select ng-model="record.status" 
                 ng-options="template as template.status for template in statuses track by template.status"

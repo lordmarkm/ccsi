@@ -1,10 +1,17 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('TenantTemplatesController', ['$scope', '$stateParams', '$state', '$modal', 'toaster', 'StockTemplateService', 'TemplateService',
-    function($scope, $stateParams, $state, $modal, toaster, StockTemplateService, TemplateService) {
+  controllers.controller('TenantTemplatesController', ['$rootScope', '$scope', '$stateParams', '$state', '$modal', 'toaster', 'StockTemplateService', 'TemplateService',
+    function($rootScope, $scope, $stateParams, $state, $modal, toaster, StockTemplateService, TemplateService) {
 
     $scope.tenantIndex = $stateParams.tenantIndex;
     $scope.templates = TemplateService.query({tenantId: $stateParams.tenantId});
+
+    //Handle tenant switch from sidebar
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      if ($state.includes('tenant.templates')) {
+        $state.go('tenant.templates', {tenantId: loadEvent.tenant.id, tenantIndex: loadEvent.tenantIndex});
+      }
+    });
 
     function reloadTemplates() {
       $scope.templates = TemplateService.query({tenantId: $stateParams.tenantId});

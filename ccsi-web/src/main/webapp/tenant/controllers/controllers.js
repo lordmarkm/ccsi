@@ -11,6 +11,9 @@ define([
   'tenant/controllers/BroadcastController.js',
   'tenant/controllers/BatchUpdateController.js',
 
+  //sidebar controllers
+  'tenant/controllers/SidebarController.js',
+
   //admin controllers
   'admin/controllers/AdminController.js',
   'admin/controllers/AdminReportsController.js'

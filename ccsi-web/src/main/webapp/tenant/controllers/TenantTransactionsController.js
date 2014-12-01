@@ -1,7 +1,7 @@
 define(['tenant/controllers/module.js'], function (controllers) {
   'use strict';
-  controllers.controller('TenantTransactionsController', ['$scope', '$state', '$stateParams', 'ngTableParams', 'RecordService', 'TransactionRecordService',
-    function($scope, $state, $stateParams, ngTableParams, RecordService, TransactionRecordService) {
+  controllers.controller('TenantTransactionsController', ['$rootScope', '$scope', '$state', '$stateParams', 'ngTableParams', 'RecordService', 'TransactionRecordService',
+    function($rootScope, $scope, $state, $stateParams, ngTableParams, RecordService, TransactionRecordService) {
 
     $scope.tenantIndex = $stateParams.tenantIndex;
 
@@ -9,9 +9,19 @@ define(['tenant/controllers/module.js'], function (controllers) {
         tenantId = $stateParams.tenantId,
         tenantRecordId = $stateParams.tenantRecordId;
 
+    console.debug('got tenant=' + $scope.tenant);
+    
     if ($stateParams.tenantRecordId) {
       $scope.tenantRecord = RecordService.get({tenantId: tenantId, tenantRecordId: tenantRecordId});
     }
+
+    //Handle tenant switch from sidebar
+    //Sadly, customer record must be nullified
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      if ($state.includes('tenant.transactions')) {
+        $state.go('tenant.transactions', {tenantId: loadEvent.tenant.id, tenantIndex: loadEvent.tenantIndex});
+      }
+    });
 
     $scope.tableParams = new ngTableParams({
       page: 1,

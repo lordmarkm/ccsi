@@ -1,9 +1,14 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('TenantHomeController', ['$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
-    function($scope, $state, $stateParams, $modal, ngTableParams, toaster, tenants, TenantService, TemplateService, RecordService) {
+  controllers.controller('TenantHomeController', ['$rootScope', '$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'tenants', 'TenantService', 'TemplateService', 'RecordService',
+    function($rootScope, $scope, $state, $stateParams, $modal, ngTableParams, toaster, tenants, TenantService, TemplateService, RecordService) {
 
     $scope.tenants = tenants;
+
+    //Handle tenant switch from sidebar
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      $scope.loadTenant(loadEvent.tenant);
+    });
 
     //Handle record filtering
     $scope.filter = {};
@@ -110,7 +115,13 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
       }
     });
 
-    if (tenants.length) {
+    if ($stateParams.tenantId) {
+      //When loaded from sidebar - /summary
+      $scope.tenantIndex = findIndex({id: parseInt($stateParams.tenantId)});
+      console.debug('Determined index: ' + $scope.tenantIndex);
+      $scope.loadTenant(tenants[$scope.tenantIndex]);
+    } else if (tenants.length) {
+      //On first login
       var index = $stateParams.tenantIndex && $stateParams.tenantIndex < tenants.length ? $stateParams.tenantIndex : 0;
       if ($stateParams.tenantIndex === '-1') index = tenants.length - 1;
       $scope.loadTenant(tenants[index]);
