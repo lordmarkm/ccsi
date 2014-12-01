@@ -1,25 +1,28 @@
-<div class="col-sm-2 sidebar">
+<div class="col-sm-3 col-md-2 sidebar">
   <ul class="nav nav-sidebar" ng-if="tenants.length">
-    <select ng-model="tenant"
-      ng-disabled="record"
-      ng-options="tenant as tenant.name for tenant in tenants track by tenant.keyword"
-      ng-change="loadTenant(tenant)"
-      class="form-control">
-    </select>
-    <div class="mt5">
+    <li>
+      <div style="padding: 0 20px 0 20px;">
+      <select ng-model="tenant"
+        ng-disabled="record"
+        ng-options="tenant as tenant.name for tenant in tenants track by tenant.keyword"
+        ng-change="loadTenant(tenant)"
+        class="form-control">
+      </select>
+      </div>
+    </li>
+    <li class="mt5">
       <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Add another business</a>
-    </div>
-  </ul>
-  <ul class="nav nav-sidebar">
-    <li ui-sref-active="active"><a ui-sref="tenant.summary({tenantId: tenant.id, tenantIndex: tenantIndex})">Home</a></li>
+    </li>
   </ul>
   <ul class="nav nav-sidebar" ng-if="tenant">
+    <li><strong style="padding: 0 20px 0 20px;">{{tenant.name}}</strong></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.summary({tenantId: tenant.id, tenantIndex: tenantIndex})">Summary & Records</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.stock_templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Keywords</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Statuses</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.transactions({tenantId: tenant.id, tenantIndex: tenantIndex})">Transactions</a></li>
   </ul>
   <ul class="nav nav-sidebar mt10" ng-if="record">
-    <li><strong>{{record.customerName}}</strong></li>
+    <li><strong style="padding: 0 20px 0 20px;">{{record.customerName}}</strong></li>
     <li ui-sref-active="active"><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a></li>
     <li ui-sref-active="active"><a ui-sref="record.preview({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Preview</a></li>
   </ul>

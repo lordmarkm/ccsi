@@ -6,7 +6,7 @@
 <title>Apptodate</title>
 <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
-<link rel="stylesheet" href="<@spring.url '/lib/dashboard.css' />" />
+<link rel="stylesheet" href="<@spring.url '/lib/sidebar.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/app.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/angular-ngtable/ng-table.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/font-awesome-4.1.0/css/font-awesome.min.css' />" />
@@ -74,7 +74,7 @@
     <toaster-container toaster-options="{'time-out': 4000, 'limit' : 3}"></toaster-container>
     <div class="row">
       <div ui-view="sidebar"></div>
-      <div class="col-sm-10 main">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <div ui-view="main">Loading resources...</div>
       </div>
     </div>
