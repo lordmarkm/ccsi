@@ -49,7 +49,7 @@ define([
       }
     })
     .state('tenant.summary', {
-      url: '/summary',
+      url: '/summary?tenantIndex',
       templateUrl: 'tenant/view/home.html',
       controller: 'TenantHomeController',
       resolve: TenantResolve

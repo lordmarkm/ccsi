@@ -10,20 +10,23 @@
       </select>
       </div>
     </li>
-    <li class="mt5">
+    <li>
       <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Add another business</a>
     </li>
   </ul>
   <ul class="nav nav-sidebar" ng-if="tenant">
-    <li><strong style="padding: 0 20px 0 20px;">{{tenant.name}}</strong></li>
+    <li style="margin: 0 20px 0 20px;"><strong>{{tenant.name}}</strong></li>
     <li ui-sref-active="active"><a ui-sref="tenant.summary({tenantId: tenant.id, tenantIndex: tenantIndex})">Summary & Records</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.stock_templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Keywords</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Statuses</a></li>
     <li ui-sref-active="active"><a ui-sref="tenant.transactions({tenantId: tenant.id, tenantIndex: tenantIndex})">Transactions</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.variables({tenantId: tenant.id, tenantIndex: tenantIndex})">Variables</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.broadcast({tenantId: tenant.id, tenantIndex: tenantIndex})">Broadcast</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.batchupdate({tenantId: tenant.id, tenantIndex: tenantIndex})">Batch Update</a></li>
   </ul>
   <ul class="nav nav-sidebar mt10" ng-if="record">
-    <li><strong style="padding: 0 20px 0 20px;">{{record.customerName}}</strong></li>
-    <li ui-sref-active="active"><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a></li>
+    <li style="margin: 0 20px 0 20px;"><strong>{{record.customerName}}</strong></li>
     <li ui-sref-active="active"><a ui-sref="record.preview({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Preview</a></li>
+    <li ui-sref-active="active"><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a></li>
   </ul>
 </div>

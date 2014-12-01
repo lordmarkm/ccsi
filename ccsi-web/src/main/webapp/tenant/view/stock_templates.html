@@ -4,7 +4,7 @@
 <div class="panel-body">
 
 <div class="row">
-  <form ng-submit="saveStock()" class="form form-inline">
+  <form ng-submit="saveStock()" class="form">
     <div class="form-group col-sm-2">
       <label class="sr-only" for="keyword">Keyword</label>
       <input type="text" ng-model="stock.keyword" required class="form-control" id="keyword" placeholder="Keyword">
@@ -14,6 +14,7 @@
       <input type="text" ng-model="stock.reply" required class="form-control" id="reply"
         placeholder="Reply" style="width: 100%; margin-left: 10px;">
     </div>
+    <div class="col-sm-4">
     <button type="submit"
       ng-disabled="!stock.id && findStockByKeyword(stock.keyword)"
       class="btn" ng-class="stock.id ? 'btn-success' : 'btn-primary'">
@@ -21,6 +22,7 @@
       <span ng-if="stock.id">Update stock template</span>
     </button>
     <span ng-click="clearStock()" class="btn btn-default">Clear</span>
+    </div>
   </form>
 </div>
 

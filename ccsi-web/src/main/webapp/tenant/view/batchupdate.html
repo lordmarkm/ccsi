@@ -1,16 +1,5 @@
 <div class="panel panel-default">
-<div class="panel-heading">Business Info</div>
-<div class="panel-body">
-  <div class="col-sm-6">
-    <dl class="dl-horizontal">
-      <dt>Name
-      <dd>{{tenant.name}}
-      <dt>Keyword
-      <dd>{{tenant.keyword}}
-    </dl>
-  </div>
-</div>
-<div class="panel-heading">Filter records to update</div>
+<div class="panel-heading"><strong>{{tenant.name}}</strong> / Batch Update</div>
 <div class="panel-body">
   <form ng-submit="reloadTable()" class="form form-inline" style="margin-top: 10px;">
     <div class="form-group">

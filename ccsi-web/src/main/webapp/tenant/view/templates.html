@@ -4,7 +4,7 @@
 <div class="panel-body">
 
 <div class="row">
-  <form ng-submit="saveTemplate()" class="form form-inline">
+  <form ng-submit="saveTemplate()" class="form">
     <div class="form-group col-sm-2">
       <label class="sr-only" for="status">Status</label>
       <input type="text" ng-model="template.status" required class="form-control" id="status" placeholder="Status">
@@ -14,13 +14,15 @@
       <input type="text" ng-model="template.templateString" required class="form-control" id="templateString"
         placeholder="Template String" style="width: 100%; margin-left: 10px;">
     </div>
-    <button type="submit"
-      ng-disabled="!template.id && findTemplateByStatus(template.status)"
-      class="btn" ng-class="template.id ? 'btn-success' : 'btn-primary'">
-      <span ng-if="!template.id">Add new template</span>
-      <span ng-if="template.id">Update template</span>
-    </button>
-    <span ng-click="clearTemplate()" class="btn btn-default">Clear</span>
+    <div class="col-sm-4">
+      <button type="submit"
+        ng-disabled="!template.id && findTemplateByStatus(template.status)"
+        class="btn" ng-class="template.id ? 'btn-success' : 'btn-primary'">
+        <span ng-if="!template.id">Add new template</span>
+        <span ng-if="template.id">Update template</span>
+      </button>
+      <span ng-click="clearTemplate()" class="btn btn-default">Clear</span>
+    </div>
   </form>
 </div>
 
