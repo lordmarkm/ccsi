@@ -1,7 +1,14 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('BatchUpdateController', ['$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'TenantService', 'TemplateService', 'RecordService',
-                                                  function($scope, $state, $stateParams, $modal, ngTableParams, toaster, TenantService, TemplateService, RecordService) {
+  controllers.controller('BatchUpdateController', ['$rootScope', '$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'TenantService', 'TemplateService', 'RecordService',
+                                                  function($rootScope, $scope, $state, $stateParams, $modal, ngTableParams, toaster, TenantService, TemplateService, RecordService) {
+
+    //Handle tenant switch from sidebar
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      if ($state.includes('tenant.batchupdate')) {
+        $state.go('tenant.batchupdate', {tenantId: loadEvent.tenant.id, tenantIndex: loadEvent.tenantIndex});
+      }
+    });
 
     $scope.tenant = TenantService.get({tenantId: $stateParams.tenantId});
     $scope.statuses = TemplateService.query({tenantId: $stateParams.tenantId}, function (templates) {

@@ -1,10 +1,11 @@
 define([
     'tenant/app.js',
     'tenant/resolve/TenantResolve.js',
+    'tenant/resolve/TenantSummaryResolve.js',
     'tenant/resolve/PreviewResolve.js',
     'admin/resolve/AdminResolve.js',
     'tenant/resolve/SidebarResolve.js'
-  ], function(app, TenantResolve, PreviewResolve, AdminResolve, SidebarResolve) {
+  ], function(app, TenantResolve, TenantSummaryResolve, PreviewResolve, AdminResolve, SidebarResolve) {
   'use strict';
   return app.config(function($stateProvider) {
     $stateProvider.state('home', {
@@ -50,9 +51,9 @@ define([
     })
     .state('tenant.summary', {
       url: '/summary?tenantIndex',
-      templateUrl: 'tenant/view/home.html',
-      controller: 'TenantHomeController',
-      resolve: TenantResolve
+      templateUrl: 'tenant/view/summary.html',
+      controller: 'TenantSummaryController',
+      resolve: TenantSummaryResolve
     })
     .state('tenant.templates', {
       url: '/templates?tenantIndex',
@@ -102,12 +103,12 @@ define([
       abstract: true
     })
     .state('record.txns', {
-      url: '/txns?tenantIndex',
+      url: '/txns',
       templateUrl: 'tenant/view/transactions.html',
       controller: 'TenantTransactionsController'
     })
     .state('record.preview', {
-      url: '/preview?tenantIndex',
+      url: '/preview',
       templateUrl: 'tenant/view/preview.html',
       controller: 'PreviewController',
       resolve: PreviewResolve

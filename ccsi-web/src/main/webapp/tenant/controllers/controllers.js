@@ -1,7 +1,12 @@
 define([
+  //"Root" controllers
   'tenant/controllers/AuthController.js',
+  'tenant/controllers/NavSearchController.js',
+
+  //Tenant
   'tenant/controllers/TenantCreateController.js',
   'tenant/controllers/TenantHomeController.js',
+  'tenant/controllers/TenantSummaryController.js',
   'tenant/controllers/TenantController.js',
   'tenant/controllers/TenantTemplatesController.js',
   'tenant/controllers/StockTemplatesController.js',

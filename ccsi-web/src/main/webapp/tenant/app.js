@@ -34,5 +34,18 @@ define([
         }
       };
     }]);
-  }]);
+  }])
+
+  //for typeahead
+  .directive("typeaheadWatchChanges", function() {
+    return {
+      require: ["ngModel"],
+      link: function(scope, element, attr, ctrls) {
+        scope.$watch('typeahead', function(value) {
+          ctrls[0].$setViewValue(value);
+        });
+      }
+    };
+  });
+
 });

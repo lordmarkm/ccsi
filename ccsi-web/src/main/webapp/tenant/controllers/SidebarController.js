@@ -6,7 +6,6 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
     $scope.tenants = tenants;
     $scope.record = record;
 
-    console.debug('Got record=' + JSON.stringify(record));
     //Handle tenants
     $scope.loadTenant = function (tenant) {
       $scope.tenant = tenant;
@@ -30,6 +29,7 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
       //This case covers tenant-specific pages where tenant should have been loaded already
       $scope.tenantIndex = findIndex({id: parseInt($stateParams.tenantId)});
       $scope.tenant = $scope.tenants[$scope.tenantIndex];
+      $rootScope.$broadcast('setTenant', $scope.tenant);
     } else if (tenants.length) {
       //This covers home page
       var index = $stateParams.tenantIndex && $stateParams.tenantIndex < tenants.length ? $stateParams.tenantIndex : 0;

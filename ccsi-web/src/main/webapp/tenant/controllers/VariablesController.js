@@ -1,7 +1,14 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('VariablesController', ['$scope', '$stateParams', '$state', '$modal', 'toaster', 'VariablesService',
-    function($scope, $stateParams, $state, $modal, toaster, VariablesService) {
+  controllers.controller('VariablesController', ['$rootScope', '$scope', '$stateParams', '$state', '$modal', 'toaster', 'VariablesService',
+    function($rootScope, $scope, $stateParams, $state, $modal, toaster, VariablesService) {
+
+    //Handle tenant switch from sidebar
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      if ($state.includes('tenant.variables')) {
+        $state.go('tenant.variables', {tenantId: loadEvent.tenant.id, tenantIndex: loadEvent.tenantIndex});
+      }
+    });
 
     $scope.tenantIndex = $stateParams.tenantIndex;
     $scope.variables = VariablesService.query({tenantId: $stateParams.tenantId});

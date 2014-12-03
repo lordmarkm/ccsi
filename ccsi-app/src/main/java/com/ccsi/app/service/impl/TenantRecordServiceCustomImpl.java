@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +28,8 @@ import com.mysema.query.types.expr.BooleanExpression;
 
 public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, TenantRecordInfo>
     implements TenantRecordServiceCustom {
+
+    private static Logger LOG = LoggerFactory.getLogger(TenantRecordServiceCustomImpl.class);
 
     @Autowired
     private TenantRecordService service;
@@ -72,7 +76,12 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
     @Override
     public PageInfo<TenantRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest, Map<String, String> optionalParams) {
 
-        BooleanExpression predicate = prepareFiltrationQuery(tenantId, optionalParams);
+        BooleanExpression predicate;
+        if (optionalParams.get("navbar") != null) {
+            predicate = prepareOrFiltrationQuery(tenantId, optionalParams);
+        } else {
+            predicate = prepareAndFiltrationQuery(tenantId, optionalParams);
+        }
 
         Page<TenantRecord> records = service.findAll(predicate, pageRequest);
 
@@ -87,13 +96,13 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
 
     @Override
     public List<TenantRecord> findAllByParams(Long tenantId, Map<String, String> optionalParams) {
-        BooleanExpression query = prepareFiltrationQuery(tenantId, optionalParams);
+        BooleanExpression query = prepareAndFiltrationQuery(tenantId, optionalParams);
         return (List<TenantRecord>) service.findAll(query);
     }
 
     @Override
     public int batchUpdate(Long tenantId, Map<String, String> optionalParams, String newStatus) {
-        BooleanExpression query = prepareFiltrationQuery(tenantId, optionalParams);
+        BooleanExpression query = prepareAndFiltrationQuery(tenantId, optionalParams);
         Template status = templateService.findByTenant_idAndStatus(tenantId, newStatus);
         Iterable<TenantRecord> records = service.findAll(query);
         for (TenantRecord record : records) {
@@ -102,7 +111,23 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
         return service.save(records).size();
     }
 
-    private BooleanExpression prepareFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {
+    private BooleanExpression prepareOrFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {
+        LOG.debug("Doing relaxed filtration query. params={}", optionalParams);
+        String trackingNo = optionalParams.get("trackingNo");
+        String customerName = optionalParams.get("customerName");
+        String transactionType = optionalParams.get("transactionType");
+
+        BooleanExpression idPredicate = QTenantRecord.tenantRecord.tenant.id.eq(tenantId);;
+        BooleanExpression paramsPredicate = BooleanExpression.anyOf(
+            tenantRecord.trackingNo.startsWithIgnoreCase(trackingNo),
+            tenantRecord.customerName.startsWithIgnoreCase(customerName),
+            tenantRecord.transactionType.startsWithIgnoreCase(transactionType)
+        );
+
+        return idPredicate.and(paramsPredicate);
+    }
+
+    private BooleanExpression prepareAndFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {
         String trackingNo = optionalParams.get("trackingNo");
         String status = optionalParams.get("status");
         String customerName = optionalParams.get("customerName");
@@ -110,17 +135,16 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
 
         BooleanExpression predicate = QTenantRecord.tenantRecord.tenant.id.eq(tenantId);;
         if (null != trackingNo) {
-            predicate = predicate.and(tenantRecord.trackingNo.eq(trackingNo));
-        } else {
-            if (null != status) {
-                predicate = predicate.and(tenantRecord.status.status.eq(status));
-            }
-            if (null != customerName) {
-                predicate = predicate.and(tenantRecord.customerName.eq(customerName));
-            }
-            if (null != transactionType) {
-                predicate = predicate.and(tenantRecord.transactionType.eq(transactionType));
-            }
+            predicate = predicate.and(tenantRecord.trackingNo.startsWithIgnoreCase(trackingNo));
+        }
+        if (null != status) {
+            predicate = predicate.and(tenantRecord.status.status.eq(status));
+        }
+        if (null != customerName) {
+            predicate = predicate.and(tenantRecord.customerName.startsWithIgnoreCase(customerName));
+        }
+        if (null != transactionType) {
+            predicate = predicate.and(tenantRecord.transactionType.eq(transactionType));
         }
 
         //broadcast no. filter

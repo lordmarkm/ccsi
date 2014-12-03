@@ -39,36 +39,20 @@
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-right" style="width: 300px;">
-        <input type="text" class="form-control" placeholder="Search Customer records..." style="width: 100%;">
+      <form ng-controller="NavSearchController" class="navbar-form navbar-right" style="width: 300px;">
+        <input type="text" ng-model="typeahead"
+         typeahead-watch-changes
+         onclick="this.select();"
+         typeahead="record as record.customerName for record in searchCustomers($viewValue)"
+         typeahead-template-url="customTemplate.html"
+         typeahead-loading="loadingLocations"
+         typeahead-input-formatter="gotoPreview($model)"
+         class="form-control" placeholder="Search {{tenant.name}} Customers..." style="width: 100%;">
       </form>
       </div>
     </div>
   </nav>
-  <!-- 
-  <nav class="navbar navbar-inverse" role="navigation">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="<@spring.url '/#/' />">App to date
-         <small style="font-size: 0.5em;">Powered by Chikka</small>
-      </a>
-    </div>
-    <ul class="nav navbar-nav" ng-controller="AuthController">
-      <li class="dropdown ng-hide" ng-show="principal.principal">
-        <a href="javascript:;" class="dropdown-toggle">
-          {{principal.principal.username}}<span class="caret" style="margin-left: 5px;"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li ng-if="!hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/' />">Home</a></li>
-          <li ng-if="hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/admin' />">Home</a></li>
-          <li ng-if="hasRole('ROLE_ADMIN')"><a ui-sref="admin_txn">Transaction & Reports</a></li>
-          <li><a href="<@spring.url '/help' />">Help</a></li>
-          <li><a href="<@spring.url '/info' />">Info / Test</a></li>
-          <li><a href="<@spring.url '/logout' />">Logout</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-  -->
+
   <!-- Main Content -->
   <div class="container-fluid">
     <toaster-container toaster-options="{'time-out': 4000, 'limit' : 3}"></toaster-container>
@@ -84,3 +68,10 @@
 </body>
 
 </html>
+
+<script type="text/ng-template" id="customTemplate.html">
+  <a href="javascript:;">
+      <strong>{{match.model.customerName}}</strong><br/>
+      <small>{{match.model.trackingNo}} | {{match.model.transactionType}}</small>
+  </a>
+</script>

@@ -55,7 +55,10 @@ public class TenantRecordResource extends GenericController {
             @RequestParam(required = false) String transactionType,
 
             //This method is also used by BroadcastController, which will set this to true
-            @RequestParam(required = false) String requireBroadcastNo) {
+            @RequestParam(required = false) String requireBroadcastNo,
+
+            //Will be "true" if it's the navbar making the search request
+            @RequestParam(required = false) String navbar) {
 
         LOG.debug("User query. Principal={}, page={}, count={}", name(principal), page, count);
 
@@ -65,6 +68,7 @@ public class TenantRecordResource extends GenericController {
         optionalParams.put("customerName", StringUtils.trimToNull(customerName));
         optionalParams.put("transactionType", StringUtils.trimToNull(transactionType));
         optionalParams.put("requireBroadcastNo", requireBroadcastNo);
+        optionalParams.put("navbar", navbar);
         PageRequest pageRequest = new PageRequest(page - 1, count, Direction.DESC, "lastUpdated");
         PageInfo<TenantRecordInfo> pageResponse = service.pageInfo(tenantId, pageRequest, optionalParams);
 

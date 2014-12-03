@@ -1,7 +1,14 @@
 define(['angular', 'tenant/controllers/module.js'], function (angular, controllers) {
   'use strict';
-  controllers.controller('BroadcastController', ['$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'TenantService', 'TemplateService', 'RecordService', 'StockTemplateService', 'BroadcastService',
-    function($scope, $state, $stateParams, $modal, ngTableParams, toaster, TenantService, TemplateService, RecordService, StockTemplateService, BroadcastService) {
+  controllers.controller('BroadcastController', ['$rootScope', '$scope', '$state', '$stateParams', '$modal', 'ngTableParams', 'toaster', 'TenantService', 'TemplateService', 'RecordService', 'StockTemplateService', 'BroadcastService',
+    function($rootScope, $scope, $state, $stateParams, $modal, ngTableParams, toaster, TenantService, TemplateService, RecordService, StockTemplateService, BroadcastService) {
+
+    //Handle tenant switch from sidebar
+    $rootScope.$on('loadTenant', function(evt, loadEvent) {
+      if ($state.includes('tenant.broadcast')) {
+        $state.go('tenant.broadcast', {tenantId: loadEvent.tenant.id, tenantIndex: loadEvent.tenantIndex});
+      }
+    });
 
     $scope.tenant = TenantService.get({tenantId: $stateParams.tenantId});
     $scope.tenantIndex = $stateParams.tenantIndex;

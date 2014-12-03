@@ -11,22 +11,22 @@
       </div>
     </li>
     <li>
-      <a ui-sref="tenant_create({tenantIndex: tenantIndex})">Add another business</a>
+      <a ui-sref="tenant_create({tenantIndex: tenantIndex})"><i class="fa fa-plus" style="width: 15%"></i> Add another business</a>
     </li>
   </ul>
   <ul class="nav nav-sidebar" ng-if="tenant">
     <li style="margin: 0 20px 0 20px;"><strong>{{tenant.name}}</strong></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.summary({tenantId: tenant.id, tenantIndex: tenantIndex})">Summary & Records</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.stock_templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Keywords</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.templates({tenantId: tenant.id, tenantIndex: tenantIndex})">Statuses</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.transactions({tenantId: tenant.id, tenantIndex: tenantIndex})">Transactions</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.variables({tenantId: tenant.id, tenantIndex: tenantIndex})">Variables</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.broadcast({tenantId: tenant.id, tenantIndex: tenantIndex})">Broadcast</a></li>
-    <li ui-sref-active="active"><a ui-sref="tenant.batchupdate({tenantId: tenant.id, tenantIndex: tenantIndex})">Batch Update</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.summary({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-list" style="width: 15%"></i> Summary & Records</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.stock_templates({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-key" style="width: 15%"></i> Keywords</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.templates({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-tags" style="width: 15%"></i> Statuses</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.transactions({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-exchange" style="width: 15%"></i> Transactions</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.variables({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-code" style="width: 15%"></i> Variables</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.broadcast({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-mobile" style="width: 15%"></i> Broadcast</a></li>
+    <li ui-sref-active="active"><a ui-sref="tenant.batchupdate({tenantId: tenant.id, tenantIndex: tenantIndex})"><i class="fa fa-bolt" style="width: 15%"></i> Batch Update</a></li>
   </ul>
   <ul class="nav nav-sidebar mt10" ng-if="record">
     <li style="margin: 0 20px 0 20px;"><strong>{{record.customerName}}</strong></li>
-    <li ui-sref-active="active"><a ui-sref="record.preview({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Preview</a></li>
-    <li ui-sref-active="active"><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id, tenantIndex: tenantIndex})">Transactions</a></li>
+    <li ui-sref-active="active"><a ui-sref="record.preview({tenantId: tenant.id, tenantRecordId: record.id})">Preview</a></li>
+    <li ui-sref-active="active"><a ui-sref="record.txns({tenantId: tenant.id, tenantRecordId: record.id})">Transactions</a></li>
   </ul>
 </div>

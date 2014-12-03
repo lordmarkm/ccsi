@@ -1,12 +1,8 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Business/Customer Record Info</div>
+  <div class="panel-heading"><strong>{{tenant.name}}</strong> / Transactions</div>
   <div class="panel-body">
     <div class="col-sm-6">
       <dl class="dl-horizontal">
-        <dt>Name
-        <dd>{{tenant.name}}
-        <dt>Keyword
-        <dd>{{tenant.keyword}}
         <dt ng-if="!tenantRecord">Total Transactions</dt>
         <dd ng-if="!tenantRecord">{{totalRecords}}</dd>
       </dl>
