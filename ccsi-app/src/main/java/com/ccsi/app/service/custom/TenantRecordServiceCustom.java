@@ -18,6 +18,7 @@ public interface TenantRecordServiceCustom {
     List<TenantRecordInfo> findInfoByTenantId(Long tenantId);
     PageInfo<TenantRecordInfo> pageInfo(Long tenantId, PageRequest pageRequest, Map<String, String> optionalParams);
     TenantRecordInfo saveInfo(Long tenantId, TenantRecordInfo record);
+    TenantRecordInfo softDelete(Long tenantRecordId);
 
     /**
      * ..ForBroadcast means TenantRecord.broadcastNo can't be null.

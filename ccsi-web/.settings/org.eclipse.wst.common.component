@@ -9,11 +9,20 @@
         <dependent-module archiveName="ccsi-commons-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ccsi-commons/ccsi-commons">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="baldy-commons-security-services-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-security-services/baldy-commons-security-services">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="baldy-commons-models-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-models/baldy-commons-models">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="ccsi-security-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ccsi-security/ccsi-security">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="ccsi-web"/>
+        <dependent-module archiveName="baldy-commons-web-3.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/baldy-commons-web/baldy-commons-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/ccsi-web/target/classes"/>
         <property name="component.exclusion.patterns" value="%regex[WEB-INF/lib/(?!(ccsi|tyrael|baldy)).*\.jar]"/>
+        <property name="context-root" value="apptodate-dev"/>
     </wb-module>
 </project-modules>

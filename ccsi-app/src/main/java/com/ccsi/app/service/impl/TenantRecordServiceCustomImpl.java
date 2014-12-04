@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ccsi.app.entity.QTenantRecord;
 import com.ccsi.app.entity.Template;
@@ -124,7 +125,12 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
             tenantRecord.transactionType.startsWithIgnoreCase(transactionType)
         );
 
-        return idPredicate.and(paramsPredicate);
+        //don't show deleted records
+        idPredicate = idPredicate.and(tenantRecord.deleted.isFalse());
+        BooleanExpression predicate = idPredicate.and(paramsPredicate);
+        LOG.debug("Query prepared. query={}", predicate);
+
+        return predicate;
     }
 
     private BooleanExpression prepareAndFiltrationQuery(Long tenantId, Map<String, String> optionalParams) {
@@ -152,7 +158,19 @@ public class TenantRecordServiceCustomImpl extends MappingService<TenantRecord, 
             predicate = predicate.and(tenantRecord.broadcastNo.isNotNull());
         }
 
+        //don't show deleted records
+        predicate = predicate.and(tenantRecord.deleted.isFalse());
+        LOG.debug("Query prepared. query={}", predicate);
+
         return predicate;
+    }
+
+    @Override
+    @Transactional
+    public TenantRecordInfo softDelete(Long tenantRecordId) {
+        TenantRecord record = service.findOne(tenantRecordId);
+        record.setDeleted(true);
+        return toDto(record);
     }
 
 }

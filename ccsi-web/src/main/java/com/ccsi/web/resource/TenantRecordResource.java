@@ -1,8 +1,7 @@
 package com.ccsi.web.resource;
 
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import java.security.Principal;
 import java.util.Map;
@@ -109,6 +108,13 @@ public class TenantRecordResource extends GenericController {
     public ResponseEntity<TenantRecordInfo> findOne(Principal principal, @PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
         LOG.debug("Tenant record view request. tenant={}, record={}", tenantId, tenantRecordId);
         return new ResponseEntity<>(service.findOneInfo(tenantRecordId), OK);
+    }
+
+    @RequestMapping(value = "/{tenantRecordId}", method = DELETE)
+    @PreAuthorize("@ccsiSecurityService.isOwner(#principal, #tenantId)")
+    public ResponseEntity<TenantRecordInfo> deleteOne(Principal principal, @PathVariable Long tenantId, @PathVariable Long tenantRecordId) {
+        LOG.debug("Tenant record delete request. tenant={}, record={}", tenantId, tenantRecordId);
+        return new ResponseEntity<>(service.softDelete(tenantRecordId), OK);
     }
 
     @RequestMapping(method = POST)

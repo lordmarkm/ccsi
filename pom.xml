@@ -12,7 +12,7 @@
   <properties>
     <project.version>1.0</project.version>
     <tyrael.version>1.0</tyrael.version>
-    <baldy-commons.version>2.0</baldy-commons.version>
+    <baldy-commons.version>3.0</baldy-commons.version>
 
     <maven.jetty.version>8.1.14.v20131031</maven.jetty.version>
     <spring.version>4.0.2.RELEASE</spring.version>

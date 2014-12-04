@@ -12,6 +12,15 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
       }
     });
 
+    //Load statuses
+    $scope.statuses = TemplateService.query({tenantId: $scope.tenant.id}, function (templates) {
+      if (templates.length) {
+        $scope.record.status = templates[0];
+      } else {
+        $scope.record.status = undefined;
+      }
+    });
+
     //Handle record filtering
     $scope.filter = {};
     $scope.clearFilter = function () {
@@ -39,9 +48,15 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
             $modalInstance.dismiss('ok');
             $scope.saveRecord();
           };
+          $scope.remove = function (record) {
+            $scope.deleteRecord(record, $scope);
+          };
           $scope.close = function () {
             $modalInstance.dismiss('ok');
           };
+          $scope.$on('recordDeleted', function () {
+            $modalInstance.dismiss();
+          });
         }]
       });
     };
@@ -93,6 +108,28 @@ define(['angular', 'tenant/controllers/module.js'], function (angular, controlle
         });
       }
     });
+
+    //Delete Record
+    $scope.deleteRecord = function (record, $parentScope) {
+      return $modal.open({
+        scope: $parentScope,
+        templateUrl: 'modal-confirm-delete',
+        backdrop: 'static',
+        controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+          $scope.confirm = function () {
+            $modalInstance.dismiss('ok');
+            $scope.$emit('recordDeleted');
+            RecordService.remove({tenantId: $scope.tenant.id, tenantRecordId: record.id}, function() {
+              $scope.reloadTable();
+            });
+          };
+          $scope.close = function () {
+            $modalInstance.dismiss('ok');
+          };
+        }]
+      });
+    };
+
 
   }]);
 });

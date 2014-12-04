@@ -143,6 +143,23 @@
   <div class="modal-footer">
     <button ng-if="!record.id" class="btn btn-s-xs btn-primary">Create</button>
     <button ng-if="record.id" class="btn btn-s-xs btn-success">Update</button>
+    <span ng-click="remove(record)" ng-if="record.id" class="btn btn-s-xs btn-danger">Delete</span>
+    <span ng-click="close()" class="btn btn-default btn-s-xs">Cancel</span>
+  </div>
+  </form>
+</script>
+
+<!-- Modals -->
+<script type="text/ng-template" id="modal-confirm-delete">
+  <div class="modal-header modal-primary">
+    <button type="button" class="close" ng-click="close()">&times;</button>
+    <h3 class="modal-title">Confirm delete Record</h3>
+  </div>
+  <div class="modal-body">
+    This will delete this customer record forevermore. Are you sure?
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-s-xs btn-danger" ng-click="confirm(record)">Proceed</button>
     <span class="btn btn-default btn-s-xs" ng-click="close()">Cancel</span>
   </div>
   </form>
