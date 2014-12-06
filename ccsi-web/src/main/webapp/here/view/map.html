@@ -11,7 +11,7 @@
 </script>
 
 <body>
-  <div id="mapContainer" style="width:100%; height:334px;"></div>
+  <div id="mapContainer" style="width:100%; height:668px;"></div>
   <div id="events">Events: {{events}}</div>
 
 <script id="example-code" data-categories="marker,events" type="text/javascript" >
@@ -31,14 +31,24 @@ function updateMarker() {
 
 function addZoomObserver(map) {
   map.addObserver('zoomLevel', function () {
-    updateMarker();
+    //updateMarker();
   });
 }
 
-function addMarkerToMap(map) {
-  var coord = new nokia.maps.geo.Coordinate(52.53, 13.39);
-  marker = new nokia.maps.map.StandardMarker(coord);
-  updateMarker();
+function addMarkerToMap(map, x, y, title) {
+  //var coord = new nokia.maps.geo.Coordinate(y, x);
+  
+   var marker = new nokia.maps.map.Marker(
+          	new nokia.maps.geo.Coordinate(x, y),{
+          		title: title,
+          		visibility: true,
+          		icon: "here/images/laptop.png",
+          		anchor: new nokia.maps.util.Point(32, 32)
+          	}
+          );
+          
+  //marker = new nokia.maps.map.StandardMarker(coord);
+  //updateMarker();
   map.objects.add(marker);
 }
 
@@ -84,8 +94,18 @@ function setUpClickListener(map) {
 // This is the callback method fired once the bootstrapper has loaded the map.
 //
 function afterHereMapLoad(theMap) {
-  map = theMap;
-  addMarkerToMap(map);
+   map = theMap;
+  
+  var t = null;
+
+	$.getJSON('http://localhost:8080/sjw/event', function (data) {
+	    t = data;
+	    var events = t;
+		for(var count = 0; count < events.length; count++){
+  			addMarkerToMap(map, events[count].latitude, events[count].longtitude, events[count].name );
+  		}
+	});
+  
   addZoomObserver(map);
   setUpClickListener(map);
 }

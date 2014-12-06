@@ -15,8 +15,8 @@
     },
     // Initial center and zoom level of the map
     InitialLocation : {
-      longitude: 52.53,
-      latitude:  13.39,
+      longitude: 14.65,
+      latitude:  121.064,
       zoomLevel: 14},
 
     JSLibs  :{
