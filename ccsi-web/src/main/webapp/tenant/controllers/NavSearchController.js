@@ -1,7 +1,7 @@
 define(['tenant/controllers/module.js'], function (controllers) {
   'use strict';
-  controllers.controller('NavSearchController', ['$rootScope', '$scope', '$state', 'RecordService',
-    function($rootScope, $scope, $state, RecordService) {
+  controllers.controller('NavSearchController', ['$rootScope', '$scope', '$modal', 'toaster', '$state', 'RecordService', 'OrgService', 'EventService',
+    function($rootScope, $scope, $modal, toaster, $state, RecordService, OrgService, EventService) {
 
     //Testing directive
     $scope.typeahead = '';
@@ -14,6 +14,36 @@ define(['tenant/controllers/module.js'], function (controllers) {
     $rootScope.$on('setTenant', function(evt, tenant) {
       $scope.tenant = tenant;
     });
+
+    $scope.neworg = {};
+    $scope.createOrg = function () {
+      console.debug("wat");
+      return $modal.open({
+        scope: $scope,
+        templateUrl: 'modal-create-organization',
+        backdrop: 'static',
+        controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+          $scope.confirm = function () {
+            doCreate($scope.neworg);
+            $modalInstance.dismiss('ok');
+          };
+          $scope.close = function () {
+            $modalInstance.dismiss('ok');
+          };
+        }]
+      });
+    };
+    function doCreate(org) {
+      OrgService.save(org, function (response) {
+        toaster.pop('success', 'Organization created', 'Successfully created organization');
+      });
+    }
+
+    $scope.organization = 'ALL';
+    $scope.orgs = OrgService.query();
+    $scope.updateOrg = function () {
+      $scope.events = EventService.query({orgId: $scope.organization == 'ALL' ? -1 : $scope.organization.id});
+    };
 
     $scope.searchCustomers = function (query) {
       if (!$scope.tenant) {
