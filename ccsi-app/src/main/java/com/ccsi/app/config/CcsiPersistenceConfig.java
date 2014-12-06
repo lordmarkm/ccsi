@@ -75,6 +75,7 @@ public class CcsiPersistenceConfig {
         entityManagerFactory.setPackagesToScan(new String[] {
             "com.ccsi.app.entity",
             "com.baldy.commons.security.models",
+            "com.sjw.app"
         });
         entityManagerFactory.setPersistenceProvider(new HibernatePersistence());
         entityManagerFactory.setJpaProperties(hibernateProperties());

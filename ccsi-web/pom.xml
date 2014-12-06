@@ -32,6 +32,11 @@
   
   <dependencies>
     <dependency>
+      <groupId>sjw</groupId>
+      <artifactId>sjw-app</artifactId>
+      <version>1.0</version>
+    </dependency> 
+    <dependency>
       <groupId>ccsi</groupId>
       <artifactId>ccsi-app</artifactId>
       <version>${project.version}</version>

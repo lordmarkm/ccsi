@@ -23,6 +23,7 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
     "com.ccsi.app.config",
     "com.ccsi.security.config",
     "com.ccsi.web",
+    "com.sjw.app"
 })
 public class CcsiWebConfig extends WebMvcConfigurationSupport {
 
