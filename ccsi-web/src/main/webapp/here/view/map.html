@@ -17,4 +17,45 @@ Hello this is map page
 {{name}}
 {{whatever}}
 
+
+<script id="example-code" data-categories="marker,events" type="text/javascript" >
+//<![CDATA[
+
+var arrColor = ['#0C0101', '#220202', '#320303', '#410505', '#520707', '#640909', '#7A0C0C', '#910F0F',
+    '#AB0E0E', '#D21313', '#FC1111', '#9DA008', '#F4F80E', '#0EF82A', '#6ADB78', '#0C0101', '#220202',
+    '#320303', '#410505', '#520707', '#640909', '#AB0E0E', '#D21313', '#FC1111', '#9DA008'],
+  map,
+  marker;
+
+function updateMarker() {
+  marker.set('text', Math.floor(map.zoomLevel));
+  var brush = {color: arrColor[Math.floor(map.zoomLevel)]};
+  marker.set('brush', brush);
+}
+
+function addZoomObserver(map) {
+  map.addObserver('zoomLevel', function () {
+    updateMarker();
+  });
+}
+
+function addMarkerToMap(map) {
+  var coord = new nokia.maps.geo.Coordinate(52.53, 13.39);
+  marker = new nokia.maps.map.StandardMarker(coord);
+  updateMarker();
+  map.objects.add(marker);
+}
+
+//
+// This is the callback method fired once the bootstrapper has loaded the map.
+//
+function afterHereMapLoad(theMap) {
+  map = theMap;
+  addMarkerToMap(map);
+  addZoomObserver(map);
+}
+
+//]]>
+</script>
+
 </body>

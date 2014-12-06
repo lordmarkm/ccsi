@@ -3,6 +3,12 @@ define(['angular'], function(angular) {
 
   angular.module('app.services', ['ngResource'])
 
+  //Here
+  .factory('OrgService', function($resource) {
+    return $resource('sjw/org')
+  })
+
+  //Legacy
   .factory('AuthService', function($resource) {
     return $resource('auth');
   })

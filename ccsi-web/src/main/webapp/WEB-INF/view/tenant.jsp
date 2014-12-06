@@ -26,11 +26,14 @@
         <a class="navbar-brand" href="<@spring.url '/#/' />">Geographical Effort Management System</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-      <form ng-controller="NavSearchController" class="navbar-form navbar-right form-inline" style="width: 300px;">
-        <div class="col-sm-2">
-        <button class="btn btn-large" title="Login"><i class="fa fa-user"></i></button>
+      <form ng-controller="NavSearchController" class="navbar-form navbar-right form-inline" style="width: 500px;">
+        <div class="col-sm-4">
+          <button class="btn btn-large" title="Login"><i class="fa fa-user"></i> Demo user</button>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-2">
+          <button class="btn btn-large btn-success" title="Add organization"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="col-sm-6">
         <input type="text" ng-model="typeahead"
          typeahead-watch-changes
          onclick="this.select();"
