@@ -42,7 +42,24 @@ function addMarkerToMap(map) {
   map.objects.add(marker);
 }
 
-var infoBubbles;
+var infoBubbles, lastcoord;
+var myHTMLcontent = '<div class=\'myHtmlContent\'>'
+  + '<form class="form-horizontal"><div class="form-group"><label class="col-sm-3" for="name">Name</label><div class="col-sm-8"><input id="evt-name" type="text" name="name" class="form-control"/></div></div>'
+  + '<div class="form-group"><label class="col-sm-3" for="desc">Description</label><div class="col-sm-8"><input id="evt-desc" type="text" class="form-control"/></div></div></div></form>'
+  + '<button id="btn-make-evt" onClick="makeEvent()">Create event</button>';
+
+function makeEvent() {
+  $.post('/sjw/event/' + $('#org-id').val(), {
+    name: $('#evt-name').val(),
+    description: $('#evt-desc').val(),
+    etype: 'EDU',
+    longtitude: lastcoord.longitude,
+    latitude: lastcoord.latitude
+  }, function (response) {
+    alert('Event created!');
+  })
+}
+
 function setUpClickListener(map) {
   // Attach an event listener to map display
   // obtain the coordinates an display in an alert box.
@@ -53,12 +70,12 @@ function setUpClickListener(map) {
     var coord = map.pixelToGeo(evt.displayX, evt.displayY);
     //alert('Clicked at ' + coord);
 
-    var myHTMLcontent = '<div class=\'myHtmlContent\'>' + '<form><input type="text" /><input type="text" /></form></div>';
     if (!infoBubbles) {
       infoBubbles = new nokia.maps.map.component.InfoBubbles();
       map.components.add(infoBubbles);
     }
 
+    lastcoord = coord;
     infoBubbles.openBubble(myHTMLcontent, coord);
   });
 }

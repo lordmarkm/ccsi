@@ -34,7 +34,7 @@
           <button class="btn btn-large btn-success" title="Add organization" ng-click="createOrg()"><i class="fa fa-plus"></i></button>
         </div>
         <div class="col-sm-3">
-          <select ng-model="orgId" ng-change="updateOrg()" class="form-control">
+          <select id="org-id" ng-model="orgId" ng-change="updateOrg()" class="form-control">
             <option value="ALL">All</option>
             <option ng-repeat="org in orgs" value="{{org.id}}">{{org.name}}</option>
           </select>
