@@ -5,9 +5,11 @@ define(['angular'], function(angular) {
 
   //Here
   .factory('OrgService', function($resource) {
-    return $resource('sjw/org')
+    return $resource('sjw/org');
   })
-
+  .factory('EventService', function($resource) {
+    return $resource('sjw/event');
+  })
   //Legacy
   .factory('AuthService', function($resource) {
     return $resource('auth');

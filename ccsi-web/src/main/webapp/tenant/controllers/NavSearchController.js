@@ -39,10 +39,10 @@ define(['tenant/controllers/module.js'], function (controllers) {
       });
     }
 
-    $scope.organization = 'ALL';
+    $scope.orgId = 'ALL';
     $scope.orgs = OrgService.query();
     $scope.updateOrg = function () {
-      $scope.events = EventService.query({orgId: $scope.organization == 'ALL' ? -1 : $scope.organization.id});
+      $scope.events = EventService.query({orgId: $scope.orgId === 'ALL' ? -1 : $scope.orgId});
     };
 
     $scope.searchCustomers = function (query) {
