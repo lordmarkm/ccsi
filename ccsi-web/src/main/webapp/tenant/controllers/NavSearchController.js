@@ -42,7 +42,9 @@ define(['tenant/controllers/module.js'], function (controllers) {
     $scope.orgId = 'ALL';
     $scope.orgs = OrgService.query();
     $scope.updateOrg = function () {
-      $scope.events = EventService.query({orgId: $scope.orgId === 'ALL' ? -1 : $scope.orgId});
+      $scope.events = EventService.query({orgId: $scope.orgId === 'ALL' ? undefined : $scope.orgId}, function (events) {
+        $rootScope.$broadcast('eventsUpdate', events);
+      });
     };
 
     $scope.searchCustomers = function (query) {

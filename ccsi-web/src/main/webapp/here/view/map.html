@@ -12,11 +12,7 @@
 
 <body>
   <div id="mapContainer" style="width:100%; height:334px;"></div>
-  <div id="src"><br/><p>Code:</p></div>
-Hello this is map page
-{{name}}
-{{whatever}}
-{{events}}
+  <div id="events">Events: {{events}}</div>
 
 <script id="example-code" data-categories="marker,events" type="text/javascript" >
 //<![CDATA[
@@ -46,6 +42,27 @@ function addMarkerToMap(map) {
   map.objects.add(marker);
 }
 
+var infoBubbles;
+function setUpClickListener(map) {
+  // Attach an event listener to map display
+  // obtain the coordinates an display in an alert box.
+  //
+  var TOUCH = nokia.maps.dom.Page.browser.touch,
+    CLICK = TOUCH ? 'tap' : 'click';
+  map.addListener(CLICK, function (evt) {
+    var coord = map.pixelToGeo(evt.displayX, evt.displayY);
+    //alert('Clicked at ' + coord);
+
+    var myHTMLcontent = '<div class=\'myHtmlContent\'>' + '<form><input type="text" /><input type="text" /></form></div>';
+    if (!infoBubbles) {
+      infoBubbles = new nokia.maps.map.component.InfoBubbles();
+      map.components.add(infoBubbles);
+    }
+
+    infoBubbles.openBubble(myHTMLcontent, coord);
+  });
+}
+
 //
 // This is the callback method fired once the bootstrapper has loaded the map.
 //
@@ -53,6 +70,7 @@ function afterHereMapLoad(theMap) {
   map = theMap;
   addMarkerToMap(map);
   addZoomObserver(map);
+  setUpClickListener(map);
 }
 
 //]]>
