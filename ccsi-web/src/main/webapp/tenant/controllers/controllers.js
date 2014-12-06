@@ -1,4 +1,7 @@
 define([
+  //Here controllers
+  'tenant/controllers/MapController.js',
+
   //"Root" controllers
   'tenant/controllers/AuthController.js',
   'tenant/controllers/NavSearchController.js',

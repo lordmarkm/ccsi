@@ -3,7 +3,7 @@
 <html>
 
 <head>
-<title>Apptodate</title>
+<title>GEMS</title>
 <link rel="icon" type="image/x-icon" href="<@spring.url '/images/1412091097_48493.ico' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/bootstrap-3.2.0/css/bootstrap.min.css' />" />
 <link rel="stylesheet" href="<@spring.url '/lib/sidebar.css' />" />
@@ -23,23 +23,14 @@
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="<@spring.url '/#/' />">Apptodate</a>
+        <a class="navbar-brand" href="<@spring.url '/#/' />">Geographical Effort Management System</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
-        <li class="dropdown ng-hide" ng-show="principal.principal">
-          <a href="javascript:;" class="dropdown-toggle">
-            {{principal.principal.username}}<span class="caret" style="margin-left: 5px;"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-if="!hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/' />">Home</a></li>
-            <li ng-if="hasRole('ROLE_ADMIN')"><a href="<@spring.url '/#/admin' />">Home</a></li>
-            <li ng-if="hasRole('ROLE_ADMIN')"><a ui-sref="admin_txn">Transaction & Reports</a></li>
-            <li><a href="<@spring.url '/logout' />">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form ng-controller="NavSearchController" class="navbar-form navbar-right" style="width: 300px;">
+      <form ng-controller="NavSearchController" class="navbar-form navbar-right form-inline" style="width: 300px;">
+        <div class="col-sm-2">
+        <button class="btn btn-large" title="Login"><i class="fa fa-user"></i></button>
+        </div>
+        <div class="col-sm-10">
         <input type="text" ng-model="typeahead"
          typeahead-watch-changes
          onclick="this.select();"
@@ -47,7 +38,8 @@
          typeahead-template-url="customTemplate.html"
          typeahead-loading="loadingLocations"
          typeahead-input-formatter="gotoPreview($model)"
-         class="form-control" placeholder="Search {{tenant.name}} Customers..." style="width: 100%;">
+         class="form-control" placeholder="Search Organizations..." style="width: 100%;">
+         </div>
       </form>
       </div>
     </div>
